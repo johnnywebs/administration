@@ -102,6 +102,9 @@ class Rest_controller extends CI_Controller {
 				}
 				echo $this->Create_EmpLogs($prepdata);
 			}
+			else {
+				show_404();
+			}
 		}
 		elseif($type == "leave_request") {
 			if(count($_GET) > 0) {
