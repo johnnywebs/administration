@@ -1,0 +1,14 @@
+runtime: php55
+api_version: 1
+threadsafe: false
+
+handlers:
+- url: /public
+  static_dir: admin/public/
+
+- url: /(.*\.(gif|png|jpg))$
+  static_files: static/\1
+  upload: public/.*\.(gif|png|jpg)$
+  
+- url: /.*
+  script: admin/index.php
