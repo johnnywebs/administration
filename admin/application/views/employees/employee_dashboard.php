@@ -15,96 +15,78 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-body">
-					<div class="row">
-						<div class="col-12 col-sm-10">
-							<h5 class="card-title">Leave Request</h5>
-							<h6 class="card-subtitle">List of Requests</h6>
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs customtab" role="tablist">
+					<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#leavereq" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Leave Request</span></a> </li>
+					<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#otreq" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Overtime Request</span></a> </li>
+					<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#emplogs" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Employee Logs</span></a> </li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div class="tab-pane p-l-20 p-r-20 active" id="leavereq" role="tabpanel">
+						<div class="table-responsive">
+							<table id="tblLeaveRequests" style="font-size:12px" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>Requestor</th>
+										<th>From</th>
+										<th>To</th>
+										<th>Type</th>
+										<th>Request</th>
+										<th>Status</th>
+										<th>Options</th>
+									</tr>
+								</thead>
+								<tbody id="leaveRequestData">
+										
+								</tbody>
+							</table>
 						</div>
 					</div>
-					<div class="table-responsive m-t-10">
-						<table id="tblLeaveRequests" style="font-size:12px" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>Requestor</th>
-									<th>From</th>
-									<th>To</th>
-									<th>Type</th>
-									<th>Request</th>
-									<th>Status</th>
-									<th>Options</th>
-								</tr>
-							</thead>
-							<tbody id="leaveRequestData">
-										
-							</tbody>
-						</table>
+					<div class="tab-pane p-l-20 p-r-20" id="otreq" role="tabpanel">
+						<div class="table-responsive">
+							<table id="tblOtRequest" style="font-size:12px" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>Requestor</th>
+										<th>No. of Hours</th>
+										<th>Reason</th>
+										<th>Date Requested</th>
+										<th>Status</th>
+										<th>Options</th>
+									</tr>
+								</thead>
+								<tbody id="OTRequestData">
+											
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="tab-pane p-l-20 p-r-20" id="emplogs" role="tabpanel">
+						<div class="table-responsive">
+							<table id="tblEmpLogs" style="font-size:12px" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>Employee ID</th>
+										<th>Employee Name</th>
+										<th>Job</th>
+										<th>Task</th>
+										<th>Location</th>
+										<th>Time Start</th>
+										<th>Time End</th>
+										<th>Date Inserted</th>
+									</tr>
+								</thead>
+								<tbody id="empLogData">
+											
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		
-		<div class="col-12">
-			<div class="card">
-				<div class="card-body">
-					<div class="row">
-						<div class="col-12 col-sm-10">
-							<h5 class="card-title">Overtime Request</h5>
-							<h6 class="card-subtitle">List of Requests</h6>
-						</div>
-					</div>
-					<div class="table-responsive m-t-10">
-						<table id="tblOtRequest" style="font-size:12px" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>Requestor</th>
-									<th>No. of Hours</th>
-									<th>Reason</th>
-									<th>Date Requested</th>
-									<th>Status</th>
-									<th>Options</th>
-								</tr>
-							</thead>
-							<tbody id="OTRequestData">
-										
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="col-12">
-			<div class="card">
-				<div class="card-body">
-					<div class="row">
-						<div class="col-12 col-sm-10">
-							<h5 class="card-title">Employee Logs</h5>
-							<h6 class="card-subtitle">List of Employee Logs</h6>
-						</div>
-					</div>
-					<div class="table-responsive m-t-10">
-						<table id="tblEmpLogs" style="font-size:12px" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>Employee ID</th>
-									<th>Employee Name</th>
-									<th>Job</th>
-									<th>Task</th>
-									<th>Location</th>
-									<th>Time Start</th>
-									<th>Time End</th>
-									<th>Date Inserted</th>
-								</tr>
-							</thead>
-							<tbody id="empLogData">
-										
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
 		<footer class="footer">
 			© 2018 Geo Grout Inc
 		</footer>
@@ -150,12 +132,7 @@
 		$.post("<?php echo base_url("employees/crud/retrieve/logs"); ?>",{ admin_id : "1" })
 		.done(function(data) {
 			$("#empLogData").html(data);
-			$('#tblEmpLogs').DataTable({
-				dom: 'Bfrtip',
-				buttons: [
-					'copy', 'csv', 'excel', 'pdf', 'print'
-				]
-			});
+			$('#tblEmpLogs').DataTable({ lengthChange: false });
 			$(".preloader").fadeOut();
 		});
 	}
@@ -164,12 +141,7 @@
 		$.post("<?php echo base_url("employees/crud/retrieve/leavelogs"); ?>",{ admin_id : "1" })
 		.done(function(data) {
 			$("#leaveRequestData").html(data);
-			$('#tblLeaveRequests').DataTable({
-				dom: 'Bfrtip',
-				buttons: [
-					'copy', 'csv', 'excel', 'pdf', 'print'
-				]
-			});
+			$('#tblLeaveRequests').DataTable({ lengthChange: false });
 		});
 	}
 	
@@ -177,12 +149,7 @@
 		$.post("<?php echo base_url("employees/crud/retrieve/otlogs"); ?>",{ admin_id : "1" })
 		.done(function(data) {
 			$("#OTRequestData").html(data);
-			$('#tblOtRequest').DataTable({
-				dom: 'Bfrtip',
-				buttons: [
-					'copy', 'csv', 'excel', 'pdf', 'print'
-				]
-			});
+			$('#tblOtRequest').DataTable({ lengthChange: false });
 		});
 	}
 	
