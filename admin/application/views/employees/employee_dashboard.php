@@ -1,11 +1,11 @@
 <div class="row page-titles">
 	<div class="col-md-5 align-self-center">
-		<h3 class="text-themecolor">Google map</h3>
+		<h3 class="text-themecolor">Employee Dashboard</h3>
 	</div>
 	<div class="col-md-7 align-self-center">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-			<li class="breadcrumb-item active">Google Map</li>
+			<li class="breadcrumb-item active">Dashboard</li>
 		</ol>
 	</div>
 	<div>
@@ -16,24 +16,75 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<h4 class="card-title">Employee Locations</h4>
-					<iframe id="markermap" width="100%" height="300px"
-						frameborder="0" style="border:0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6318.092472145345!2d-122.41930747363149!3d37.64811701913067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xad1925a4bf0970e9!2sGeoGrout+ggms!5e0!3m2!1sen!2sph!4v1528353344175" allowfullscreen>
-					</iframe>
-                 </div>
+					<div class="row">
+						<div class="col-12 col-sm-10">
+							<h5 class="card-title">Leave Request</h5>
+							<h6 class="card-subtitle">List of Requests</h6>
+						</div>
+					</div>
+					<div class="table-responsive m-t-10">
+						<table id="tblLeaveRequests" style="font-size:12px" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>Requestor</th>
+									<th>From</th>
+									<th>To</th>
+									<th>Type</th>
+									<th>Request</th>
+									<th>Status</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody id="leaveRequestData">
+										
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
+		
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
 					<div class="row">
 						<div class="col-12 col-sm-10">
-							<h4 class="card-title">Employee Logs</h4>
+							<h5 class="card-title">Overtime Request</h5>
+							<h6 class="card-subtitle">List of Requests</h6>
+						</div>
+					</div>
+					<div class="table-responsive m-t-10">
+						<table id="tblOtRequest" style="font-size:12px" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>Requestor</th>
+									<th>No. of Hours</th>
+									<th>Reason</th>
+									<th>Date Requested</th>
+									<th>Status</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody id="OTRequestData">
+										
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-12 col-sm-10">
+							<h5 class="card-title">Employee Logs</h5>
 							<h6 class="card-subtitle">List of Employee Logs</h6>
 						</div>
 					</div>
 					<div class="table-responsive m-t-10">
-						<table id="tblEmpLogs" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+						<table id="tblEmpLogs" style="font-size:12px" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
 							<thead>
 								<tr>
 									<th>Employee ID</th>
@@ -41,7 +92,6 @@
 									<th>Job</th>
 									<th>Task</th>
 									<th>Location</th>
-									<th>Group Entry</th>
 									<th>Time Start</th>
 									<th>Time End</th>
 									<th>Date Inserted</th>
@@ -61,8 +111,33 @@
 	</div>
 </div>
 
+<!-- start create modal -->
+	<div id="showLocation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Employee Location</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+					<div class="col-12">
+						<iframe id="markermap" width="100%" height="300px"
+							frameborder="0" style="border:0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6318.092472145345!2d-122.41930747363149!3d37.64811701913067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xad1925a4bf0970e9!2sGeoGrout+ggms!5e0!3m2!1sen!2sph!4v1528353344175" allowfullscreen>
+						</iframe>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end create modal -->
+
 <script>
 	$(document).ready(function() {
+		getOTRequestList();
+		getLeaveRequestList();
 		getEmployeeDepartmentList();
 		<?php 
 			if($this->session->flashdata('global_message') != "") {
@@ -85,9 +160,157 @@
 		});
 	}
 	
+	function getLeaveRequestList() {
+		$.post("<?php echo base_url("employees/crud/retrieve/leavelogs"); ?>",{ admin_id : "1" })
+		.done(function(data) {
+			$("#leaveRequestData").html(data);
+			$('#tblLeaveRequests').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					'copy', 'csv', 'excel', 'pdf', 'print'
+				]
+			});
+		});
+	}
+	
+	function getOTRequestList() {
+		$.post("<?php echo base_url("employees/crud/retrieve/otlogs"); ?>",{ admin_id : "1" })
+		.done(function(data) {
+			$("#OTRequestData").html(data);
+			$('#tblOtRequest').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					'copy', 'csv', 'excel', 'pdf', 'print'
+				]
+			});
+		});
+	}
+	
 	function showInMap(map) {
 		var url = "https://www.google.com/maps/embed/v1/search?key=AIzaSyDiiBE86xJkfFADJnCE4jZfwCu2nn30IOI&q=";
 		url = url + map + "&zoom=18";
 		$("#markermap").attr('src',url);
+		$("#showLocation").modal('show');
 	}
+	
+	function fnApproveLeave(id) {
+		swal({   
+            title: "Are you sure you want to approve this leave?",   
+            text: "You can't revert this action!",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Yes",   
+            cancelButtonText: "No",   
+            closeOnConfirm: false,   
+            closeOnCancel: false,
+			showLoaderOnConfirm: true			
+        }, function(isConfirm){   
+            if (isConfirm) {     
+				$.post("<?php echo base_url("employees/crud/update/leaverequest"); ?>",{ admin_id : "1", id: id, status: "Approved" })
+				.done(function(data) {
+					if(data == 1) { // or true
+						$('#tblLeaveRequests').DataTable().destroy();
+						getLeaveRequestList();
+						swal("Success!", "Leave Request was successfully approved!", "success"); 
+					} else {
+						swal("Error!", "Unable to approve leave request.", "error"); 
+					}
+				});  
+            } else {     
+                swal("Cancelled", "Leave Request was not approved!", "error");   
+            } 
+        });
+	}
+	
+	function fnRejectLeave(id) {
+		swal({   
+            title: "Are you sure you want to reject this leave?",   
+            text: "You can't revert this action!",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Yes",   
+            cancelButtonText: "No",   
+            closeOnConfirm: false,   
+            closeOnCancel: false,
+			showLoaderOnConfirm: true			
+        }, function(isConfirm){   
+            if (isConfirm) {     
+				$.post("<?php echo base_url("employees/crud/update/leaverequest"); ?>",{ admin_id : "1", id: id, status: "Rejected" })
+				.done(function(data) {
+					if(data == 1) { // or true
+						$('#tblLeaveRequests').DataTable().destroy();
+						getLeaveRequestList();
+						swal("Success!", "Leave Request was successfully rejected!", "success"); 
+					} else {
+						swal("Error!", "Unable to reject leave request.", "error"); 
+					}
+				});  
+            } else {     
+                swal("Cancelled", "Leave Request was not rejected!", "error");   
+            } 
+        });
+	}
+	
+	function fnApproveOT(id) {
+		swal({   
+            title: "Are you sure you want to approve this Overtime?",   
+            text: "You can't revert this action!",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Yes",   
+            cancelButtonText: "No",   
+            closeOnConfirm: false,   
+            closeOnCancel: false,
+			showLoaderOnConfirm: true			
+        }, function(isConfirm){   
+            if (isConfirm) {     
+				$.post("<?php echo base_url("employees/crud/update/otrequest"); ?>",{ admin_id : "1", id: id, status: "Approved" })
+				.done(function(data) {
+					if(data == 1) { // or true
+						$('#tblOtRequest').DataTable().destroy();
+						getOTRequestListList();
+						swal("Success!", "Overtime Request was successfully approved!", "success"); 
+					} else {
+						swal("Error!", "Unable to approve overtime request.", "error"); 
+					}
+				});  
+            } else {     
+                swal("Cancelled", "Overtime Request was not approved!", "error");   
+            } 
+        });
+	}
+	
+	function fnRejectOT(id) {
+		swal({   
+            title: "Are you sure you want to reject this Overtime?",   
+            text: "You can't revert this action!",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Yes",   
+            cancelButtonText: "No",   
+            closeOnConfirm: false,   
+            closeOnCancel: false,
+			showLoaderOnConfirm: true			
+        }, function(isConfirm){   
+            if (isConfirm) {     
+				$.post("<?php echo base_url("employees/crud/update/otrequest"); ?>",{ admin_id : "1", id: id, status: "Rejected" })
+				.done(function(data) {
+					if(data == 1) { // or true
+						$('#tblOtRequest').DataTable().destroy();
+						getOTRequestList();
+						swal("Success!", "Overtime Request was successfully rejected!", "success"); 
+					} else {
+						swal("Error!", "Unable to approve overtime request.", "error"); 
+					}
+				});  
+            } else {     
+                swal("Cancelled", "Overtime Request was not rejected!", "error");   
+            } 
+        });
+	}
+	
 </script>

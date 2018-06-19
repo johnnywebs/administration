@@ -102,9 +102,6 @@ class Rest_controller extends CI_Controller {
 				}
 				echo $this->Create_EmpLogs($prepdata);
 			}
-			else {
-				show_404();
-			}
 		}
 		elseif($type == "leave_request") {
 			if(count($_GET) > 0) {
@@ -113,6 +110,18 @@ class Rest_controller extends CI_Controller {
 					$prepdata[$key] = $value;
 				}
 				echo $this->Create_LeaveRequest($prepdata);
+			} 
+			else {
+				show_404();
+			}
+		}
+		elseif($type == "otrequest") {
+			if(count($_GET) > 0) {
+				$prepdata = array();
+				foreach($_GET as $key=>$value) {
+					$prepdata[$key] = $value;
+				}
+				echo $this->Create_OTRequest($prepdata);
 			} 
 			else {
 				show_404();
@@ -141,6 +150,20 @@ class Rest_controller extends CI_Controller {
 		if(count($data) > 0) {
 			$this->load->model('Payroll','pay');
 			$result = $this->pay->insert_LeaveReq($data);
+			if($result) {
+				return "success";
+			} else {
+				return "failed";
+			}
+		} else {
+			return "Error: Invalid data receive.";
+		}
+	}
+	
+	public function Create_OTRequest($data = array()) {
+		if(count($data) > 0) {
+			$this->load->model('Payroll','pay');
+			$result = $this->pay->insert_OTReq($data);
 			if($result) {
 				return "success";
 			} else {
