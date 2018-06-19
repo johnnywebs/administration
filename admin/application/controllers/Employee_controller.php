@@ -154,10 +154,9 @@ class Employee_controller extends CI_Controller {
 					if($this->input->post("admin_id") <> "" && $this->input->post("row_id") <> "" && $this->input->post("emp_type") <> "") {
 						$data = array(
 							"description" 	=> $this->input->post('emp_type'),
-							"user"			=> $this->input->post('admin_id'),
-							"id"			=> $this->input->post('row_id')
+							"user"			=> $this->input->post('admin_id')
 						);
-						$result = $this->Update_EmpType($data);
+						$result = $this->Update_EmpType($data,$this->input->post('row_id'));
 						if($result == false) {
 							$this->redirector("employees/types","An error occurred when updating record!","error");
 						} else {
@@ -172,10 +171,9 @@ class Employee_controller extends CI_Controller {
 					if($this->input->post("admin_id") <> "" && $this->input->post("row_id") <> "" && $this->input->post("emp_dept") <> "") {
 						$data = array(
 							"description" 	=> $this->input->post('emp_dept'),
-							"user"			=> $this->input->post('admin_id'),
-							"id"			=> $this->input->post('row_id')
+							"user"			=> $this->input->post('admin_id')
 						);
-						$result = $this->Update_EmpDept($data);
+						$result = $this->Update_EmpDept($data,$this->input->post('row_id'));
 						if($result == false) {
 							$this->redirector("employees/departments","An error occurred when updating record!","error");
 						} else {
@@ -190,10 +188,9 @@ class Employee_controller extends CI_Controller {
 					if($this->input->post("admin_id") <> "" && $this->input->post("row_id") <> "" && $this->input->post("emp_desig") <> "") {
 						$data = array(
 							"description" 	=> $this->input->post('emp_desig'),
-							"user"			=> $this->input->post('admin_id'),
-							"id"			=> $this->input->post('row_id')
+							"user"			=> $this->input->post('admin_id')
 						);
-						$result = $this->Update_EmpDesig($data);
+						$result = $this->Update_EmpDesig($data,$this->input->post('row_id'));
 						if($result == false) {
 							$this->redirector("employees/designations","An error occurred when updating record!","error");
 						} else {
@@ -234,6 +231,30 @@ class Employee_controller extends CI_Controller {
 						$this->redirector("employees/emplist","Invalid User ID!","error");
 					}
 				}
+				elseif($module == "leaverequest") {
+					if($this->input->post('admin_id') <> "") {
+						$data = array(
+							"status" => $this->input->post('status'),
+							"approver" => $this->input->post('admin_id')
+						);
+						$result = $this->Update_LeaveRequest($data,$this->input->post('id'));
+						echo $result;
+					} else {
+						echo false;
+					}
+				}
+				elseif($module == "otrequest") {
+					if($this->input->post('admin_id') <> "") {
+						$data = array(
+							"status" => $this->input->post('status'),
+							"approver" => $this->input->post('admin_id')
+						);
+						$result = $this->Update_OTRequest($data,$this->input->post('id'));
+						echo $result;
+					} else {
+						echo false;
+					}
+				}
 				else {
 					show_404();
 				}
@@ -256,6 +277,12 @@ class Employee_controller extends CI_Controller {
 				}
 				elseif($module == "logs") {
 					echo $this->List_EmpLogs();
+				}
+				elseif($module == "leavelogs") {
+					echo $this->List_LeaveRequestLogs();
+				}
+				elseif($module == "otlogs") {
+					echo $this->List_OTRequestLogs();
 				}
 				else {
 					echo $module;
@@ -364,14 +391,14 @@ class Employee_controller extends CI_Controller {
 		}		
 	}
 	
-	public function Update_EmpType($param = array()) {
+	public function Update_EmpType($param = array(),$id) {
 		if(count($param) > 0) {
 			$data = array(
 				"description" => $param['description'],
 				"user"		  => $param['user']
 			);
 			$this->load->model('Employees','emp');
-			return $this->emp->update_Types($data,$param['id']);
+			return $this->emp->update_Types($data,$id);
 		} else {
 			return false;
 		}		
@@ -415,14 +442,14 @@ class Employee_controller extends CI_Controller {
 		}		
 	}
 	
-	public function Update_EmpDept($param = array()) {
+	public function Update_EmpDept($param = array(),$id) {
 		if(count($param) > 0) {
 			$data = array(
 				"description" => $param['description'],
 				"user"		  => $param['user']
 			);
 			$this->load->model('Employees','emp');
-			return $this->emp->update_Depts($data,$param['id']);
+			return $this->emp->update_Depts($data,$id);
 		} else {
 			return false;
 		}		
@@ -466,14 +493,14 @@ class Employee_controller extends CI_Controller {
 		}		
 	}
 	
-	public function Update_EmpDesig($param = array()) {
+	public function Update_EmpDesig($param = array(),$id) {
 		if(count($param) > 0) {
 			$data = array(
 				"description" => $param['description'],
 				"user"		  => $param['user']
 			);
 			$this->load->model('Employees','emp');
-			return $this->emp->update_Desigs($data,$param['id']);
+			return $this->emp->update_Desigs($data,$id);
 		} else {
 			return false;
 		}		
@@ -576,7 +603,6 @@ class Employee_controller extends CI_Controller {
 				$html .= "<td>$row->job</td>";
 				$html .= "<td>$row->task</td>";
 				$html .= "<td><button class='btn btn-link' onclick=\"showInMap('".$row->location."');\">Show in Map</button></td>";
-				$html .= "<td>$row->group_entry</td>";
 				$html .= "<td>$row->time_start</td>";
 				$html .= "<td>$row->time_end</td>";
 				$html .= "<td>$row->date_inserted</td>";
@@ -591,6 +617,101 @@ class Employee_controller extends CI_Controller {
 			$this->load->model('Employees','emp');
 			$rr = $this->emp->delete_Emp($adminid,$id);
 			return $rr;
+		} else {
+			return false;
+		}
+	}
+	
+	public function List_LeaveLogs() {
+		$this->load->model('Payroll','pay');
+		$data = $this->pay->get_LeaveLogs();
+		if($data !== false) {
+			$html = "";
+			foreach($data as $row) {
+				$html .= "<tr>";
+				$html .= "<td>$row->fullname</td>";
+				$html .= "<td>$row->date_from</td>";
+				$html .= "<td>$row->date_to</td>";
+				$html .= "<td>$row->leave_type</td>";
+				$html .= "<td>$row->reason</td>";
+				$html .= "<td>$row->status</td>";
+				if(strtoupper($row->status) == "PENDING") {
+					$html .= "<td>
+							<button data-toggle='tooltip' title='Approve' type='button' onclick=\"fnApproveLeave('".$row->id."');\" class='btn btn-success'><i class='fa fa-check-square-o'></i></button>
+							<button data-toggle='tooltip' title='Reject' type='button' onclick=\"fnRejectLeave('".$row->id."');\" class='btn btn-warning'><i class='fa fa-times-rectangle-o'></i></button></td>";
+				} else {
+					$html .= "<td></td>";
+				}
+				$html .= "</tr>";
+			}
+			return $html;
+		}
+	}
+	
+	public function List_LeaveRequestLogs() {
+		$this->load->model('Payroll','pay');
+		$data = $this->pay->get_LeaveRequestLogs();
+		if($data !== false) {
+			$html = "";
+			foreach($data as $row) {
+				$html .= "<tr>";
+				$html .= "<td>$row->fullname</td>";
+				$html .= "<td>$row->date_from</td>";
+				$html .= "<td>$row->date_to</td>";
+				$html .= "<td>$row->leave_type</td>";
+				$html .= "<td>$row->reason</td>";
+				$html .= "<td>$row->status</td>";
+				if(strtoupper($row->status) == "PENDING") {
+					$html .= "<td>
+							<button data-toggle='tooltip' title='Approve' type='button' onclick=\"fnApproveLeave('".$row->id."');\" class='btn btn-success'><i class='fa fa-check-square-o'></i></button>
+							<button data-toggle='tooltip' title='Reject' type='button' onclick=\"fnRejectLeave('".$row->id."');\" class='btn btn-warning'><i class='fa fa-times-rectangle-o'></i></button></td>";
+				} else {
+					$html .= "<td></td>";
+				}
+				$html .= "</tr>";
+			}
+			return $html;
+		}
+	}
+	
+	public function Update_LeaveRequest($data = array(),$id) {
+		if(count($data) > 0) {
+			$this->load->model('Payroll','pay');
+			return $this->pay->update_LeaveReq($data,$id);
+		} else {
+			return false;
+		}
+	}
+	
+	public function List_OTRequestLogs() {
+		$this->load->model('Payroll','pay');
+		$data = $this->pay->get_OTRequestLogs();
+		if($data !== false) {
+			$html = "";
+			foreach($data as $row) {
+				$html .= "<tr>";
+				$html .= "<td>$row->fullname</td>";
+				$html .= "<td>$row->hours</td>";
+				$html .= "<td>$row->reason</td>";
+				$html .= "<td>$row->date_inserted</td>";
+				$html .= "<td>$row->status</td>";
+				if(strtoupper($row->status) == "PENDING") {
+					$html .= "<td>
+							<button data-toggle='tooltip' title='Approve' type='button' onclick=\"fnApproveOT('".$row->id."');\" class='btn btn-success'><i class='fa fa-check-square-o'></i></button>
+							<button data-toggle='tooltip' title='Reject' type='button' onclick=\"fnRejectOT('".$row->id."');\" class='btn btn-warning'><i class='fa fa-times-rectangle-o'></i></button></td>";
+				} else {
+					$html .= "<td></td>";
+				}
+				$html .= "</tr>";
+			}
+			return $html;
+		}
+	}
+	
+	public function Update_OTRequest($data = array(),$id) {
+		if(count($data) > 0) {
+			$this->load->model('Payroll','pay');
+			return $this->pay->update_OTReq($data,$id);
 		} else {
 			return false;
 		}

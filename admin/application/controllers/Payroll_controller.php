@@ -66,8 +66,7 @@ class Payroll_controller extends CI_Controller {
 						"date_from" 	=> $this->input->post('date_from'),
 						"date_to" 		=> $this->input->post('date_to'),
 						"leave_type" 	=> $this->input->post('leave_type'),
-						"reason" 		=> $this->input->post('reason'),
-						"user"			=> $this->input->post('admin_id')
+						"reason" 		=> $this->input->post('reason')
 					);
 					$result = $this->Create_LeaveRequest($data);
 					if($result == false) {
@@ -89,7 +88,7 @@ class Payroll_controller extends CI_Controller {
 				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('rowid') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
-						"user"			=> $this->input->post('admin_id')
+						"approver"			=> $this->input->post('admin_id')
 					);
 					$result = $this->Edit_LeaveType($data,$this->input->post('rowid'));
 					if($result == false) {
