@@ -20,6 +20,15 @@ class Payroll extends CI_Model {
 		}
 	}
 	
+	function getWhere_Payperiod($id) {
+		$query = $this->db->query('SELECT * FROM payroll_period WHERE id = ? ORDER by date_inserted',$id);
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	
 	function get_LeaveReq() {
 		$query = $this->db->query('SELECT * FROM leave_request ORDER by date_inserted');
 		if($query->num_rows() > 0) {
@@ -126,6 +135,43 @@ class Payroll extends CI_Model {
 	
 	function insert_OTReq($param) {
 		$this->db->insert('overtime_request',$param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function get_Payperiod() {
+		$query = $this->db->query('SELECT * FROM payroll_period ORDER by date_inserted');
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}	
+	
+	function insert_Payperiod($param) {
+		$this->db->insert('payroll_period',$param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function update_Payperiod($param,$id) {
+		$this->db->where('id', $id);
+		$this->db->update('payroll_period', $param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function delete_Payperiod($admin,$id) {
+		$this->db->delete('payroll_period', array('id' => $id));
 		if($this->db->affected_rows() > 0) {
 			return true;
 		} else {
