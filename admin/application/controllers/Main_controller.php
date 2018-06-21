@@ -97,6 +97,10 @@ class Main_controller extends CI_Controller {
 			$data['module'] = "payroll/leave_type";
 			$this->load->view('main',$data);
 		} 
+		elseif($module == "payperiod") {
+			$data['module']	= "payroll/payroll_period";
+			$this->load->view('main',$data);
+		}
 		else {
 			show_404();
 		}

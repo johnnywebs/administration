@@ -14,6 +14,7 @@
     <link href="<?php echo base_url("public/assets/plugins/sweetalert/sweetalert.css"); ?>" rel="stylesheet">
     <link href="<?php echo base_url("public/assets/plugins/wizard/steps.css"); ?>" rel="stylesheet">
     <link href="<?php echo base_url("public/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css");?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url("public/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css");?>" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url("public/css/style.css"); ?>" rel="stylesheet">
     <link href="<?php echo base_url("public/css/colors/blue.css"); ?>" id="theme" rel="stylesheet">
 	
@@ -213,6 +214,7 @@
 						</li>
 						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">PAYROLL</span></a>
 							<ul aria-expanded="false" class="collapse">
+								<li><a href="<?php echo base_url("payroll/payperiod"); ?>">Payroll Period</a></li>
 								<li><a href="<?php echo base_url("payroll/leaverequest"); ?>">Leave Request</a></li>
 								<li><a href="<?php echo base_url("payroll/leavetype"); ?>">Leave Type</a></li>
 							</ul>
@@ -238,6 +240,8 @@
     <script src="<?php echo base_url("public/assets/plugins/wizard/jquery.validate.min.js"); ?>"></script>
 	<script src="<?php echo base_url("public/assets/plugins/wizard/steps.js"); ?>"></script>
 	<script src="<?php echo base_url("public/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"); ?>"></script>
+	<script src="<?php echo base_url("public/assets/plugins/moment/moment.js"); ?>"></script>
+	<script src="<?php echo base_url("public/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"); ?>"></script>
     <!--Custom JavaScript -->
     <script src="<?php echo base_url("public/js/custom.min.js");?>"></script>
 	<script src="<?php echo base_url("public/js/toastr.js");?>"></script>
