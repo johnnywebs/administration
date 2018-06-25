@@ -101,6 +101,18 @@ class Main_controller extends CI_Controller {
 			$data['module']	= "payroll/payroll_period";
 			$this->load->view('main',$data);
 		}
+		elseif($module == "timesheet_type") {
+			$data['module'] = "payroll/timesheet_type";
+			$this->load->view('main',$data);
+		}
+		elseif($module == "deduction_type") {
+			$data['module'] = "payroll/deduction_type";
+			$this->load->view('main',$data);
+		}
+		elseif($module == "deduction_master") {
+			$data['module'] = "payroll/deduction_master";
+			$this->load->view('main',$data);
+		}
 		else {
 			show_404();
 		}
