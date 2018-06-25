@@ -29,6 +29,15 @@ class Payroll extends CI_Model {
 		}
 	}
 	
+	function getWhere_TimesheetType($id) {
+		$query = $this->db->query('SELECT * FROM timesheet_type WHERE id = ? ORDER by created_date',$id);
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	
 	function get_LeaveReq() {
 		$query = $this->db->query('SELECT * FROM leave_request ORDER by date_inserted');
 		if($query->num_rows() > 0) {
@@ -172,6 +181,43 @@ class Payroll extends CI_Model {
 	
 	function delete_Payperiod($admin,$id) {
 		$this->db->delete('payroll_period', array('id' => $id));
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function get_TimesheetType() {
+		$query = $this->db->query('SELECT * FROM timesheet_type ORDER by created_date');
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	
+	function insert_TimesheetType($param) {
+		$this->db->insert('timesheet_type',$param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function update_TimesheetType($param,$id) {
+		$this->db->where('id', $id);
+		$this->db->update('timesheet_type', $param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function delete_TimesheetType($admin,$id) {
+		$this->db->delete('timesheet_type', array('id' => $id));
 		if($this->db->affected_rows() > 0) {
 			return true;
 		} else {
