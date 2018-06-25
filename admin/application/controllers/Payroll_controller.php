@@ -116,6 +116,23 @@ class Payroll_controller extends CI_Controller {
 					show_404();
 				}
 			}
+			elseif($module == "deductiontype") {
+				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "") {
+					$data = array(
+						"description" 	=> $this->input->post('description'),
+						"created_by"	=> $this->input->post('admin_id')
+					);
+					$result = $this->Create_DeductionType($data);
+					if($result == false) {
+						$this->redirector("payroll/deduction_type","An error occurrred when creating record!","error");
+					} else {
+						$this->redirector("payroll/deduction_type","Successfully created a deduction type!","success");
+					}
+				}
+				else {
+					show_404();
+				}
+			}
 			else {
 				show_404();
 			}
@@ -195,6 +212,23 @@ class Payroll_controller extends CI_Controller {
 					show_404();
 				}
 			}
+			elseif($module == "deductiontype") {
+				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('rowid') <> "") {
+					$data = array(
+						"description" 	=> $this->input->post('description'),
+						"created_by"	=> $this->input->post('admin_id')
+					);
+					$result = $this->Edit_DeductionType($data,$this->input->post('rowid'));
+					if($result == false) {
+						$this->redirector("payroll/deduction_type","An error occurrred when creating record!","error");
+					} else {
+						$this->redirector("payroll/deduction_type","Successfully updated a deduction type!","success");
+					}
+				}
+				else {
+					show_404();
+				}
+			}
 			else {
 				show_404();
 			}
@@ -253,7 +287,21 @@ class Payroll_controller extends CI_Controller {
 					}
 				}
 				else {
-					$this->redirector("payroll/payperiod","Invalid parameters passed!","error");
+					$this->redirector("payroll/deduction_type","Invalid parameters passed!","error");
+				}
+			} 
+			elseif($module == "deductiontype") {
+				if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
+					$result = $this->Delete_DeductionType($this->input->post('admin_id'),$this->input->post('id'));
+					if($result == false) {
+						$this->redirector("payroll/deduction_type","An error occurred when deleting record!","error");
+					} 
+					else {
+						echo true;
+					}
+				}
+				else {
+					$this->redirector("payroll/deduction_type","Invalid parameters passed!","error");
 				}
 			} 
 			else {
@@ -275,6 +323,9 @@ class Payroll_controller extends CI_Controller {
 			}
 			elseif($module == "timesheettype") {
 				echo $this->List_TimesheetType();
+			}
+			elseif($module == "deductiontype") {
+				echo $this->List_DeductionType();
 			}
 			else {
 				show_404();
@@ -299,6 +350,9 @@ class Payroll_controller extends CI_Controller {
 			}
 			elseif($type == "timesheettype") {
 				$data = $this->pay->getWhere_TimesheetType($this->input->post('id'));
+			}
+			elseif($type == "deductiontype") {
+				$data = $this->pay->getWhere_DeductionType($this->input->post('id'));
 			}
 			else {
 				show_404();
@@ -516,4 +570,51 @@ class Payroll_controller extends CI_Controller {
 		}
 	}
 	
+	public function List_DeductionType() {
+		$this->load->model('Payroll','pay');
+		$data = $this->pay->get_DeductionType();
+		if($data !== false) {
+			$html = "";
+			foreach($data as $row) {
+				$html .= "<tr>";
+				$html .= "<td>$row->description</td>";
+				$html .= "<td>$row->created_by</td>";
+				$html .= "<td>$row->created_date</td>";
+				$html .= "<td>
+							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditDeductionType('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteDeductionType('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
+						  </td>";
+			}
+			return $html;
+		}
+		return false;
+	}
+	
+	public function Create_DeductionType($data) {
+		if(count($data) > 0) {
+			$this->load->model('Payroll','pay');
+			return $this->pay->insert_DeductionType($data);
+		} else {
+			return false;
+		}	
+	}
+	
+	public function Edit_DeductionType($data,$id) {
+		if(count($data) > 0) {
+			$this->load->model('Payroll','pay');
+			return $this->pay->update_DeductionType($data,$id);
+		} else {
+			return false;
+		}	
+	}
+	
+	public function Delete_DeductionType($adminid,$id) {
+		if($adminid <> "" && $id <> "") {
+			$this->load->model('Payroll','pay');
+			$rr = $this->pay->delete_DeductionType($adminid,$id);
+			return $rr;
+		} else {
+			return false;
+		}
+	}
 }

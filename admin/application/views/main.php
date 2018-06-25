@@ -218,6 +218,7 @@
 								<li><a href="<?php echo base_url("payroll/leaverequest"); ?>">Leave Request</a></li>
 								<li><a href="<?php echo base_url("payroll/leavetype"); ?>">Leave Type</a></li>
 								<li><a href="<?php echo base_url("payroll/timesheet_type"); ?>">Timesheet Type</a></li>
+								<li><a href="<?php echo base_url("payroll/deduction_type"); ?>">Deduction Type</a></li>
 							</ul>
 						</li>
 					</ul>
