@@ -317,4 +317,41 @@ class Payroll extends CI_Model {
 		}
 	}
 	
+	function get_EmpTimesheet() {
+		$query = $this->db->query('SELECT * FROM employee_timesheet ORDER by created_date');
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	
+	function insert_EmpTimesheet($param) {
+		$this->db->insert('employee_timesheet',$param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function update_EmpTimesheet($param,$id) {
+		$this->db->where('id', $id);
+		$this->db->update('employee_timesheet', $param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function delete_EmpTimesheet($admin,$id) {
+		$this->db->delete('employee_timesheet', array('id' => $id));
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }
