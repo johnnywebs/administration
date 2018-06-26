@@ -22,7 +22,7 @@
 					<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#emplogs" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Employee Logs</span></a> </li>
 				</ul>
 				<!-- Tab panes -->
-				<div class="tab-content">
+				<div class="tab-content p-b-20">
 					<div class="tab-pane p-l-20 p-r-20 active" id="leavereq" role="tabpanel">
 						<div class="table-responsive">
 							<table id="tblLeaveRequests" style="font-size:12px" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">

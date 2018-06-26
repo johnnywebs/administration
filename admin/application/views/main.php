@@ -219,6 +219,7 @@
 								<li><a href="<?php echo base_url("payroll/leavetype"); ?>">Leave Type</a></li>
 								<li><a href="<?php echo base_url("payroll/timesheet_type"); ?>">Timesheet Type</a></li>
 								<li><a href="<?php echo base_url("payroll/deduction_type"); ?>">Deduction Type</a></li>
+								<li><a href="<?php echo base_url("payroll/deduction_master"); ?>">Deduction Master</a></li>
 							</ul>
 						</li>
 					</ul>

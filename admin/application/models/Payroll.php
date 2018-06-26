@@ -47,6 +47,15 @@ class Payroll extends CI_Model {
 		}
 	}
 	
+	function getWhere_DeductionMaster($id) {
+		$query = $this->db->query('SELECT * FROM deduction_master WHERE id = ? ORDER by created_date',$id);
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	
 	function get_LeaveReq() {
 		$query = $this->db->query('SELECT * FROM leave_request ORDER by date_inserted');
 		if($query->num_rows() > 0) {
@@ -264,6 +273,43 @@ class Payroll extends CI_Model {
 	
 	function delete_DeductionType($admin,$id) {
 		$this->db->delete('deduction_type', array('id' => $id));
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function get_DeductionMaster() {
+		$query = $this->db->query('SELECT * FROM deduction_master ORDER by created_date');
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	
+	function insert_DeductionMaster($param) {
+		$this->db->insert('deduction_master',$param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function update_DeductionMaster($param,$id) {
+		$this->db->where('id', $id);
+		$this->db->update('deduction_master', $param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function delete_DeductionMaster($admin,$id) {
+		$this->db->delete('deduction_master', array('id' => $id));
 		if($this->db->affected_rows() > 0) {
 			return true;
 		} else {
