@@ -133,6 +133,27 @@ class Payroll_controller extends CI_Controller {
 					show_404();
 				}
 			}
+			elseif($module == "deductionmaster") {
+				if($this->input->post('admin_id') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('employee_name') <> "" && $this->input->post('deduction_type') <> "" && $this->input->post('amt') <> "" && $this->input->post('period') <> "") {
+					$data = array(
+						"employee_id" 		=> $this->input->post('employee_id'),
+						"employee_name"		=> $this->input->post('employee_name'),
+						"deduction_type"	=> $this->input->post('deduction_type'),
+						"amt"				=> $this->input->post('amt'),
+						"period"			=> $this->input->post('period'),
+						"created_by"	=> $this->input->post('admin_id')
+					);
+					$result = $this->Create_DeductionMaster($data);
+					if($result == false) {
+						$this->redirector("payroll/deduction_master","An error occurrred when creating record!","error");
+					} else {
+						$this->redirector("payroll/deduction_master","Successfully created a deduction master!","success");
+					}
+				}
+				else {
+					show_404();
+				}
+			}
 			else {
 				show_404();
 			}
@@ -229,6 +250,27 @@ class Payroll_controller extends CI_Controller {
 					show_404();
 				}
 			}
+			elseif($module == "deductionmaster") {
+				if($this->input->post('admin_id') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('employee_name') <> "" && $this->input->post('deduction_type') <> "" && $this->input->post('amt') <> "" && $this->input->post('period') <> "") {
+					$data = array(
+						"employee_id" 		=> $this->input->post('employee_id'),
+						"employee_name"		=> $this->input->post('employee_name'),
+						"deduction_type"	=> $this->input->post('deduction_type'),
+						"amt"				=> $this->input->post('amt'),
+						"period"			=> $this->input->post('period'),
+						"created_by"		=> $this->input->post('admin_id')
+					);
+					$result = $this->Edit_DeductionMaster($data,$this->input->post('rowid'));
+					if($result == false) {
+						$this->redirector("payroll/deduction_master","An error occurrred when creating record!","error");
+					} else {
+						$this->redirector("payroll/deduction_master","Successfully created a deduction master!","success");
+					}
+				}
+				else {
+					show_404();
+				}
+			}
 			else {
 				show_404();
 			}
@@ -304,6 +346,20 @@ class Payroll_controller extends CI_Controller {
 					$this->redirector("payroll/deduction_type","Invalid parameters passed!","error");
 				}
 			} 
+			elseif($module == "deductionmaster") {
+				if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
+					$result = $this->Delete_DeductionMaster($this->input->post('admin_id'),$this->input->post('id'));
+					if($result == false) {
+						$this->redirector("payroll/deduction_master","An error occurred when deleting record!","error");
+					} 
+					else {
+						echo true;
+					}
+				}
+				else {
+					$this->redirector("payroll/deduction_master","Invalid parameters passed!","error");
+				}
+			} 
 			else {
 				show_404();
 			}
@@ -326,6 +382,12 @@ class Payroll_controller extends CI_Controller {
 			}
 			elseif($module == "deductiontype") {
 				echo $this->List_DeductionType();
+			}
+			elseif($module == "deductionmaster") {
+				echo $this->List_DeductionMaster();
+			}
+			elseif($module == "cbodeductiontype") {
+				echo $this->CBO_DeductionType();
 			}
 			else {
 				show_404();
@@ -353,6 +415,9 @@ class Payroll_controller extends CI_Controller {
 			}
 			elseif($type == "deductiontype") {
 				$data = $this->pay->getWhere_DeductionType($this->input->post('id'));
+			}
+			elseif($type == "deductionmaster") {
+				$data = $this->pay->getWhere_DeductionMaster($this->input->post('id'));
 			}
 			else {
 				show_404();
@@ -387,6 +452,19 @@ class Payroll_controller extends CI_Controller {
 	public function CBO_LeaveType() {
 		$this->load->model('Payroll','pay');
 		$data = $this->pay->get_LeaveType();
+		if($data !== false) {
+			$html = "";
+			foreach($data as $row) {
+				$html .= "<option value='$row->description'>$row->description</option>";
+			}
+			return $html;
+		}
+		return false;
+	}
+	
+	public function CBO_DeductionType() {
+		$this->load->model('Payroll','pay');
+		$data = $this->pay->get_DeductionType();
 		if($data !== false) {
 			$html = "";
 			foreach($data as $row) {
@@ -612,6 +690,58 @@ class Payroll_controller extends CI_Controller {
 		if($adminid <> "" && $id <> "") {
 			$this->load->model('Payroll','pay');
 			$rr = $this->pay->delete_DeductionType($adminid,$id);
+			return $rr;
+		} else {
+			return false;
+		}
+	}
+	
+	public function List_DeductionMaster() {
+		$this->load->model('Payroll','pay');
+		$data = $this->pay->get_DeductionMaster();
+		if($data !== false) {
+			$html = "";
+			foreach($data as $row) {
+				$html .= "<tr>";
+				$html .= "<td>$row->employee_id</td>";
+				$html .= "<td>$row->employee_name</td>";
+				$html .= "<td>$row->deduction_type</td>";
+				$html .= "<td>$row->amt</td>";
+				$html .= "<td>$row->period</td>";
+				$html .= "<td>$row->created_by</td>";
+				$html .= "<td>$row->created_date</td>";
+				$html .= "<td>
+							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditDeductionMaster('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteDeductionMaster('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
+						  </td>";
+			}
+			return $html;
+		}
+		return false;
+	}
+	
+	public function Create_DeductionMaster($data) {
+		if(count($data) > 0) {
+			$this->load->model('Payroll','pay');
+			return $this->pay->insert_DeductionMaster($data);
+		} else {
+			return false;
+		}	
+	}
+	
+	public function Edit_DeductionMaster($data,$id) {
+		if(count($data) > 0) {
+			$this->load->model('Payroll','pay');
+			return $this->pay->update_DeductionMaster($data,$id);
+		} else {
+			return false;
+		}	
+	}
+	
+	public function Delete_DeductionMaster($adminid,$id) {
+		if($adminid <> "" && $id <> "") {
+			$this->load->model('Payroll','pay');
+			$rr = $this->pay->delete_DeductionMaster($adminid,$id);
 			return $rr;
 		} else {
 			return false;
