@@ -127,6 +127,7 @@ class Rest_controller extends CI_Controller {
 				show_404();
 			}
 		}
+
 		elseif($type == "employee_timesheet") {
 			if(count($_GET) > 0) {
 				$prepdata = array();
@@ -139,6 +140,7 @@ class Rest_controller extends CI_Controller {
 				show_404();
 			}
 		}
+
 		elseif($type == "overtime") {
 			
 		}
