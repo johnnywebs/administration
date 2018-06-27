@@ -127,6 +127,20 @@ class Rest_controller extends CI_Controller {
 				show_404();
 			}
 		}
+
+		elseif($type == "employee_timesheet") {
+			if(count($_GET) > 0) {
+				$prepdata = array();
+				foreach($_GET as $key=>$value) {
+					$prepdata[$key] = $value;
+				}
+				echo $this->Create_EmpTimesheet($prepdata);
+			} 
+			else {
+				show_404();
+			}
+		}
+
 		elseif($type == "overtime") {
 			
 		}
@@ -167,6 +181,20 @@ class Rest_controller extends CI_Controller {
 		if(count($data) > 0) {
 			$this->load->model('Payroll','pay');
 			$result = $this->pay->insert_OTReq($data);
+			if($result) {
+				return "success";
+			} else {
+				return "failed";
+			}
+		} else {
+			return "Error: Invalid data receive.";
+		}
+	}
+	
+	public function Create_EmpTimesheet($data = array()) {
+		if(count($data) > 0) {
+			$this->load->model('Payroll','pay');
+			$result = $this->pay->insert_EmpTimesheet($data);
 			if($result) {
 				return "success";
 			} else {
