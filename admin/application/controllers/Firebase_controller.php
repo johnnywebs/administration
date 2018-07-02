@@ -38,10 +38,11 @@ class Firebase_controller extends CI_Controller {
 	
 	public function retrieveData($database) {
 		$firestore = new FirestoreClient(['projectId' => 'mytimesheet-9d4a0',"keyFilePath" => "./key.json"]);
-		$empLogs = $firestore->collection($database);
-		$docEmpLogs = $empLogs->documents();
+		$fsData = $firestore->collection($database);
+		$query = $fsData->where('uploaded', '=', 'N');
+		$docfsData = $query->documents();
 		$result = array();
-		foreach ($docEmpLogs as $document) {
+		foreach ($docfsData as $document) {
 			if ($document->exists()) {
 				foreach($document->data() as $key=>$val) {
 					if($key != "uploaded") {
@@ -64,6 +65,9 @@ class Firebase_controller extends CI_Controller {
 					}
 				}
 			}
+			$fsData->document($document->id())->set([
+				'uploaded' => "Y"
+			], ['merge' => true]);
 		}
 		
 		$this->load->model('Firebase','fbase');
