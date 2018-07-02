@@ -163,7 +163,7 @@ class Payroll_controller extends CI_Controller {
 				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('rowid') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
-						"approver"			=> $this->input->post('admin_id')
+						"user"			=> $this->input->post('admin_id')
 					);
 					$result = $this->Edit_LeaveType($data,$this->input->post('rowid'));
 					if($result == false) {
