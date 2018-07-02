@@ -26,3 +26,6 @@ $route['payroll/prepupdate/(:any)']		= "payroll_controller/prep_update/$1";
 //API Router
 $route['apitest']						= "rest_controller/receive/$1";
 $route['api/(:any)']					= "rest_controller/api/$1";
+
+$route['firebaseapi']					= "firebase_controller/index/$1";
+$route['firebaseapi/(:any)']			= "firebase_controller/retrieveData/$1";
