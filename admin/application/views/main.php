@@ -30,7 +30,7 @@
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
     <div class="preloader">
-		<h6>Please wait while we load your page...</h6>
+		<h6 style='text-align:center'>Please wait while we load your page...</h6>
         <svg class="circular" viewBox="25 25 50 50">
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
     </div>
@@ -246,7 +246,7 @@
 	<script src="<?php echo base_url("public/assets/plugins/moment/moment.js"); ?>"></script>
 	<script src="<?php echo base_url("public/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"); ?>"></script>
     <!--Custom JavaScript -->
-    <script src="<?php echo base_url("public/js/custom.min.js");?>"></script>
+    <script src="<?php echo base_url("public/js/custom.js");?>"></script>
 	<script src="<?php echo base_url("public/js/toastr.js");?>"></script>
 	<script src="<?php echo base_url("public/js/mask.js");?>"></script>
     <script src="<?php echo base_url("public/assets/plugins/datatables/jquery.dataTables.min.js"); ?>"></script>
