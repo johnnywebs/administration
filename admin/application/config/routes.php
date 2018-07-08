@@ -23,6 +23,13 @@ $route['payroll/(:any)/(:num)']			= "main_controller/payroll/$1/$2";
 $route['payroll/(:any)']				= "main_controller/payroll/$1";
 $route['payroll/crud/(:any)/(:any)']	= "payroll_controller/crud/$1/$2";
 $route['payroll/prepupdate/(:any)']		= "payroll_controller/prep_update/$1";
+
+//Estimation Router
+$route['estimation/(:any)']					= "main_controller/estimation/$1";
+$route['estimation/(:any)/(:num)']			= "main_controller/estimation/$1/$2";
+$route['estimation/crud/(:any)/(:any)']		= "estimation_controller/crud/$1/$2";
+
+
 //API Router
 $route['apitest']						= "rest_controller/receive/$1";
 $route['api/(:any)']					= "rest_controller/api/$1";
