@@ -1,0 +1,22 @@
+#frmestimation{padding: 3px;}
+
+#frmestimation .form-group{padding: 3px; margin-bottom:2px;}
+#frmestimation .form-group .input-sm{ padding: 5px;  line-height: 11px; font-size: 11px;}
+
+#frmestimation .form-control{border-radius:0px; padding:1px; text-align: center; font-size:12px; padding: 0px; line-height:10px; min-height:25px;} 
+#frmestimation .nav-link{padding:10px;}
+
+
+
+/*
+#estimateinfo{display:none}
+
+*/
+
+#estimatebreakdown{display:none}
+#estimatebreakdown .table-responsive {font-size: 12px;}
+#estimatebreakdown .table-responsive thead{font-weight: bold; background-color: #7ec1fc; color: #FFF;}
+#estimatebreakdown .table-responsive td{padding:2px;}
+#estimatebreakdown .table-responsive tfoot{}
+.cell {padding: 0px; border-top: none; border-left: none; border-right: none; border-bottom: none; border-radius: 0px; line-height: 11px;}
+.cellblock {padding: 0px; border-top: none; border-left: none; border-right: none; border-bottom: none; border-radius: 0px;  line-height: 11px;  font-size: 12px; font-weight: bold;}
