@@ -16,6 +16,7 @@
     <link href="<?php echo base_url("public/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css");?>" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url("public/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css");?>" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url("public/css/style.css"); ?>" rel="stylesheet">
+	<link href="<?php echo base_url("public/css/estimate.css"); ?>" rel="stylesheet">
     <link href="<?php echo base_url("public/css/colors/blue.css"); ?>" id="theme" rel="stylesheet">
 	
     <script src="<?php echo base_url("public/assets/plugins/jquery/jquery.min.js");?>"></script>
@@ -23,6 +24,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	 <script src="<?php echo base_url("public/js/jquery-calx-sample-2.2.7.min.js");?>"></script>
 </head>
 
 <body class="fix-header card-no-border">
@@ -220,6 +222,11 @@
 								<li><a href="<?php echo base_url("payroll/timesheet_type"); ?>">Timesheet Type</a></li>
 								<li><a href="<?php echo base_url("payroll/deduction_type"); ?>">Deduction Type</a></li>
 								<li><a href="<?php echo base_url("payroll/deduction_master"); ?>">Deduction Master</a></li>
+							</ul>
+						</li>
+						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">Estimation</span></a>
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="<?php echo base_url("estimation/build"); ?>">Create Project</a></li>
 							</ul>
 						</li>
 					</ul>

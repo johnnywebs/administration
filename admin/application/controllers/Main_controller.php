@@ -118,6 +118,13 @@ class Main_controller extends CI_Controller {
 		}
 	}
 	
+	public function estimation($module = '',$id = ''){
+		if($module == "build"){
+			$data['module'] = "estimation/estimation_build";
+			$this->load->view('main',$data);
+		}
+	}
+	
 	public function redirector($path,$flashmsg,$flashmsgtype) {
 		if($flashmsgtype == "error") {
 			$toast = "$.toast({
