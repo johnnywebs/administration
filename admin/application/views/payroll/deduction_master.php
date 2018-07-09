@@ -21,7 +21,7 @@
 							<h6 class="card-subtitle">List of Deduction Master</h6>
 						</div>
 						<div class="col-12 col-sm-2">
-							<button type='button' data-toggle="modal" data-target="#createDeductionMaster" class='btn btn-info'><i class='fa fa-edit'></i> Create New</button>
+							<button type='button' onclick="$.fn.modal.Constructor.prototype.enforceFocus = function() {};" data-toggle="modal" data-target="#createDeductionMaster" class='btn btn-info'><i class='fa fa-edit'></i> Create New</button>
 						</div>
 					</div>
 					<div class="table-responsive m-t-10">
@@ -61,28 +61,28 @@
 				<div class="modal-body">
 					<form method="post" action="<?php echo base_url("payroll/crud/create/deductionmaster"); ?>" class="form-horizontal p-t-20">
 						<div class="form-group row">
-							<label for="employee_id" class="col-sm-12 control-label">Employee ID*</label>
+							<label for="employee_id" class="col-sm-12 control-label">Employee*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
 									<input type="hidden" class="form-control" name="admin_id" value="1">
-									<input type="text" class="form-control" name="employee_id" id="employee_id">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
+									<select class="select2 form-control custom-select" name="employee_id" id="employee_id" style="width: 100%; height:36px;">
+										<option>-- SELECT --</option>
+									</select>
+									<input type="hidden" class="form-control" name="employee_name" id="employee_name">
 								</div>
 							</div>
 						</div>
-						<div class="form-group row">
+						<!--<div class="form-group row">
 							<label for="employee_name" class="col-sm-12 control-label">Employee Name*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
-									<input type="text" class="form-control" name="employee_name" id="employee_name">
+									<input type="hidden" class="form-control" name="employee_name" id="employee_name">
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 									</div>
 								</div>
 							</div>
-						</div>
+						</div>-->
 						<div class="form-group row">
 							<label for="deduction_type" class="col-sm-12 control-label">Deduction Type*</label>
 							<div class="col-sm-12">
@@ -111,7 +111,9 @@
 							<label for="period" class="col-sm-12 control-label">Period*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
-									<input type="text" class="form-control" name="period" id="period">
+									<select class="form-control" name="period" id="period">
+										<option>-- SELECT --</option>
+									</select>
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 									</div>
@@ -140,29 +142,29 @@
 				<div class="modal-body">
 					<form id="updateDeductionMaster" method="post" action="<?php echo base_url("payroll/crud/update/deductionmaster"); ?>" class="form-horizontal p-t-20">
 						<div class="form-group row">
-							<label for="employee_id" class="col-sm-12 control-label">Employee ID*</label>
+							<label for="employee_id" class="col-sm-12 control-label">Employee*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
 									<input type="hidden" class="form-control" name="rowid" id="rowid">
 									<input type="hidden" class="form-control" name="admin_id" value="1">
-									<input type="text" class="form-control" name="employee_id" id="employee_id">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
+									<select class="select2 form-control custom-select" name="employee_id" id="employee_id" style="width: 100%; height:36px;">
+										<option>-- SELECT --</option>
+									</select>
+									<input type="hidden" class="form-control" name="employee_name" id="employee_name">
 								</div>
 							</div>
 						</div>
-						<div class="form-group row">
-							<label for="employee_name" class="col-sm-12 control-label">Employee Name*</label>
-							<div class="col-sm-12">
+						<!--<div class="form-group row">
+							<!--<label for="employee_name" class="col-sm-12 control-label">Employee Name*</label>-->
+							<!--<div class="col-sm-12">
 								<div class="input-group">
-									<input type="text" class="form-control" name="employee_name" id="employee_name">
+									<input type="hidden" class="form-control" name="employee_name" id="employee_name">
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 									</div>
 								</div>
 							</div>
-						</div>
+						</div>-->
 						<div class="form-group row">
 							<label for="deduction_type" class="col-sm-12 control-label">Deduction Type*</label>
 							<div class="col-sm-12">
@@ -191,7 +193,9 @@
 							<label for="period" class="col-sm-12 control-label">Period*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
-									<input type="text" class="form-control" name="period" id="period">
+									<select class="form-control" name="period" id="period">
+										<option>-- SELECT --</option>
+									</select>
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 									</div>
@@ -212,12 +216,52 @@
 
 <script>
 	$(document).ready(function() {
+		
 		getDeductionMasterList();
 		<?php 
 			if($this->session->flashdata('global_message') != "") {
 				echo $this->session->flashdata('global_message');
 			}
 		?>
+		$("#createDeductionMaster .select2").select2({
+			dropdownParent: $("#createDeductionMaster"),
+			ajax: {
+				url: "<?php echo base_url("employees/crud/retrieve/cbolistempid"); ?>",
+				type: "POST",
+				dataType: 'json',
+				delay: 100,
+				data: function (params) {
+					var query = { admin_id: "1",searchTerm: params.term }
+					return query;
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+			}
+		});
+		
+		$("#editDeductionMaster .select2").select2({
+			dropdownParent: $("#editDeductionMaster"),
+			/*ajax: {
+				url: "<?php echo base_url("employees/crud/retrieve/cbolistempid"); ?>",
+				type: "POST",
+				dataType: 'json',
+				delay: 250,
+				data: function (params) {
+					var query = { admin_id: "1",searchTerm: params.term }
+					return query;
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+			}*/
+		});
 	});
 	
 	function getDeductionMasterList() {
@@ -239,16 +283,48 @@
 		.done(function(data) {
 			$("#createDeductionMaster #deduction_type").html(data);
 			$("#editDeductionMaster #deduction_type").html(data);
+			getPeriodList();
+		});
+	}
+	
+	function getPeriodList() {
+		$.post("<?php echo base_url("payroll/crud/retrieve/cbopayperiod"); ?>",{ admin_id : "1" })
+		.done(function(data) {
+			$("#createDeductionMaster #period").html(data);
+			$("#editDeductionMaster #period").html(data);
 			$(".preloader").fadeOut();
 		});
 	}
+	
+	function getEmployeeList(param) {
+		$.post("<?php echo base_url("employees/crud/retrieve/cbolistempid"); ?>",{ admin_id : "1",searchTerm:param })
+		.done(function(data) {
+			var hhh = "";
+			var magic = JSON.parse(data);
+			for(i=0;i<magic.length;i++) {
+				hhh += "<option value='"+magic[i].id+"'>"+magic[i].text+"</option>";
+			}
+			$("#editDeductionMaster #employee_id").html(hhh);
+			$(".preloader").fadeOut();
+		});
+	}
+	
+	$("#createDeductionMaster #employee_id").change(function() {
+		$('#createDeductionMaster input#employee_name').val($("#createDeductionMaster #employee_id option:selected").text());
+	});
+	
+	$("#editDeductionMaster #employee_id").change(function() {
+		$('#editDeductionMaster input#employee_name').val($("#editDeductionMaster #employee_id option:selected").text());
+	});
 	
 	function fneditDeductionMaster(id) {
 		$.post("<?php echo base_url("payroll/prepupdate/deductionmaster"); ?>",{ admin_id : "1", id: id })
 		.done(function(json) {
 			var obj = JSON.parse(json);
 			$('#editDeductionMaster input#rowid').val(obj[0].id);
-			$('#editDeductionMaster input#employee_id').val(obj[0].employee_id);
+			$(".preloader").show();
+			getEmployeeList(obj[0].employee_id);
+			$('#editDeductionMaster select#employee_id').val(obj[0].employee_id).trigger('change');
 			$('#editDeductionMaster input#employee_name').val(obj[0].employee_name);
 			$('#editDeductionMaster select#deduction_type').val(obj[0].deduction_type);
 			$('#editDeductionMaster input#amt').val(obj[0].amt);

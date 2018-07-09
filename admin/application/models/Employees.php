@@ -226,6 +226,15 @@ class Employees extends CI_Model {
 		}
 	}
 	
+	function search_Emplist($param) {
+		$query = $this->db->query('SELECT * FROM employee_info WHERE id = ? OR emp_last LIKE ? OR emp_first LIKE ? OR emp_mi LIKE ? ORDER by date_inserted',array($param,"%".$param."%","%".$param."%","%".$param."%"));
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	
 	function getWhere_empLogs($id) {
 		$query = $this->db->query('SELECT * FROM employee_logs WHERE id = ? ORDER by date_inserted',$id);
 		if($query->num_rows() > 0) {

@@ -15,6 +15,7 @@
     <link href="<?php echo base_url("public/assets/plugins/wizard/steps.css"); ?>" rel="stylesheet">
     <link href="<?php echo base_url("public/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css");?>" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url("public/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css");?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url("public/assets/plugins/select2/dist/css/select2.min.css");?>" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url("public/css/style.css"); ?>" rel="stylesheet">
 	<link href="<?php echo base_url("public/css/estimate.css"); ?>" rel="stylesheet">
     <link href="<?php echo base_url("public/css/colors/blue.css"); ?>" id="theme" rel="stylesheet">
@@ -252,6 +253,7 @@
 	<script src="<?php echo base_url("public/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"); ?>"></script>
 	<script src="<?php echo base_url("public/assets/plugins/moment/moment.js"); ?>"></script>
 	<script src="<?php echo base_url("public/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"); ?>"></script>
+	<script src="<?php echo base_url("public/assets/plugins/select2/dist/js/select2.full.js"); ?>"></script>
     <!--Custom JavaScript -->
     <script src="<?php echo base_url("public/js/custom.js");?>"></script>
 	<script src="<?php echo base_url("public/js/toastr.js");?>"></script>
