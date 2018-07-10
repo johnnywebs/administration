@@ -389,6 +389,9 @@ class Payroll_controller extends CI_Controller {
 			elseif($module == "cbodeductiontype") {
 				echo $this->CBO_DeductionType();
 			}
+			elseif($module == "cbopayperiod") {
+				echo $this->CBO_Payperiod();
+			}
 			else {
 				show_404();
 			}
@@ -707,7 +710,7 @@ class Payroll_controller extends CI_Controller {
 				$html .= "<td>$row->employee_name</td>";
 				$html .= "<td>$row->deduction_type</td>";
 				$html .= "<td>$row->amt</td>";
-				$html .= "<td>$row->period</td>";
+				$html .= "<td>$row->description</td>";
 				$html .= "<td>$row->created_by</td>";
 				$html .= "<td>$row->created_date</td>";
 				$html .= "<td>
@@ -746,5 +749,18 @@ class Payroll_controller extends CI_Controller {
 		} else {
 			return false;
 		}
+	}
+	
+	public function CBO_Payperiod() {
+		$this->load->model('Payroll','pay');
+		$data = $this->pay->get_Payperiod();
+		if($data !== false) {
+			$html = "";
+			foreach($data as $row) {
+				$html .= "<option value='$row->id'>$row->description</option>";
+			}
+			return $html;
+		}
+		return false;
 	}
 }

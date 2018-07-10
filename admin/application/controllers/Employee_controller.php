@@ -284,6 +284,10 @@ class Employee_controller extends CI_Controller {
 				elseif($module == "otlogs") {
 					echo $this->List_OTRequestLogs();
 				}
+				elseif($module == "cbolistempid") {
+					$param = $this->input->post('searchTerm');
+					echo $this->CBO_EmpListId($param);
+				}
 				else {
 					echo $module;
 				}
@@ -715,7 +719,18 @@ class Employee_controller extends CI_Controller {
 		} else {
 			return false;
 		}
+	} 
+	
+	public function CBO_EmpListId($param) {
+		$this->load->model('Employees','emp');
+		$data = $this->emp->search_Emplist($param);
+		if($data !== false) {
+			$html = array();
+			foreach($data as $row) {
+				$html[] = array("id"=>$row->id,"text"=>$row->emp_last.", ".$row->emp_first." ".$row->emp_mi);
+			}
+			return json_encode($html);
+		}
 	}
-
 	
 }
