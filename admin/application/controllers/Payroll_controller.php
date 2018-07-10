@@ -63,6 +63,7 @@ class Payroll_controller extends CI_Controller {
 				if($this->input->post('admin_id') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('date_from') <> "" && $this->input->post('date_to') <> "" && $this->input->post('leave_type') <> "" && $this->input->post('reason') <> "") {
 					$data = array(
 						"employee_id" 	=> $this->input->post('employee_id'),
+						"employee_name" => $this->input->post('employee_name'),
 						"date_from" 	=> $this->input->post('date_from'),
 						"date_to" 		=> $this->input->post('date_to'),
 						"leave_type" 	=> $this->input->post('leave_type'),
@@ -180,6 +181,7 @@ class Payroll_controller extends CI_Controller {
 				if($this->input->post('admin_id') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('date_from') <> "" && $this->input->post('date_to') <> "" && $this->input->post('leave_type') <> "" && $this->input->post('reason') <> "") {
 					$data = array(
 						"employee_id" 	=> $this->input->post('employee_id'),
+						"employee_name" 	=> $this->input->post('employee_name'),
 						"date_from" 	=> $this->input->post('date_from'),
 						"date_to" 		=> $this->input->post('date_to'),
 						"leave_type" 	=> $this->input->post('leave_type'),
@@ -437,6 +439,7 @@ class Payroll_controller extends CI_Controller {
 			foreach($data as $row) {
 				$html .= "<tr>";
 				$html .= "<td>$row->employee_id</td>";
+				$html .= "<td>$row->employee_name</td>";
 				$html .= "<td>$row->date_from</td>";
 				$html .= "<td>$row->date_to</td>";
 				$html .= "<td>$row->leave_type</td>";
