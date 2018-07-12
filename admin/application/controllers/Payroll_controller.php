@@ -394,6 +394,10 @@ class Payroll_controller extends CI_Controller {
 			elseif($module == "cbopayperiod") {
 				echo $this->CBO_Payperiod();
 			}
+			elseif($module == "payrollschedprocess") {
+				$payperiod = $this->input->post('payperiod');
+				echo $this->List_PayrollProcessed($payperiod);
+			}
 			else {
 				show_404();
 			}
@@ -761,6 +765,30 @@ class Payroll_controller extends CI_Controller {
 			$html = "";
 			foreach($data as $row) {
 				$html .= "<option value='$row->id'>$row->description</option>";
+			}
+			return $html;
+		}
+		return false;
+	}
+	
+	public function List_PayrollProcessed($periodid) {
+		$this->load->model('Payroll','pay');
+		$data = $this->pay->get_PayrollSched($periodid);
+		if($data !== false) {
+			$html = "";
+			foreach($data as $row) {
+				$html .= "<tr>";
+				$html .= "<td>$row->id</td>";
+				$html .= "<td>$row->fullname</td>";
+				$html .= "<td>$row->payroll_period</td>";
+				$html .= "<td>$row->emp_status</td>";
+				$html .= "<td>".intval($row->ttl_regpay)."</td>";
+				$html .= "<td>".intval($row->ttl_otpay)."</td>";
+				$html .= "<td>".intval($row->deductions)."</td>";
+				$html .= "<td>".intval($row->leave_deduction)."</td>";
+				$html .= "<td>".intval(($row->ttl_regpay + $row->ttl_otpay))."</td>";
+				$html .= "<td>".intval(($row->ttl_regpay + $row->ttl_otpay) - ($row->deductions + $row->leave_deduction))."</td>";
+				$html .= "</tr>";
 			}
 			return $html;
 		}

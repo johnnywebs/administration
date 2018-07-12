@@ -42,6 +42,8 @@ class Main_controller extends CI_Controller {
 				$data['add_state']		= $row->add_state;
 				$data['add_zipcode']	= $row->add_zipcode;
 				$data['designation']	= $row->designation;
+				$data['hourly_rate']	= $row->hourly_rate;
+				$data['monthly_rate']	= $row->monthly_rate;
 			}
 			$this->load->view('main',$data);
 		}
@@ -111,6 +113,10 @@ class Main_controller extends CI_Controller {
 		}
 		elseif($module == "deduction_master") {
 			$data['module'] = "payroll/deduction_master";
+			$this->load->view('main',$data);
+		}
+		elseif($module == "processpayroll") {
+			$data['module'] = "payroll/process_payroll";
 			$this->load->view('main',$data);
 		}
 		else {

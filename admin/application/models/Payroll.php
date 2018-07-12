@@ -281,7 +281,10 @@ class Payroll extends CI_Model {
 	}
 	
 	function get_DeductionMaster() {
-		$query = $this->db->query('SELECT * FROM deduction_master ORDER by created_date');
+		$query = $this->db->query('SELECT * FROM deduction_master
+									JOIN payroll_period
+									ON(deduction_master.period = payroll_period.id)
+									ORDER BY created_date');
 		if($query->num_rows() > 0) {
 			return $query->result();
 		} else {
@@ -354,4 +357,22 @@ class Payroll extends CI_Model {
 		}
 	}
 	
+	function get_PayrollSched($periodid) {
+		$query = $this->db->query("SELECT a.id,CONCAT(a.emp_last,', ',a.emp_first,' ',a.emp_mi) AS fullname,d.description AS payroll_period,a.emp_status,
+									SUM((b.ttl_hours * a.hourly_rate)) AS ttl_regpay, SUM((b.ttl_ot * a.hourly_rate)) AS ttl_otpay,
+									(SELECT SUM(amt) FROM deduction_master WHERE employee_id = a.id AND period = b.payroll_period) AS deductions,
+									((SELECT SUM(DATEDIFF(date_to,date_from)+1) 
+										FROM leave_request WHERE date_from BETWEEN d.date_from AND d.date_to AND employee_id = a.id) * a.hourly_rate) AS leave_deduction
+									FROM employee_info a JOIN employee_timesheet b
+									ON(a.id = b.employee_id)
+									JOIN payroll_period d
+									ON(b.payroll_period = d.id)
+									WHERE b.payroll_period = ?
+									GROUP BY a.id",array($periodid));
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
 }
