@@ -112,7 +112,9 @@ class Employee_controller extends CI_Controller {
 							"add_country"		=> $this->input->post('add_country'),
 							"add_zipcode"		=> $this->input->post('add_zipcode'),
 							"designation"		=> $this->input->post('designation'),
-							"user"				=> $this->input->post('admin_id')
+							"user"				=> $this->input->post('admin_id'),
+							"hourly_rate"		=> $this->input->post('hourly_rate'),
+							"monthly_rate"		=> $this->input->post('monthly_rate')
 						);
 						} else {
 							$data = array(
@@ -131,7 +133,9 @@ class Employee_controller extends CI_Controller {
 							"add_state"			=> $this->input->post('add_state'),
 							"add_zipcode"		=> $this->input->post('add_zipcode'),
 							"designation"		=> $this->input->post('designation'),
-							"user"				=> $this->input->post('admin_id')
+							"user"				=> $this->input->post('admin_id'),
+							"hourly_rate"		=> $this->input->post('hourly_rate'),
+							"monthly_rate"		=> $this->input->post('monthly_rate')
 						);
 						}
 						
@@ -219,7 +223,9 @@ class Employee_controller extends CI_Controller {
 							"add_state"			=> $this->input->post('add_state'),
 							"add_zipcode"		=> $this->input->post('add_zipcode'),
 							"designation"		=> $this->input->post('designation'),
-							"user"				=> $this->input->post('admin_id')
+							"user"				=> $this->input->post('admin_id'),
+							"hourly_rate"		=> $this->input->post('hourly_rate'),
+							"monthly_rate"		=> $this->input->post('monthly_rate')
 						);
 						$result = $this->Update_EmpList($data,$this->input->post('rowid'));
 						if($result == false) {
@@ -719,8 +725,8 @@ class Employee_controller extends CI_Controller {
 		} else {
 			return false;
 		}
-	} 
-	
+	}
+
 	public function CBO_EmpListId($param) {
 		$this->load->model('Employees','emp');
 		$data = $this->emp->search_Emplist($param);
@@ -732,5 +738,4 @@ class Employee_controller extends CI_Controller {
 			return json_encode($html);
 		}
 	}
-	
 }

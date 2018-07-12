@@ -150,7 +150,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="empStat"> Employment Status : <span class="danger">*</span> </label>
 									<div class="controls">
@@ -163,13 +163,29 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="desig"> Designation : <span class="danger">*</span> </label>
 									<div class="controls">
 										<select class="form-control required" id="desig" name="designation" required data-validation-required-message="This field is required" >
 											<option value="">-- SELECT --</option>
 										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="hourlyrate">Hourly Rate: <span class="danger">*</span> </label>
+									<div class="controls">
+										<input placeholder="0" type="number" class="form-control" name="hourly_rate" id="hourly_rate" required data-validation-required-message="This field is required" value="<?php echo $hourly_rate; ?>" >
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="hourlyrate">Monthly Rate: <span class="danger">*</span> </label>
+									<div class="controls">
+										<input placeholder="0" type="number" class="form-control" name="monthly_rate" id="monthly_rate" required data-validation-required-message="This field is required"  value="<?php echo $monthly_rate; ?>" >
 									</div>
 								</div>
 							</div>
@@ -200,7 +216,7 @@
 		});
 		loadCountries("<?php echo $add_country; ?>");
 		
-		<?php if($add_country <> ""): ?>
+		<?php if($add_country <> "" && ($add_country == "Canada" || $add_country == "United States")): ?>
 			$("#divctr").removeClass('col-md-8');
 			$("#divctr").addClass('col-md-4');
 			$("#statebox").show();
