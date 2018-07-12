@@ -223,6 +223,7 @@
 								<li><a href="<?php echo base_url("payroll/timesheet_type"); ?>">Timesheet Type</a></li>
 								<li><a href="<?php echo base_url("payroll/deduction_type"); ?>">Deduction Type</a></li>
 								<li><a href="<?php echo base_url("payroll/deduction_master"); ?>">Deduction Master</a></li>
+								<li><a href="javascript:void(0);" onclick="processPayroll();"><b style='color:#ff0000'>Process Payroll</b></a></li>
 							</ul>
 						</li>
 						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">Estimation</span></a>
@@ -237,6 +238,8 @@
 		<div class="page-wrapper">
 			<?php $this->load->view($module); ?>
 		</div>
+		
+		
 	</div>
     <script src="<?php echo base_url("public/assets/plugins/bootstrap/js/popper.min.js");?>"></script>
     <script src="<?php echo base_url("public/assets/plugins/bootstrap/js/bootstrap.min.js");?>"></script>
@@ -270,9 +273,27 @@
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
     <!-- end - This is for export functionality only -->
 	<script>
-		$(document).ready(function() {
-			
-		});
+		function processPayroll() {
+			swal({   
+				title: "Are you sure you want to process the payroll?",   
+				text: "Process is not revertable!",   
+				type: "warning",   
+				showCancelButton: true,   
+				confirmButtonColor: "#DD6B55",   
+				confirmButtonText: "Yes",   
+				cancelButtonText: "No",   
+				closeOnConfirm: false,   
+				closeOnCancel: false,
+				showLoaderOnConfirm: true 
+			}, function(isConfirm){   
+				if (isConfirm) {    
+					swal("Processed!", "Redirecting to processing page!", "success"); 				
+					window.location.replace("<?php echo base_url("payroll/processpayroll"); ?>");
+				} else {     
+					swal("Cancelled", "Processing was cancelled!", "error");   
+				} 
+			});
+		}
 	</script>
 </body>
 
