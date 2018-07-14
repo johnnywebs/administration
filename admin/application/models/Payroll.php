@@ -359,16 +359,31 @@ class Payroll extends CI_Model {
 	
 	function get_PayrollSched($periodid) {
 		$query = $this->db->query("SELECT a.id,CONCAT(a.emp_last,', ',a.emp_first,' ',a.emp_mi) AS fullname,d.description AS payroll_period,a.emp_status,
+									sum(b.ttl_hours) as ttl_reghrs,sum(b.ttl_ot) as ttl_othrs,
 									SUM((b.ttl_hours * a.hourly_rate)) AS ttl_regpay, SUM((b.ttl_ot * a.hourly_rate)) AS ttl_otpay,
 									(SELECT SUM(amt) FROM deduction_master WHERE employee_id = a.id AND period = b.payroll_period) AS deductions,
 									((SELECT SUM(DATEDIFF(date_to,date_from)+1) 
-										FROM leave_request WHERE date_from BETWEEN d.date_from AND d.date_to AND employee_id = a.id) * a.hourly_rate) AS leave_deduction
+										FROM leave_request WHERE date_from BETWEEN d.date_from AND d.date_to AND employee_id = a.id) * a.hourly_rate) AS leave_deduction,d.id as periodid
 									FROM employee_info a JOIN employee_timesheet b
 									ON(a.id = b.employee_id)
 									JOIN payroll_period d
 									ON(b.payroll_period = d.id)
 									WHERE b.payroll_period = ?
 									GROUP BY a.id",array($periodid));
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	
+	function get_PayrollTimesheet($periodid,$empid) {
+		$query = $this->db->query("SELECT a.employee_name,b.description,a.ttl_hours,a.ttl_ot,a.created_date
+									FROM employee_timesheet a
+									JOIN payroll_period b
+									ON(a.payroll_period = b.id)
+									WHERE b.id = ?
+									AND a.employee_id = ?",array($periodid,$empid));
 		if($query->num_rows() > 0) {
 			return $query->result();
 		} else {

@@ -287,7 +287,7 @@
 				showLoaderOnConfirm: true 
 			}, function(isConfirm){   
 				if (isConfirm) {    
-					swal("Processed!", "Redirecting to processing page!", "success"); 				
+					swal("Processing...", "Redirecting to processing page!", "success"); 				
 					window.location.replace("<?php echo base_url("payroll/processpayroll"); ?>");
 				} else {     
 					swal("Cancelled", "Processing was cancelled!", "error");   
