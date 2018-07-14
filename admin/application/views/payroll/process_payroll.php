@@ -80,6 +80,24 @@
 			</div>
 		</div>
 		<!-- end create modal -->
+		
+		<div id="logsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Process Payroll - View Data.</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					</div>
+					<div id="logdata" class="modal-body">
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end create modal -->
 </div>
 
 <script>
@@ -95,6 +113,23 @@
 		.done(function(data) {
 			$("#periodModal #period").html(data);
 			$(".preloader").fadeOut();
+		});
+	}
+	
+	function showPayrollLogs(type,empid,period) {
+		var url = "";
+		if(type == "timesheet") {
+			url = "<?php echo base_url("payroll/crud/retrieve/listtimesheet"); ?>";
+		} else if(type == "odeduction") {
+			url = "<?php echo base_url("payroll/crud/retrieve/listodeduction"); ?>";
+		} else if(type == "ldeduction") {
+			url = "<?php echo base_url("payroll/crud/retrieve/listldeduction"); ?>";
+		}
+		
+		$.post(url,{ payperiod:period, empid: empid })
+		.done(function(data) {
+			$("#logdata").html(data);
+			$("#logsModal").modal('show');
 		});
 	}
 	

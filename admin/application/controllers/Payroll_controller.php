@@ -398,6 +398,21 @@ class Payroll_controller extends CI_Controller {
 				$payperiod = $this->input->post('payperiod');
 				echo $this->List_PayrollProcessed($payperiod);
 			}
+			elseif($module == "listtimesheet") {
+				$empid = $this->input->post('empid');
+				$payperiod = $this->input->post('payperiod');
+				echo $this->List_PayrollTimesheet($payperiod,$empid);
+			}
+			elseif($module == "listodeduction") {
+				$empid = $this->input->post('empid');
+				$payperiod = $this->input->post('payperiod');
+				echo $this->List_PayrollODeduction($payperiod,$empid);
+			}
+			elseif($module == "listldeduction") {
+				$empid = $this->input->post('empid');
+				$payperiod = $this->input->post('payperiod');
+				echo $this->List_PayrollLDeduction($payperiod,$empid);
+			}
 			else {
 				show_404();
 			}
@@ -782,14 +797,35 @@ class Payroll_controller extends CI_Controller {
 				$html .= "<td>$row->fullname</td>";
 				$html .= "<td>$row->payroll_period</td>";
 				$html .= "<td>$row->emp_status</td>";
-				$html .= "<td>".intval($row->ttl_regpay)."</td>";
-				$html .= "<td>".intval($row->ttl_otpay)."</td>";
-				$html .= "<td>".intval($row->deductions)."</td>";
-				$html .= "<td>".intval($row->leave_deduction)."</td>";
+				$html .= "<td><b>(<a href='#' onclick=\"showPayrollLogs('timesheet','".$row->id."','".$row->periodid."');\">".intval($row->ttl_reghrs)."</a>)</b> ".intval($row->ttl_regpay)."</td>";
+				$html .= "<td><b>(<a href='#' onclick=\"showPayrollLogs('timesheet','".$row->id."','".$row->periodid."');\">".intval($row->ttl_othrs)."</a>)</b> ".intval($row->ttl_otpay)."</td>";
+				$html .= "<td><a href='#' onclick=\"showPayrollLogs('odeduction','".$row->id."','".$row->periodid."');\">".intval($row->deductions)."</a></td>";
+				$html .= "<td><a href='#' onclick=\"showPayrollLogs('ldeduction','".$row->id."','".$row->periodid."');\">".intval($row->leave_deduction)."</a></td>";
 				$html .= "<td>".intval(($row->ttl_regpay + $row->ttl_otpay))."</td>";
 				$html .= "<td>".intval(($row->ttl_regpay + $row->ttl_otpay) - ($row->deductions + $row->leave_deduction))."</td>";
 				$html .= "</tr>";
 			}
+			return $html;
+		}
+		return false;
+	}
+	
+	public function List_PayrollTimesheet($periodid,$empid) {
+		$this->load->model('Payroll','pay');
+		$data = $this->pay->get_PayrollTimesheet($periodid,$empid);
+		if($data !== false) {
+			$html = '<table style="font-size:10px;" id="tblPayperiod" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">';
+			$html .= "<tr><th>Fullname</th><th>Payroll Period</th><th>Hour Rendered</th><th>OT Rendered</th><th>Date</th>";
+			foreach($data as $row) {
+				$html .= "<tr>";
+				$html .= "<td>$row->employee_name</td>";
+				$html .= "<td>$row->description</td>";
+				$html .= "<td>$row->ttl_hours</td>";
+				$html .= "<td>$row->ttl_ot</td>";
+				$html .= "<td>$row->created_date</td>";
+				$html .= "</tr>";
+			}
+			$html .= "</table>";
 			return $html;
 		}
 		return false;
