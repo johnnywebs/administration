@@ -11,6 +11,15 @@ class Project extends CI_Model {
 		}
 	}
 	
+	function getWhere_BiddingData($id) {
+		$query = $this->db->query('SELECT * FROM project_bidding WHERE id = ? ORDER by date_inserted',$id);
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	
 	function get_ProjList() {
 		$query = $this->db->query('SELECT * FROM projects ORDER by date_inserted');
 		if($query->num_rows() > 0) {
@@ -231,4 +240,44 @@ class Project extends CI_Model {
 			return false;
 		}
 	}
+
+	function insert_BiddingData($param) {
+		$this->db->insert('project_bidding',$param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function get_BiddingData() {
+		$query = $this->db->query('SELECT * FROM project_bidding ORDER by date_inserted');
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	
+	function update_BiddingData($param,$id) {
+		$this->db->where('id', $id);
+		$this->db->update('project_bidding', $param);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function delete_BiddingData($admin,$id) {
+		$this->db->delete('project_bidding', array('id' => $id));
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+
+	
 }
