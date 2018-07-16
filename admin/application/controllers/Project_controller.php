@@ -76,7 +76,7 @@ class Project_controller extends CI_Controller {
 					}
 				}
 				else {
-					show_404();
+					$this->redirector("projects/types","Incomplete required parameter!","error");
 				}
 			}
 			elseif($module == "equiprate") {
@@ -102,7 +102,7 @@ class Project_controller extends CI_Controller {
 					}
 				}
 				else {
-					show_404();
+					$this->redirector("projects/equipment","Incomplete required parameter!","error");
 				}
 			}
 			elseif($module == "laborrate") {
@@ -126,7 +126,7 @@ class Project_controller extends CI_Controller {
 					}
 				}
 				else {
-					show_404();
+					$this->redirector("projects/labor","Incomplete required parameter!","error");
 				}
 			}
 			elseif($module == "material") {
@@ -144,7 +144,37 @@ class Project_controller extends CI_Controller {
 					}
 				}
 				else {
-					show_404();
+					$this->redirector("projects/materials","Incomplete required parameter!","error");
+				}
+			}
+			elseif($module == "bidding") {
+				if($this->input->post('admin_id') <> "" && $this->input->post('bid_date') <> "" && $this->input->post('bid_agent') && $this->input->post('job_name') && $this->input->post('project_type') && $this->input->post('bid_completed') && $this->input->post('rebid') && $this->input->post('old_bid_date') && $this->input->post('prebid_meeting_date') && $this->input->post('job_location') && $this->input->post('start_date') && $this->input->post('project_valuation') && $this->input->post('sc_method') && $this->input->post('delivery_system') && $this->input->post('owner_type') && $this->input->post('address')) {
+					$data = array(
+						"bid_date"				=> $this->input->post('bid_date'),
+						"bid_agent"				=> $this->input->post('bid_agent'),
+						"job_name"				=> $this->input->post('job_name'),
+						"project_type"			=> $this->input->post('project_type'),
+						"bid_completed"			=> $this->input->post('bid_completed'),
+						"rebid"					=> $this->input->post('rebid'),
+						"old_bid_date"			=> $this->input->post('old_bid_date'),
+						"prebid_meeting_date"	=> $this->input->post('prebid_meeting_date'),
+						"job_location"			=> $this->input->post('job_location'),
+						"start_date"			=> $this->input->post('start_date'),
+						"project_valuation"		=> $this->input->post('project_valuation'),
+						"sc_method"				=> $this->input->post('sc_method'),
+						"delivery_system"		=> $this->input->post('delivery_system'),
+						"owner_type"			=> $this->input->post('owner_type'),
+						"address"				=> $this->input->post('address')
+					);
+					$result = $this->Create_BiddingData($data);
+					if($result == false) {
+						$this->redirector("projects/bidding","An error occurrred when creating record!","error");
+					} else {
+						$this->redirector("projects/bidding","Successfully created a Material!","success");
+					}
+				}
+				else {
+					$this->redirector("projects/bidding","Incomplete required parameter!","error");
 				}
 			}
 			else {
@@ -257,6 +287,37 @@ class Project_controller extends CI_Controller {
 					show_404();
 				}
 			}
+			elseif($module == "bidding") {
+				if($this->input->post('admin_id') <> "" && $this->input->post('rowid') && $this->input->post('bid_date') <> "" && $this->input->post('bid_agent') && $this->input->post('job_name') && $this->input->post('project_type') && $this->input->post('bid_completed') && $this->input->post('rebid') && $this->input->post('old_bid_date') && $this->input->post('prebid_meeting_date') && $this->input->post('job_location') && $this->input->post('start_date') && $this->input->post('project_valuation') && $this->input->post('sc_method') && $this->input->post('delivery_system') && $this->input->post('owner_type') && $this->input->post('address')) {
+					$data = array(
+						"bid_date"				=> $this->input->post('bid_date'),
+						"bid_agent"				=> $this->input->post('bid_agent'),
+						"job_name"				=> $this->input->post('job_name'),
+						"project_type"			=> $this->input->post('project_type'),
+						"bid_completed"			=> $this->input->post('bid_completed'),
+						"rebid"					=> $this->input->post('rebid'),
+						"old_bid_date"			=> $this->input->post('old_bid_date'),
+						"prebid_meeting_date"	=> $this->input->post('prebid_meeting_date'),
+						"job_location"			=> $this->input->post('job_location'),
+						"start_date"			=> $this->input->post('start_date'),
+						"project_valuation"		=> $this->input->post('project_valuation'),
+						"sc_method"				=> $this->input->post('sc_method'),
+						"delivery_system"		=> $this->input->post('delivery_system'),
+						"owner_type"			=> $this->input->post('owner_type'),
+						"address"				=> $this->input->post('address'),
+						"user"					=> $this->input->post('user')
+					);
+					$result = $this->Edit_BiddingData($data,$this->input->post('rowid'));
+					if($result == false) {
+						$this->redirector("projects/bidding","An error occurrred when creating record!","error");
+					} else {
+						$this->redirector("projects/bidding","Successfully created a Material!","success");
+					}
+				}
+				else {
+					$this->redirector("projects/bidding","Incomplete required parameter!","error");
+				}
+			}
 			else {
 				show_404();
 			}
@@ -279,6 +340,9 @@ class Project_controller extends CI_Controller {
 				}
 				elseif($module == "material") {
 					echo $this->List_Material();
+				}
+				elseif($module == "bidding") {
+					echo $this->List_BiddingData();
 				}
 				else {
 					show_404();
@@ -352,6 +416,20 @@ class Project_controller extends CI_Controller {
 						$this->redirector("projects/material","Invalid parameters passed!","error");
 					}
 				}
+				elseif($module == "bidding") {
+					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_BiddingData($this->input->post('admin_id'),$this->input->post('id'));
+						if($result == false) {
+							$this->redirector("projects/bidding","An error occurred when deleting record!","error");
+						} 
+						else {
+							echo true;
+						}
+					}
+					else {
+						$this->redirector("projects/bidding","Invalid parameters passed!","error");
+					}
+				}
 				else {
 					show_404();
 				}
@@ -378,6 +456,9 @@ class Project_controller extends CI_Controller {
 			}
 			elseif($type == "material") {
 				$data = $this->proj->getWhere_Materials($this->input->post('id'));
+			}
+			elseif($type == "bidding") {
+				$data = $this->proj->getWhere_BiddingData($this->input->post('id'));
 			}
 			else {
 				show_404();
@@ -657,4 +738,66 @@ class Project_controller extends CI_Controller {
 			return false;
 		}	
 	}
+	
+	public function Create_BiddingData($data) {
+		if(count($data) > 0) {
+			$this->load->model('Project','proj');
+			return $this->proj->insert_BiddingData($data);
+		} else {
+			return false;
+		}	
+	}
+	
+	public function List_BiddingData() {
+		$this->load->model('Project','proj');
+		$data = $this->proj->get_BiddingData();
+		if($data !== false) {
+			$html = "";
+			foreach($data as $row) {
+				$html .= "<tr>";
+				$html .= "<td>$row->bid_date</td>";
+				$html .= "<td>$row->bid_agent</td>";
+				$html .= "<td>$row->job_name</td>";
+				$html .= "<td>$row->project_type</td>";
+				$html .= "<td>$row->bid_completed</td>";
+				$html .= "<td>$row->rebid</td>";
+				$html .= "<td>$row->old_bid_date</td>";
+				$html .= "<td>$row->prebid_meeting_date</td>";
+				$html .= "<td>$row->job_location</td>";
+				$html .= "<td>$row->start_date</td>";
+				$html .= "<td>$row->project_valuation</td>";
+				$html .= "<td>$row->sc_method</td>";
+				$html .= "<td>$row->delivery_system</td>";
+				$html .= "<td>$row->owner_type</td>";
+				$html .= "<td>$row->address</td>";
+				$html .= "<td>$row->date_inserted</td>";
+				$html .= "<td>
+							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditBiddingData('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteBiddingData('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
+						  </td>";
+			}
+			return $html;
+		}
+		return false;
+	}
+	
+	public function Delete_BiddingData($adminid,$id) {
+		if($adminid <> "" && $id <> "") {
+			$this->load->model('Project','proj');
+			$rr = $this->proj->delete_BiddingData($adminid,$id);
+			return $rr;
+		} else {
+			return false;
+		}
+	}
+	
+	public function Edit_BiddingData($data,$id) {
+		if(count($data) > 0) {
+			$this->load->model('Project','proj');
+			return $this->proj->update_BiddingData($data,$id);
+		} else {
+			return false;
+		}	
+	}
+	
 }

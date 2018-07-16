@@ -213,6 +213,7 @@
 								<li><a href="<?php echo base_url("projects/equipment"); ?>">Equipments Rate</a></li>
 								<li><a href="<?php echo base_url("projects/labor"); ?>">Labor Rate</a></li>
 								<li><a href="<?php echo base_url("projects/materials"); ?>">Materials</a></li>
+								<li><a href="<?php echo base_url("projects/bidding"); ?>">Bidding</a></li>
 							</ul>
 						</li>
 						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">PAYROLL</span></a>
