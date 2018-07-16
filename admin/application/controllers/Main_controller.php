@@ -85,6 +85,10 @@ class Main_controller extends CI_Controller {
 			$data['module'] = "projects/materials";
 			$this->load->view('main',$data);
 		}
+		elseif($module == "bidding") {
+			$data['module'] = "projects/project_bidding";
+			$this->load->view('main',$data);
+		}
 		else {
 			show_404();
 		}
