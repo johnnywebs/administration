@@ -5,6 +5,10 @@ $route['default_controller'] = 'main_controller';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+//Users Router
+$route['user/login']					= "admin_controller/loginpage/$1";
+$route['user/login/submit']				= "admin_controller/submitLogin/$1";
+$route['user/logout']					= "admin_controller/submitLogout/$1";
 //Employee Router
 $route['employees/(:any)/(:num)']		= "main_controller/employees/$1/$2";
 $route['employees/(:any)']		 		= "main_controller/employees/$1";

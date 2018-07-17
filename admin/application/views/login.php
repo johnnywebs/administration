@@ -22,27 +22,28 @@
         <div class="col-md-12 content-center">
             <div class="row">
                 <div class="col-lg-4 col-md-12">
-                                     
+                             
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="card-plain">
                         <div class="header">
-                            <!--<h5>Geo Grout Login</h5>-->
+                            <h6><?php echo ($this->session->flashdata('global_message') != "" ? $this->session->flashdata('global_message') : ""); ?></h6>
                             <img src="<?php echo base_url("public/assets/images/logo.png"); ?>" />
                         </div>
-                        <form class="form">
+                        <form class="form" method="post" action="<?php echo base_url("user/login/submit"); ?>">
                             <div class="input-group">
-                                <input type="email" class="form-control" placeholder="Email">
+                                <input type="email" name="useremail" class="form-control" placeholder="Email" required />
                                 <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
                             </div>
                             <div class="input-group">
-                                <input type="password" placeholder="Password" class="form-control" />
+                                <input type="password" name="userpass" placeholder="Password" class="form-control" required/>
                                 <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
-                            </div>                            
-                        </form>
+                            </div>  
                         <div class="footer">
-                            <a href="<?php echo base_url("employees/dashboard"); ?>" class="btn btn-primary btn-round btn-block">SIGN IN</a>
+                            <input type="submit" class="btn btn-primary btn-round btn-block" value="SIGN IN" />
                         </div>
+						                          
+                        </form>
                         <!--<a href="forgot-password.html" class="link">Forgot Password?</a>-->
                     </div>
                 </div>
