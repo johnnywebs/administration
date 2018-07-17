@@ -164,7 +164,8 @@ class Project_controller extends CI_Controller {
 						"sc_method"				=> $this->input->post('sc_method'),
 						"delivery_system"		=> $this->input->post('delivery_system'),
 						"owner_type"			=> $this->input->post('owner_type'),
-						"address"				=> $this->input->post('address')
+						"address"				=> $this->input->post('address'),
+						"user"					=> $this->input->post('admin_id')
 					);
 					$result = $this->Create_BiddingData($data);
 					if($result == false) {
