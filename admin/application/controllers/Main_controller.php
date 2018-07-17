@@ -9,6 +9,9 @@ class Main_controller extends CI_Controller {
 	}
 	
 	public function employees($module = '',$id = '') {
+		if($this->session->userdata('userid') == "") {
+			redirect(base_url("user/login"));
+		}
 		if($module == "dashboard") {
 			$data['module'] = "employees/employee_dashboard";
 			$this->load->view('main',$data);
@@ -65,6 +68,9 @@ class Main_controller extends CI_Controller {
 	}
 	
 	public function projects($module = '',$id = '') {
+		if($this->session->userdata('userid') == "") {
+			redirect(base_url("user/login"));
+		}
 		if($module == "projlist") {
 			$data['module'] = "projects/project_list";
 			$this->load->view('main',$data);
@@ -95,6 +101,9 @@ class Main_controller extends CI_Controller {
 	}
 	
 	public function payroll($module = '', $id = '') {
+		if($this->session->userdata('userid') == "") {
+			redirect(base_url("user/login"));
+		}
 		if($module == "leaverequest") {
 			$data['module'] = "payroll/leave_request";
 			$this->load->view('main',$data);
@@ -129,6 +138,9 @@ class Main_controller extends CI_Controller {
 	}
 	
 	public function estimation($module = '',$id = ''){
+		if($this->session->userdata('userid') == "") {
+			redirect(base_url("user/login"));
+		}
 		if($module == "build"){
 			$data['module'] = "estimation/estimation_build";
 			$this->load->view('main',$data);
