@@ -1,3 +1,9 @@
+<style>
+	.form-group { margin-bottom:5px; }
+	.form-group .input-group > .form-control { min-height:35px !important;font-size:11px !important; }
+	.holderx { font-size:11px; }
+	.modal-lg { max-width: 80%; }
+</style>
 <div class="row page-titles">
 	<div class="col-md-5 align-self-center">
 		<h3 class="text-themecolor">Project Records</h3>
@@ -72,173 +78,181 @@
 				</div>
 				<div class="modal-body">
 					<form method="post" action="<?php echo base_url("projects/crud/create/bidding"); ?>" class="form-horizontal p-t-20">
-						<div class="form-group row">
-							<label for="bid_date" class="col-sm-12 control-label">Bid Date*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="hidden" class="form-control" name="admin_id" value="1">
-									<input type="date" class="form-control" name="bid_date" id="bid_date">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-ruler-pencil"></i></span>
+						<div class="row holderx">
+							<div class="col-4">
+								<div class="form-group row">
+									<label for="bid_date" class="col-sm-12 control-label">Bid Date*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="hidden" class="form-control" name="admin_id" value="1">
+											<input type="text" class="form-control" name="bid_date" id="bid_date">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-ruler-pencil"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="bid_agent" class="col-sm-12 control-label">Bid Agent*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="bid_agent" id="bid_agent">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="job_name" class="col-sm-12 control-label">Job Name*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="job_name" id="job_name">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="project_type" class="col-sm-12 control-label">Project Type*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<select class="form-control" name="project_type" id="project_type">
+											
+											</select>
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="bid_completed" class="col-sm-12 control-label">Bid Completed*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="number" class="form-control" name="bid_completed" id="bid_completed">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="form-group row">
-							<label for="bid_agent" class="col-sm-12 control-label">Bid Agent*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="bid_agent" id="bid_agent">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+							<div class="col-4">
+								<div class="form-group row">
+									<label for="rebid" class="col-sm-12 control-label">Rebid*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<select class="form-control" name="rebid" id="rebid">
+												<option value="Y">YES</option>
+												<option value="N">NO</option>
+											</select>
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="old_bid_date" class="col-sm-12 control-label">Old Bid Date*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="old_bid_date" id="old_bid_date">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="prebid_meeting_date" class="col-sm-12 control-label">Pre-Bid Meeting*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="prebid_meeting_date" id="prebid_meeting_date">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="job_location" class="col-sm-12 control-label">Job Location*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="job_location" id="job_location">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="start_date" class="col-sm-12 control-label">Start Date*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="start_date" id="start_date">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="form-group row">
-							<label for="job_name" class="col-sm-12 control-label">Job Name*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="job_name" id="job_name">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+							<div class="col-4">
+								<div class="form-group row">
+									<label for="project_valuation" class="col-sm-12 control-label">Project Valuation*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="project_valuation" id="project_valuation">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="project_type" class="col-sm-12 control-label">Project Type*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<select class="form-control" name="project_type" id="project_type">
-									
-									</select>
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+								<div class="form-group row">
+									<label for="sc_method" class="col-sm-12 control-label">Subcontract Method*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="sc_method" id="sc_method">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="bid_completed" class="col-sm-12 control-label">Bid Completed*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="number" class="form-control" name="bid_completed" id="bid_completed">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+								<div class="form-group row">
+									<label for="delivery_system" class="col-sm-12 control-label">Project Delivery System*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="delivery_system" id="delivery_system">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="rebid" class="col-sm-12 control-label">Rebid*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<select class="form-control" name="rebid" id="rebid">
-										<option value="Y">YES</option>
-										<option value="N">NO</option>
-									</select>
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+								<div class="form-group row">
+									<label for="owner_type" class="col-sm-12 control-label">Owner Type*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="owner_type" id="owner_type">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="old_bid_date" class="col-sm-12 control-label">Old Bid Date*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="date" class="form-control" name="old_bid_date" id="old_bid_date">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="prebid_meeting_date" class="col-sm-12 control-label">Pre-Bid Meeting*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="date" class="form-control" name="prebid_meeting_date" id="prebid_meeting_date">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="job_location" class="col-sm-12 control-label">Job Location*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="job_location" id="job_location">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="start_date" class="col-sm-12 control-label">Start Date*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="date" class="form-control" name="start_date" id="start_date">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="project_valuation" class="col-sm-12 control-label">Project Valuation*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="project_valuation" id="project_valuation">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="sc_method" class="col-sm-12 control-label">Subcontract Method*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="sc_method" id="sc_method">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="delivery_system" class="col-sm-12 control-label">Project Delivery System*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="delivery_system" id="delivery_system">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="owner_type" class="col-sm-12 control-label">Owner Type*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="owner_type" id="owner_type">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="address" class="col-sm-12 control-label">Address*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="address" id="address">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+								<div class="form-group row">
+									<label for="address" class="col-sm-12 control-label">Address*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="address" id="address">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -264,174 +278,182 @@
 				</div>
 				<div class="modal-body">
 					<form method="post" action="<?php echo base_url("projects/crud/update/bidding"); ?>" class="form-horizontal p-t-20">
-						<div class="form-group row">
-							<label for="bid_date" class="col-sm-12 control-label">Bid Date*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="hidden" class="form-control" name="rowid" id="rowid">
-									<input type="hidden" class="form-control" name="admin_id" value="1">
-									<input type="date" class="form-control" name="bid_date" id="bid_date">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-ruler-pencil"></i></span>
+						<div class="row holderx">
+							<div class="col-4">	
+								<div class="form-group row">
+									<label for="bid_date" class="col-sm-12 control-label">Bid Date*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="hidden" class="form-control" name="rowid" id="rowid">
+											<input type="hidden" class="form-control" name="admin_id" value="1">
+											<input type="text" class="form-control" name="bid_date" id="bid_date">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-ruler-pencil"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="bid_agent" class="col-sm-12 control-label">Bid Agent*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="bid_agent" id="bid_agent">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="job_name" class="col-sm-12 control-label">Job Name*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="job_name" id="job_name">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="project_type" class="col-sm-12 control-label">Project Type*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<select class="form-control" name="project_type" id="project_type">
+											
+											</select>
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="bid_completed" class="col-sm-12 control-label">Bid Completed*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="number" class="form-control" name="bid_completed" id="bid_completed">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="form-group row">
-							<label for="bid_agent" class="col-sm-12 control-label">Bid Agent*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="bid_agent" id="bid_agent">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+							<div class="col-4">
+								<div class="form-group row">
+									<label for="rebid" class="col-sm-12 control-label">Rebid*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<select class="form-control" name="rebid" id="rebid">
+												<option value="Y">YES</option>
+												<option value="N">NO</option>
+											</select>
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+								<label for="old_bid_date" class="col-sm-12 control-label">Old Bid Date*</label>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<input type="text" class="form-control" name="old_bid_date" id="old_bid_date">
+										<div class="input-group-append">
+											<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="form-group row">
-							<label for="job_name" class="col-sm-12 control-label">Job Name*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="job_name" id="job_name">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+								<div class="form-group row">
+									<label for="prebid_meeting_date" class="col-sm-12 control-label">Pre-Bid Meeting*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="prebid_meeting_date" id="prebid_meeting_date">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="job_location" class="col-sm-12 control-label">Job Location*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="job_location" id="job_location">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="start_date" class="col-sm-12 control-label">Start Date*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="start_date" id="start_date">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="form-group row">
-							<label for="project_type" class="col-sm-12 control-label">Project Type*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<select class="form-control" name="project_type" id="project_type">
-									
-									</select>
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+							<div class="col-4">
+								<div class="form-group row">
+									<label for="project_valuation" class="col-sm-12 control-label">Project Valuation*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="project_valuation" id="project_valuation">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="sc_method" class="col-sm-12 control-label">Subcontract Method*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="sc_method" id="sc_method">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="delivery_system" class="col-sm-12 control-label">Project Delivery System*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="delivery_system" id="delivery_system">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+								<label for="owner_type" class="col-sm-12 control-label">Owner Type*</label>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<input type="text" class="form-control" name="owner_type" id="owner_type">
+										<div class="input-group-append">
+											<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="form-group row">
-							<label for="bid_completed" class="col-sm-12 control-label">Bid Completed*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="number" class="form-control" name="bid_completed" id="bid_completed">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="rebid" class="col-sm-12 control-label">Rebid*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<select class="form-control" name="rebid" id="rebid">
-										<option value="Y">YES</option>
-										<option value="N">NO</option>
-									</select>
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="old_bid_date" class="col-sm-12 control-label">Old Bid Date*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="date" class="form-control" name="old_bid_date" id="old_bid_date">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="prebid_meeting_date" class="col-sm-12 control-label">Pre-Bid Meeting*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="date" class="form-control" name="prebid_meeting_date" id="prebid_meeting_date">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="job_location" class="col-sm-12 control-label">Job Location*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="job_location" id="job_location">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="start_date" class="col-sm-12 control-label">Start Date*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="date" class="form-control" name="start_date" id="start_date">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="project_valuation" class="col-sm-12 control-label">Project Valuation*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="project_valuation" id="project_valuation">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="sc_method" class="col-sm-12 control-label">Subcontract Method*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="sc_method" id="sc_method">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="delivery_system" class="col-sm-12 control-label">Project Delivery System*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="delivery_system" id="delivery_system">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="owner_type" class="col-sm-12 control-label">Owner Type*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="owner_type" id="owner_type">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="address" class="col-sm-12 control-label">Address*</label>
-							<div class="col-sm-12">
-								<div class="input-group">
-									<input type="text" class="form-control" name="address" id="address">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+								<div class="form-group row">
+									<label for="address" class="col-sm-12 control-label">Address*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="address" id="address">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -450,6 +472,14 @@
 
 <script>
 	$(document).ready(function() {
+		$('#createBiddingList #bid_date').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
+		$('#createBiddingList #old_bid_date').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
+		$('#createBiddingList #prebid_meeting_date').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
+		$('#createBiddingList #start_date').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
+		$('#editBiddingList #bid_date').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
+		$('#editBiddingList #old_bid_date').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
+		$('#editBiddingList #prebid_meeting_date').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
+		$('#editBiddingList #start_date').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
 		getBiddingData();
 		<?php 
 			if($this->session->flashdata('global_message') != "") {
