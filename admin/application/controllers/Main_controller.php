@@ -9,7 +9,7 @@ class Main_controller extends CI_Controller {
 	}
 	
 	public function employees($module = '',$id = '') {
-		if($this->session->userdata('userid') == "") {
+		if($this->session->userdata('adminid') == "") {
 			redirect(base_url("user/login"));
 		}
 		if($module == "dashboard") {
@@ -68,7 +68,7 @@ class Main_controller extends CI_Controller {
 	}
 	
 	public function projects($module = '',$id = '') {
-		if($this->session->userdata('userid') == "") {
+		if($this->session->userdata('adminid') == "") {
 			redirect(base_url("user/login"));
 		}
 		if($module == "projlist") {
@@ -101,7 +101,7 @@ class Main_controller extends CI_Controller {
 	}
 	
 	public function payroll($module = '', $id = '') {
-		if($this->session->userdata('userid') == "") {
+		if($this->session->userdata('adminid') == "") {
 			redirect(base_url("user/login"));
 		}
 		if($module == "leaverequest") {
@@ -138,12 +138,28 @@ class Main_controller extends CI_Controller {
 	}
 	
 	public function estimation($module = '',$id = ''){
-		if($this->session->userdata('userid') == "") {
+		if($this->session->userdata('adminid') == "") {
 			redirect(base_url("user/login"));
 		}
 		if($module == "build"){
 			$data['module'] = "estimation/estimation_build";
 			$this->load->view('main',$data);
+		}
+	}
+	
+	public function admins($module = '',$id = '') {
+		if($this->session->userdata('adminid') == "") {
+			redirect(base_url("user/login"));
+		}
+		if($this->session->userdata('userlevel') == "ADMIN") {
+			if($module == "list") {
+				$data['module'] = "admin/admin_list";
+				$this->load->view('main',$data);
+			} else {
+				show_404();
+			}
+		} else {
+			show_404();
 		}
 	}
 	

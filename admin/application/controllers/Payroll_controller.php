@@ -43,10 +43,14 @@ class Payroll_controller extends CI_Controller {
 	public function crud($action = '',$module = '',$search = '') {
 		if($action == "create") {
 			if($module == "leavetype") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/leavetype","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_LeaveType($data);
 					if($result == false) {
@@ -60,7 +64,11 @@ class Payroll_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "leaverequest") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('date_from') <> "" && $this->input->post('date_to') <> "" && $this->input->post('leave_type') <> "" && $this->input->post('reason') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/leaverequest","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('date_from') <> "" && $this->input->post('date_to') <> "" && $this->input->post('leave_type') <> "" && $this->input->post('reason') <> "") {
 					$data = array(
 						"employee_id" 	=> $this->input->post('employee_id'),
 						"employee_name" => $this->input->post('employee_name'),
@@ -81,13 +89,17 @@ class Payroll_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "payperiod") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('date_from') <> "" && $this->input->post('date_to') <> "" && $this->input->post('status') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/payperiod","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "" && $this->input->post('date_from') <> "" && $this->input->post('date_to') <> "" && $this->input->post('status') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
 						"date_from" 	=> $this->input->post('date_from'),
 						"date_to" 		=> $this->input->post('date_to'),
 						"status" 		=> $this->input->post('status'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_Payperiod($data);
 					if($result == false) {
@@ -101,10 +113,14 @@ class Payroll_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "timesheettype") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/timesheet_type","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
-						"created_by"	=> $this->input->post('admin_id')
+						"created_by"	=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_TimesheetType($data);
 					if($result == false) {
@@ -118,10 +134,14 @@ class Payroll_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "deductiontype") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/deduction_type","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
-						"created_by"	=> $this->input->post('admin_id')
+						"created_by"	=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_DeductionType($data);
 					if($result == false) {
@@ -135,14 +155,18 @@ class Payroll_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "deductionmaster") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('employee_name') <> "" && $this->input->post('deduction_type') <> "" && $this->input->post('amt') <> "" && $this->input->post('period') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/deduction_master","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('employee_name') <> "" && $this->input->post('deduction_type') <> "" && $this->input->post('amt') <> "" && $this->input->post('period') <> "") {
 					$data = array(
 						"employee_id" 		=> $this->input->post('employee_id'),
 						"employee_name"		=> $this->input->post('employee_name'),
 						"deduction_type"	=> $this->input->post('deduction_type'),
 						"amt"				=> $this->input->post('amt'),
 						"period"			=> $this->input->post('period'),
-						"created_by"	=> $this->input->post('admin_id')
+						"created_by"	=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_DeductionMaster($data);
 					if($result == false) {
@@ -161,10 +185,14 @@ class Payroll_controller extends CI_Controller {
 		}
 		elseif($action == "update") {
 			if($module == "leavetype") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('rowid') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/leavetype","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "" && $this->input->post('rowid') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Edit_LeaveType($data,$this->input->post('rowid'));
 					if($result == false) {
@@ -178,7 +206,11 @@ class Payroll_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "leaverequest") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('date_from') <> "" && $this->input->post('date_to') <> "" && $this->input->post('leave_type') <> "" && $this->input->post('reason') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/leaverequest","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('date_from') <> "" && $this->input->post('date_to') <> "" && $this->input->post('leave_type') <> "" && $this->input->post('reason') <> "") {
 					$data = array(
 						"employee_id" 	=> $this->input->post('employee_id'),
 						"employee_name" 	=> $this->input->post('employee_name'),
@@ -199,13 +231,17 @@ class Payroll_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "payperiod") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('date_from') <> "" && $this->input->post('date_to') <> "" && $this->input->post('status') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/payperiod","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "" && $this->input->post('date_from') <> "" && $this->input->post('date_to') <> "" && $this->input->post('status') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
 						"date_from" 	=> $this->input->post('date_from'),
 						"date_to" 		=> $this->input->post('date_to'),
 						"status" 		=> $this->input->post('status'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Edit_Payperiod($data,$this->input->post('rowid'));
 					if($result == false) {
@@ -219,10 +255,14 @@ class Payroll_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "timesheettype") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('rowid') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/timesheet_type","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "" && $this->input->post('rowid') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
-						"created_by"	=> $this->input->post('admin_id')
+						"created_by"	=> $this->session->userdata('adminid')
 					);
 					$result = $this->Edit_TimesheetType($data,$this->input->post('rowid'));
 					if($result == false) {
@@ -236,10 +276,14 @@ class Payroll_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "deductiontype") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('rowid') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/deduction_type","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "" && $this->input->post('rowid') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
-						"created_by"	=> $this->input->post('admin_id')
+						"created_by"	=> $this->session->userdata('adminid')
 					);
 					$result = $this->Edit_DeductionType($data,$this->input->post('rowid'));
 					if($result == false) {
@@ -253,14 +297,18 @@ class Payroll_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "deductionmaster") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('employee_name') <> "" && $this->input->post('deduction_type') <> "" && $this->input->post('amt') <> "" && $this->input->post('period') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/deduction_master","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('employee_id') <> "" && $this->input->post('employee_name') <> "" && $this->input->post('deduction_type') <> "" && $this->input->post('amt') <> "" && $this->input->post('period') <> "") {
 					$data = array(
 						"employee_id" 		=> $this->input->post('employee_id'),
 						"employee_name"		=> $this->input->post('employee_name'),
 						"deduction_type"	=> $this->input->post('deduction_type'),
 						"amt"				=> $this->input->post('amt'),
 						"period"			=> $this->input->post('period'),
-						"created_by"		=> $this->input->post('admin_id')
+						"created_by"		=> $this->session->userdata('adminid')
 					);
 					$result = $this->Edit_DeductionMaster($data,$this->input->post('rowid'));
 					if($result == false) {
@@ -279,8 +327,12 @@ class Payroll_controller extends CI_Controller {
 		}
 		elseif($action == "delete") {
 			if($module == "leavetype") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-					$result = $this->Delete_LeaveType($this->input->post('admin_id'),$this->input->post('id'));
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/leavetype","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+					$result = $this->Delete_LeaveType($this->session->userdata('adminid'),$this->input->post('id'));
 					if($result == false) {
 						$this->redirector("payroll/leavetype","An error occurred when deleting record!","error");
 					} 
@@ -293,8 +345,12 @@ class Payroll_controller extends CI_Controller {
 				}
 			} 
 			elseif($module == "leaverequest") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-					$result = $this->Delete_LeaveRequest($this->input->post('admin_id'),$this->input->post('id'));
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/leaverequest","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+					$result = $this->Delete_LeaveRequest($this->session->userdata('adminid'),$this->input->post('id'));
 					if($result == false) {
 						$this->redirector("payroll/leaverequest","An error occurred when deleting record!","error");
 					} 
@@ -307,8 +363,12 @@ class Payroll_controller extends CI_Controller {
 				}
 			} 
 			elseif($module == "payperiod") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-					$result = $this->Delete_Payperiod($this->input->post('admin_id'),$this->input->post('id'));
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/payperiod","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+					$result = $this->Delete_Payperiod($this->session->userdata('adminid'),$this->input->post('id'));
 					if($result == false) {
 						$this->redirector("payroll/payperiod","An error occurred when deleting record!","error");
 					} 
@@ -321,8 +381,12 @@ class Payroll_controller extends CI_Controller {
 				}
 			} 
 			elseif($module == "timesheettype") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-					$result = $this->Delete_TimesheetType($this->input->post('admin_id'),$this->input->post('id'));
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/timesheet_type","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+					$result = $this->Delete_TimesheetType($this->session->userdata('adminid'),$this->input->post('id'));
 					if($result == false) {
 						$this->redirector("payroll/timesheet_type","An error occurred when deleting record!","error");
 					} 
@@ -335,8 +399,12 @@ class Payroll_controller extends CI_Controller {
 				}
 			} 
 			elseif($module == "deductiontype") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-					$result = $this->Delete_DeductionType($this->input->post('admin_id'),$this->input->post('id'));
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/deduction_type","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+					$result = $this->Delete_DeductionType($this->session->userdata('adminid'),$this->input->post('id'));
 					if($result == false) {
 						$this->redirector("payroll/deduction_type","An error occurred when deleting record!","error");
 					} 
@@ -349,8 +417,12 @@ class Payroll_controller extends CI_Controller {
 				}
 			} 
 			elseif($module == "deductionmaster") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-					$result = $this->Delete_DeductionMaster($this->input->post('admin_id'),$this->input->post('id'));
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("payroll/deduction_master","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+					$result = $this->Delete_DeductionMaster($this->session->userdata('adminid'),$this->input->post('id'));
 					if($result == false) {
 						$this->redirector("payroll/deduction_master","An error occurred when deleting record!","error");
 					} 
@@ -423,28 +495,32 @@ class Payroll_controller extends CI_Controller {
 	}
 	
 	public function prep_update($type) {
-		if($this->input->post('id') <> "" && $this->input->post('admin_id') <> "") {
+		if($this->input->post('id') <> "" && $this->session->userdata('adminid') <> "") {
 			$this->load->model('Payroll','pay');
-			if($type == "leavetype") {
-				$data = $this->pay->getWhere_LeaveType($this->input->post('id'));
-			}
-			elseif($type == "leaverequest") {
-				$data = $this->pay->getWhere_LeaveReq($this->input->post('id'));
-			}
-			elseif($type == "payperiod") {
-				$data = $this->pay->getWhere_Payperiod($this->input->post('id'));
-			}
-			elseif($type == "timesheettype") {
-				$data = $this->pay->getWhere_TimesheetType($this->input->post('id'));
-			}
-			elseif($type == "deductiontype") {
-				$data = $this->pay->getWhere_DeductionType($this->input->post('id'));
-			}
-			elseif($type == "deductionmaster") {
-				$data = $this->pay->getWhere_DeductionMaster($this->input->post('id'));
-			}
-			else {
-				show_404();
+			if($this->session->userdata('userlevel') == "VIEWER") {
+				$data = "Unable to proceed insufficient account level!";
+			} else {
+				if($type == "leavetype") {
+					$data = $this->pay->getWhere_LeaveType($this->input->post('id'));
+				}
+				elseif($type == "leaverequest") {
+					$data = $this->pay->getWhere_LeaveReq($this->input->post('id'));
+				}
+				elseif($type == "payperiod") {
+					$data = $this->pay->getWhere_Payperiod($this->input->post('id'));
+				}
+				elseif($type == "timesheettype") {
+					$data = $this->pay->getWhere_TimesheetType($this->input->post('id'));
+				}
+				elseif($type == "deductiontype") {
+					$data = $this->pay->getWhere_DeductionType($this->input->post('id'));
+				}
+				elseif($type == "deductionmaster") {
+					$data = $this->pay->getWhere_DeductionMaster($this->input->post('id'));
+				}
+				else {
+					show_404();
+				}
 			}
 			echo json_encode($data);
 		}

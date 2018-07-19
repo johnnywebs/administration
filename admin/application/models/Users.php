@@ -24,7 +24,7 @@ class Users extends CI_Model {
 		}
 	}
 	
-	function create_Users($param=array()) {
+	function insert_Users($param=array()) {
 		if(count($param)>0) {
 			$this->db->insert("auth_accounts",$param);
 			if($this->db->affected_rows()>0) {
@@ -37,7 +37,7 @@ class Users extends CI_Model {
 		}
 	}
 	
-	function retrieve_Users($limit=0,$offset=0) {
+	function get_Users($limit=0,$offset=0) {
 		if($limit>0) {
 			$query = $this->db->get("auth_accounts",$limit,$offset);
 		} else {
@@ -68,7 +68,7 @@ class Users extends CI_Model {
 		}
 	}
 	
-	function delete_Users($param=array(),$id) {
+	function delete_Users($param,$id) {
 		if(count($param)>0) {
 			if($id!="") {
 				$this->db->delete("auth_accounts",array('id'=>$id));
