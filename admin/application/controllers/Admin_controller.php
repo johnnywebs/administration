@@ -70,7 +70,7 @@ class Admin_controller extends CI_Controller {
 				);
 
 				$this->session->set_userdata($newdata);
-				$this->redirector("employees/types","Welcome back ".$this->session->userdata('fullname')."!","success");
+				$this->redirector("employees/dashboard","Welcome back ".$this->session->userdata('fullname')."!","success");
 			} else {
 				$this->session->set_flashdata('global_message', "<span style='color:red'>Invalid Account!</span>");
 				redirect(base_url("user/login"));
@@ -93,7 +93,7 @@ class Admin_controller extends CI_Controller {
 			if($action == "create" && $this->session->userdata('adminid') <> "") {
 				if($module == "list") {
 					if($this->session->userdata('userlevel') == "VIEWER") {
-						$this->redirector("admin/list","Unable to proceed insufficient account level!","error");
+						$this->redirector("user/list","Unable to proceed insufficient account level!","error");
 						exit;
 					}
 					if($this->session->userdata('adminid') <> "" && $this->input->post('username') <> "" && $this->input->post('password') <> "" && $this->input->post('fullname') <> "" && $this->input->post('level') <> "") {
@@ -105,13 +105,13 @@ class Admin_controller extends CI_Controller {
 						);
 						$result = $this->Create_AdminList($data);
 						if($result == false) {
-							$this->redirector("admin/list","An error occurred when creating record!","error");
+							$this->redirector("user/list","An error occurred when creating record!","error");
 						} else {
-							$this->redirector("admin/list","Successfully admin account!","success");
+							$this->redirector("user/list","Successfully admin account!","success");
 						}
 					}  
 					else {
-						$this->redirector("admin/list","Invalid User ID!","error");
+						$this->redirector("user/list","Invalid User ID!","error");
 					}
 				}
 				else {
@@ -129,7 +129,7 @@ class Admin_controller extends CI_Controller {
 			elseif($action == "update" && $this->session->userdata('adminid') <> "") {
 				if($module == "list") {
 					if($this->session->userdata('userlevel') == "VIEWER") {
-						$this->redirector("admin/list","Unable to proceed insufficient account level!","error");
+						$this->redirector("user/list","Unable to proceed insufficient account level!","error");
 						exit;
 					}
 					if($this->session->userdata('adminid') <> "" && $this->input->post("row_id") <> "" && $this->input->post("username") <> "" && $this->input->post('fullname') <> "" && $this->input->post('level') <> "") {
@@ -150,13 +150,13 @@ class Admin_controller extends CI_Controller {
 						}
 						$result = $this->Update_AdminData($data,$this->input->post('row_id'));
 						if($result == false) {
-							$this->redirector("admin/list","An error occurred when updating record!","error");
+							$this->redirector("user/list","An error occurred when updating record!","error");
 						} else {
-							$this->redirector("admin/list","Successfully update admin data!","success");
+							$this->redirector("user/list","Successfully update admin data!","success");
 						}
 					} 
 					else {
-						$this->redirector("admin/list","Invalid parameters passed!","error");
+						$this->redirector("user/list","Invalid parameters passed!","error");
 					}
 				}
 				else {
@@ -166,19 +166,19 @@ class Admin_controller extends CI_Controller {
 			elseif($action == "delete" && $this->session->userdata('adminid') <> "") {
 				if($module == "list") {
 					if($this->session->userdata('userlevel') == "VIEWER") {
-						$this->redirector("admin/list","Unable to proceed insufficient account level!","error");
+						$this->redirector("user/list","Unable to proceed insufficient account level!","error");
 						exit;
 					}
 					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
 						$result = $this->Delete_AdminData($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
-							$this->redirector("admin/list","An error occurred when deleting record!","error");
+							$this->redirector("user/list","An error occurred when deleting record!","error");
 						} else {
 							echo true;
 						}
 					}
 					else {
-						$this->redirector("admin/list","Invalid parameters passed!","error");
+						$this->redirector("user/list","Invalid parameters passed!","error");
 					}
 				}
 				else {
