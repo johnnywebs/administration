@@ -24,7 +24,9 @@
 							<h6 class="card-subtitle">List of Employee Department</h6>
 						</div>
 						<div class="col-12 col-sm-2">
+							<?php if($this->session->userdata('userlevel') != "VIEWER"): ?>
 							<button type='button' data-toggle="modal" data-target="#createEmpDept" class='btn btn-info'><i class='fa fa-edit'></i> Create New</button>
+							<?php endif; ?>
 						</div>
 					</div>
 					<div class="table-responsive m-t-10">
@@ -144,6 +146,10 @@
 	function fneditDepts(id) {
 		$.post("<?php echo base_url("employees/prepupdate/department"); ?>",{ admin_id : "1", id: id })
 		.done(function(json) {
+			if(json == "Unable to proceed insufficient account level!") {
+				swal("Error!", json, "error"); 
+				return false;
+			}
 			var obj = JSON.parse(json);
 			$('#updateEmpDept input#row_id').val(obj[0].id);
 			$('#updateEmpDept input#emp_dept').val(obj[0].description);
@@ -172,7 +178,7 @@
 						getEmployeeDepartmentList();
 						swal("Deleted!", "Record was successfully deleted!", "success"); 
 					} else {
-						swal("Error!", "Unable to delete record.", "error"); 
+						swal("Error!", data, "error"); 
 					}
 				});  
             } else {     

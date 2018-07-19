@@ -44,7 +44,7 @@ class Admin_controller extends CI_Controller {
 		if($this->session->userdata('userid') == "") { 
 			$this->load->view('login');
 		} else {
-			$this->redirector("employees/types","Welcome back ".$this->session->userdata('fullname')."!","success");
+			$this->redirector("employees/dashboard","Welcome back ".$this->session->userdata('fullname')."!","success");
 		}
 	}
 	
@@ -63,14 +63,14 @@ class Admin_controller extends CI_Controller {
 				}
 				
 				$newdata = array(
-					'userid'	=> $xuserid,
+					'adminid'	=> $xuserid,
 					'username'	=> $xusername,
 					'fullname'	=> $xuserfullname,
 					'userlevel'	=> $xuserlevel
 				);
 
 				$this->session->set_userdata($newdata);
-				$this->redirector("employees/types","Welcome back ".$this->session->userdata('fullname')."!","success");
+				$this->redirector("employees/dashboard","Welcome back ".$this->session->userdata('fullname')."!","success");
 			} else {
 				$this->session->set_flashdata('global_message', "<span style='color:red'>Invalid Account!</span>");
 				redirect(base_url("user/login"));
@@ -88,5 +88,174 @@ class Admin_controller extends CI_Controller {
 		redirect(base_url("user/login"));
 	}
 	
+	public function crud($action = '',$module = '',$search = '') {
+		if($action != "") {
+			if($action == "create" && $this->session->userdata('adminid') <> "") {
+				if($module == "list") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("user/list","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('username') <> "" && $this->input->post('password') <> "" && $this->input->post('fullname') <> "" && $this->input->post('level') <> "") {
+						$data = array(
+							"username" 	=> $this->input->post('username'),
+							"password"	=> md5($this->input->post('password')),
+							"fullname"	=> $this->input->post('fullname'),
+							"level" 	=> $this->input->post('level')
+						);
+						$result = $this->Create_AdminList($data);
+						if($result == false) {
+							$this->redirector("user/list","An error occurred when creating record!","error");
+						} else {
+							$this->redirector("user/list","Successfully admin account!","success");
+						}
+					}  
+					else {
+						$this->redirector("user/list","Invalid User ID!","error");
+					}
+				}
+				else {
+					show_404();
+				}
+			} 
+			elseif($action == "retrieve" && $this->session->userdata('adminid') <> "") {
+				if($module == "list") {
+					echo $this->List_AdminData();
+				}
+				else {
+					show_404();
+				}
+			}
+			elseif($action == "update" && $this->session->userdata('adminid') <> "") {
+				if($module == "list") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("user/list","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post("row_id") <> "" && $this->input->post("username") <> "" && $this->input->post('fullname') <> "" && $this->input->post('level') <> "") {
+						if($this->input->post('password') <> "") {
+							$data = array(
+								"username" 	=> $this->input->post('username'),
+								"fullname" 	=> $this->input->post('fullname'),
+								"level" 	=> $this->input->post('level'),
+								"password" 	=> md5($this->input->post('password'))
+							);
+						} else {
+							$data = array(
+								"username" 	=> $this->input->post('username'),
+								"fullname" 	=> $this->input->post('fullname'),
+								"level" 	=> $this->input->post('level')
+							);
+
+						}
+						$result = $this->Update_AdminData($data,$this->input->post('row_id'));
+						if($result == false) {
+							$this->redirector("user/list","An error occurred when updating record!","error");
+						} else {
+							$this->redirector("user/list","Successfully update admin data!","success");
+						}
+					} 
+					else {
+						$this->redirector("user/list","Invalid parameters passed!","error");
+					}
+				}
+				else {
+					show_404();
+				}
+			}
+			elseif($action == "delete" && $this->session->userdata('adminid') <> "") {
+				if($module == "list") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("user/list","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_AdminData($this->session->userdata('adminid'),$this->input->post('id'));
+						if($result == false) {
+							$this->redirector("user/list","An error occurred when deleting record!","error");
+						} else {
+							echo true;
+						}
+					}
+					else {
+						$this->redirector("user/list","Invalid parameters passed!","error");
+					}
+				}
+				else {
+					show_404();
+				}
+			}
+		}
+		else {
+			show_404();
+		}
+	}
 	
+	public function prep_update($type) {
+		if($this->input->post('id') <> "" && $this->session->userdata('adminid') <> "") {
+			$this->load->model('Users','user');
+			if($this->session->userdata('userlevel') == "VIEWER") {
+				$data = "Unable to proceed insufficient account level!";
+			} else {
+				if($type == "list") {
+					$data = $this->user->search_Users(array("id"=>$this->input->post('id')));
+				}
+				else {
+					echo $type;
+				}
+			}
+			echo json_encode($data);
+		}
+		else {
+			show_404();
+		}
+	}
+	
+	public function Create_AdminList($param) {
+		if(count($param) > 0) {
+			$this->load->model('Users','user');
+			return $this->user->insert_Users($param);
+		} else {
+			return false;
+		}		
+	}
+	
+	public function List_AdminData() {
+		$this->load->model('Users','user');
+		$data = $this->user->get_Users();
+		if($data !== false) {
+			$html = "";
+			foreach($data as $row) {
+				$html .= "<tr>";
+				$html .= "<td>".$row->fullname."</td>";
+				$html .= "<td>".$row->username."</td>";
+				$html .= "<td>".$row->level."</td>";
+				$html .= "<td>".$row->date_created."</td>";
+				$html .= "<td>
+							<button data-toggle='tooltip' title='Edit Record'  type='button' onclick=\"fneditAdminList('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteAdminList('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
+						  </td>";
+			}
+			return $html;
+		}
+	}
+	
+	public function Update_AdminData($param = array(),$id) {
+		if(count($param) > 0) {
+			$this->load->model('Users','user');
+			return $this->user->update_Users($param,$id);
+		} else {
+			return false;
+		}		
+	}
+	
+	public function Delete_AdminData($adminid,$id) {
+		if($adminid <> "" && $id <> "") {
+			$this->load->model('Users','user');
+			$rr = $this->user->delete_Users($adminid,$id);
+			return $rr;
+		} else {
+			return false;
+		}
+	}
 }

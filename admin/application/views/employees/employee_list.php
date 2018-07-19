@@ -24,7 +24,9 @@
 							<h6 class="card-subtitle">List of Employees</h6>
 						</div>
 						<div class="col-12 col-sm-2">
+							<?php if($this->session->userdata('userlevel') != "VIEWER"): ?>
 							<a href="<?php echo base_url("employees/empnew"); ?>" class='btn btn-info'><i class='fa fa-edit'></i> Create New</a>
+							<?php endif; ?>
 						</div>
 					</div>
 					<div class="table-responsive m-t-10">
@@ -138,7 +140,7 @@
 						getEmployeeList();
 						swal("Deleted!", "Record was successfully deleted!", "success"); 
 					} else {
-						swal("Error!", "Unable to delete record.", "error"); 
+						swal("Error!", data, "error"); 
 					}
 				});  
             } else {     

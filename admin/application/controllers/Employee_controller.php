@@ -42,12 +42,16 @@ class Employee_controller extends CI_Controller {
 	
 	public function crud($action = '',$module = '',$search = '') {
 		if($action != "") {
-			if($action == "create" && $this->input->post('admin_id') <> "") {
+			if($action == "create" && $this->session->userdata('adminid') <> "") {
 				if($module == "types") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('emp_type') <> "") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/types","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('emp_type') <> "") {
 						$data = array(
 							"description" 	=> $this->input->post('emp_type'),
-							"user"			=> $this->input->post('admin_id')
+							"user"			=> $this->session->userdata('adminid')
 						);
 						$result = $this->Create_EmpType($data);
 						if($result == false) {
@@ -61,10 +65,14 @@ class Employee_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "departments") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('emp_dept') <> "") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/departments","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('emp_dept') <> "") {
 						$data = array(
 							"description" 	=> $this->input->post('emp_dept'),
-							"user"			=> $this->input->post('admin_id')
+							"user"			=> $this->session->userdata('adminid')
 						);
 						$result = $this->Create_EmpDept($data);
 						if($result == false) {
@@ -78,10 +86,14 @@ class Employee_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "designations") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('emp_desig') <> "") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/designations","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('emp_desig') <> "") {
 						$data = array(
 							"description" 	=> $this->input->post('emp_desig'),
-							"user"			=> $this->input->post('admin_id')
+							"user"			=> $this->session->userdata('adminid')
 						);
 						$result = $this->Create_EmpDesig($data);
 						if($result == false) {
@@ -95,7 +107,11 @@ class Employee_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "emplist") {
-					if($this->input->post('admin_id') <> "") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/emplist","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "") {
 						if($this->input->post('add_country') != "United States" || $this->input->post('add_country') != "Canada") {
 							$data = array(
 							"emp_last"			=> $this->input->post('emp_last'),
@@ -112,7 +128,7 @@ class Employee_controller extends CI_Controller {
 							"add_country"		=> $this->input->post('add_country'),
 							"add_zipcode"		=> $this->input->post('add_zipcode'),
 							"designation"		=> $this->input->post('designation'),
-							"user"				=> $this->input->post('admin_id'),
+							"user"				=> $this->session->userdata('adminid'),
 							"hourly_rate"		=> $this->input->post('hourly_rate'),
 							"monthly_rate"		=> $this->input->post('monthly_rate')
 						);
@@ -133,7 +149,7 @@ class Employee_controller extends CI_Controller {
 							"add_state"			=> $this->input->post('add_state'),
 							"add_zipcode"		=> $this->input->post('add_zipcode'),
 							"designation"		=> $this->input->post('designation'),
-							"user"				=> $this->input->post('admin_id'),
+							"user"				=> $this->session->userdata('adminid'),
 							"hourly_rate"		=> $this->input->post('hourly_rate'),
 							"monthly_rate"		=> $this->input->post('monthly_rate')
 						);
@@ -153,18 +169,22 @@ class Employee_controller extends CI_Controller {
 					show_404();
 				}
 			} 
-			elseif($action == "update" && $this->input->post('admin_id') <> "") {
+			elseif($action == "update" && $this->session->userdata('adminid') <> "") {
 				if($module == "types") {
-					if($this->input->post("admin_id") <> "" && $this->input->post("row_id") <> "" && $this->input->post("emp_type") <> "") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/types","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post("row_id") <> "" && $this->input->post("emp_type") <> "") {
 						$data = array(
 							"description" 	=> $this->input->post('emp_type'),
-							"user"			=> $this->input->post('admin_id')
+							"user"			=> $this->session->userdata('adminid')
 						);
 						$result = $this->Update_EmpType($data,$this->input->post('row_id'));
 						if($result == false) {
 							$this->redirector("employees/types","An error occurred when updating record!","error");
 						} else {
-							$this->redirector("employees/types","Successfully created employee types!","success");
+							$this->redirector("employees/types","Successfully updated employee type!","success");
 						}
 					} 
 					else {
@@ -172,10 +192,14 @@ class Employee_controller extends CI_Controller {
 					}
 				} 
 				elseif($module == "departments") {
-					if($this->input->post("admin_id") <> "" && $this->input->post("row_id") <> "" && $this->input->post("emp_dept") <> "") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/departments","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post("row_id") <> "" && $this->input->post("emp_dept") <> "") {
 						$data = array(
 							"description" 	=> $this->input->post('emp_dept'),
-							"user"			=> $this->input->post('admin_id')
+							"user"			=> $this->session->userdata('adminid')
 						);
 						$result = $this->Update_EmpDept($data,$this->input->post('row_id'));
 						if($result == false) {
@@ -189,10 +213,14 @@ class Employee_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "designations") {
-					if($this->input->post("admin_id") <> "" && $this->input->post("row_id") <> "" && $this->input->post("emp_desig") <> "") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/designations","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post("row_id") <> "" && $this->input->post("emp_desig") <> "") {
 						$data = array(
 							"description" 	=> $this->input->post('emp_desig'),
-							"user"			=> $this->input->post('admin_id')
+							"user"			=> $this->session->userdata('adminid')
 						);
 						$result = $this->Update_EmpDesig($data,$this->input->post('row_id'));
 						if($result == false) {
@@ -206,7 +234,11 @@ class Employee_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "emplist") {
-					if($this->input->post('admin_id') <> "") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/emplist","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "") {
 						$data = array(
 							"emp_last"			=> $this->input->post('emp_last'),
 							"emp_first"			=> $this->input->post('emp_first'),
@@ -223,7 +255,7 @@ class Employee_controller extends CI_Controller {
 							"add_state"			=> $this->input->post('add_state'),
 							"add_zipcode"		=> $this->input->post('add_zipcode'),
 							"designation"		=> $this->input->post('designation'),
-							"user"				=> $this->input->post('admin_id'),
+							"user"				=> $this->session->userdata('adminid'),
 							"hourly_rate"		=> $this->input->post('hourly_rate'),
 							"monthly_rate"		=> $this->input->post('monthly_rate')
 						);
@@ -238,10 +270,14 @@ class Employee_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "leaverequest") {
-					if($this->input->post('admin_id') <> "") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						echo "Unable to proceed insufficient account level!";
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "") {
 						$data = array(
 							"status" => $this->input->post('status'),
-							"approver" => $this->input->post('admin_id')
+							"approver" => $this->session->userdata('adminid')
 						);
 						$result = $this->Update_LeaveRequest($data,$this->input->post('id'));
 						echo $result;
@@ -250,10 +286,14 @@ class Employee_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "otrequest") {
-					if($this->input->post('admin_id') <> "") {
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						echo "Unable to proceed insufficient account level!";
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "") {
 						$data = array(
 							"status" => $this->input->post('status'),
-							"approver" => $this->input->post('admin_id')
+							"approver" => $this->session->userdata('adminid')
 						);
 						$result = $this->Update_OTRequest($data,$this->input->post('id'));
 						echo $result;
@@ -265,7 +305,7 @@ class Employee_controller extends CI_Controller {
 					show_404();
 				}
 			}
-			elseif($action == "retrieve" && $this->input->post('admin_id') <> "") {
+			elseif($action == "retrieve" && $this->session->userdata('adminid') <> "") {
 				if($module == "types") {
 					echo $this->List_EmpType();
 				}
@@ -298,10 +338,14 @@ class Employee_controller extends CI_Controller {
 					echo $module;
 				}
 			}
-			elseif($action == "delete" && $this->input->post('admin_id') <> "") {
+			elseif($action == "delete" && $this->session->userdata('adminid') <> "") {
 				if($module == "types") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-						$result = $this->Delete_EmpType($this->input->post('admin_id'),$this->input->post('id'));
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/types","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_EmpType($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
 							$this->redirector("employees/types","An error occurred when deleting record!","error");
 						} else {
@@ -314,8 +358,12 @@ class Employee_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "departments") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-						$result = $this->Delete_EmpDept($this->input->post('admin_id'),$this->input->post('id'));
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/departments","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_EmpDept($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
 							$this->redirector("employees/departments","An error occurred when deleting record!","error");
 						} else {
@@ -328,8 +376,12 @@ class Employee_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "designations") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-						$result = $this->Delete_EmpDesig($this->input->post('admin_id'),$this->input->post('id'));
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/designations","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_EmpDesig($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
 							$this->redirector("employees/designations","An error occurred when deleting record!","error");
 						} else {
@@ -342,8 +394,12 @@ class Employee_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "emplist") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-						$result = $this->Delete_EmpList($this->input->post('admin_id'),$this->input->post('id'));
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("employees/emplist","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_EmpList($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
 							$this->redirector("employees/designations","An error occurred when deleting record!","error");
 						} else {
@@ -368,22 +424,26 @@ class Employee_controller extends CI_Controller {
 	}
 	
 	public function prep_update($type) {
-		if($this->input->post('id') <> "" && $this->input->post('admin_id') <> "") {
+		if($this->input->post('id') <> "" && $this->session->userdata('adminid') <> "") {
 			$this->load->model('Employees','emp');
-			if($type == "types") {
-				$data = $this->emp->getWhere_Types($this->input->post('id'));
-			}
-			elseif($type == "department") {
-				$data = $this->emp->getWhere_Depts($this->input->post('id'));
-			}
-			elseif($type == "designations") {
-				$data = $this->emp->getWhere_Desigs($this->input->post('id'));
-			}
-			elseif($type == "emplist") {
-				$data = $this->emp->getWhere_Emplist($this->input->post('id'));
-			}
-			else {
-				show_404();
+			if($this->session->userdata('userlevel') == "VIEWER") {
+				$data = "Unable to proceed insufficient account level!";
+			} else {
+				if($type == "types") {
+					$data = $this->emp->getWhere_Types($this->input->post('id'));
+				}
+				elseif($type == "department") {
+					$data = $this->emp->getWhere_Depts($this->input->post('id'));
+				}
+				elseif($type == "designations") {
+					$data = $this->emp->getWhere_Desigs($this->input->post('id'));
+				}
+				elseif($type == "emplist") {
+					$data = $this->emp->getWhere_Emplist($this->input->post('id'));
+				}
+				else {
+					show_404();
+				}
 			}
 			echo json_encode($data);
 		}
@@ -403,12 +463,8 @@ class Employee_controller extends CI_Controller {
 	
 	public function Update_EmpType($param = array(),$id) {
 		if(count($param) > 0) {
-			$data = array(
-				"description" => $param['description'],
-				"user"		  => $param['user']
-			);
 			$this->load->model('Employees','emp');
-			return $this->emp->update_Types($data,$id);
+			return $this->emp->update_Types($param,$id);
 		} else {
 			return false;
 		}		
@@ -454,12 +510,8 @@ class Employee_controller extends CI_Controller {
 	
 	public function Update_EmpDept($param = array(),$id) {
 		if(count($param) > 0) {
-			$data = array(
-				"description" => $param['description'],
-				"user"		  => $param['user']
-			);
 			$this->load->model('Employees','emp');
-			return $this->emp->update_Depts($data,$id);
+			return $this->emp->update_Depts($param,$id);
 		} else {
 			return false;
 		}		
@@ -505,12 +557,8 @@ class Employee_controller extends CI_Controller {
 	
 	public function Update_EmpDesig($param = array(),$id) {
 		if(count($param) > 0) {
-			$data = array(
-				"description" => $param['description'],
-				"user"		  => $param['user']
-			);
 			$this->load->model('Employees','emp');
-			return $this->emp->update_Desigs($data,$id);
+			return $this->emp->update_Desigs($param,$id);
 		} else {
 			return false;
 		}		

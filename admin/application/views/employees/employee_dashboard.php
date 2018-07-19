@@ -181,7 +181,7 @@
 						getLeaveRequestList();
 						swal("Success!", "Leave Request was successfully approved!", "success"); 
 					} else {
-						swal("Error!", "Unable to approve leave request.", "error"); 
+						swal("Error!", data, "error"); 
 					}
 				});  
             } else {     
@@ -211,7 +211,7 @@
 						getLeaveRequestList();
 						swal("Success!", "Leave Request was successfully rejected!", "success"); 
 					} else {
-						swal("Error!", "Unable to reject leave request.", "error"); 
+						swal("Error!", data, "error"); 
 					}
 				});  
             } else {     
@@ -241,7 +241,7 @@
 						getOTRequestListList();
 						swal("Success!", "Overtime Request was successfully approved!", "success"); 
 					} else {
-						swal("Error!", "Unable to approve overtime request.", "error"); 
+						swal("Error!", data, "error"); 
 					}
 				});  
             } else {     
@@ -271,7 +271,7 @@
 						getOTRequestList();
 						swal("Success!", "Overtime Request was successfully rejected!", "success"); 
 					} else {
-						swal("Error!", "Unable to approve overtime request.", "error"); 
+						swal("Error!", data, "error"); 
 					}
 				});  
             } else {     

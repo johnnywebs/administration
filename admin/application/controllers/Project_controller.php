@@ -41,15 +41,19 @@ class Project_controller extends CI_Controller {
 	}
 	
 	public function crud($action = '',$module = '',$search = '') {
-		if($action == "create" && $this->input->post('admin_id') <> "") {
+		if($action == "create" && $this->session->userdata('adminid') <> "") {
 			if($module == "projlist") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('project_name') <> "" && $this->input->post('client_name') <> "" && $this->input->post('proj_location') <> "" && $this->input->post('project_type') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/projlist","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('project_name') <> "" && $this->input->post('client_name') <> "" && $this->input->post('proj_location') <> "" && $this->input->post('project_type') <> "") {
 					$data = array(
 						"project_name" 	=> $this->input->post('project_name'),
 						"client_name" 	=> $this->input->post('client_name'),
 						"location" => $this->input->post('proj_location'),
 						"project_type" 	=> $this->input->post('project_type'),
-						"user" 			=> $this->input->post('admin_id'),
+						"user" 			=> $this->session->userdata('adminid'),
 					);
 					$result = $this->Create_Projlist($data);
 					if($result == false) {
@@ -63,10 +67,14 @@ class Project_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "types") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/types","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "") {
 					$data = array(
 						"description" 	=> $this->input->post('description'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_Types($data);
 					if($result == false) {
@@ -80,7 +88,11 @@ class Project_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "equiprate") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('code') <> "" && $this->input->post('equip_no') <> "" && $this->input->post('class') <> "" && $this->input->post('fa_rate') <> "" && $this->input->post('geo_rate') <> "" && $this->input->post('make') <> "" && $this->input->post('model') <> "" && $this->input->post('ot_factor') <> "" && $this->input->post('row_delay') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/equipment","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "" && $this->input->post('code') <> "" && $this->input->post('equip_no') <> "" && $this->input->post('class') <> "" && $this->input->post('fa_rate') <> "" && $this->input->post('geo_rate') <> "" && $this->input->post('make') <> "" && $this->input->post('model') <> "" && $this->input->post('ot_factor') <> "" && $this->input->post('row_delay') <> "") {
 					$data = array(
 						"code"			=> $this->input->post('code'),
 						"description"	=> $this->input->post('description'),
@@ -92,7 +104,7 @@ class Project_controller extends CI_Controller {
 						"model"			=> $this->input->post('model'),
 						"ot_factor"		=> $this->input->post('ot_factor'),
 						"row_delay"		=> $this->input->post('row_delay'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_EquipRate($data);
 					if($result == false) {
@@ -106,7 +118,11 @@ class Project_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "laborrate") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('class') <> "" && $this->input->post('st_hour') <> "" && $this->input->post('st_rate') <> "" && $this->input->post('ot_hour') <> "" && $this->input->post('ot_rate') <> "" && $this->input->post('dt_hour') <> "" && $this->input->post('dt_rate') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/labor","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "" && $this->input->post('class') <> "" && $this->input->post('st_hour') <> "" && $this->input->post('st_rate') <> "" && $this->input->post('ot_hour') <> "" && $this->input->post('ot_rate') <> "" && $this->input->post('dt_hour') <> "" && $this->input->post('dt_rate') <> "") {
 					$data = array(
 						"class"			=> $this->input->post('class'),
 						"description"	=> $this->input->post('description'),
@@ -116,7 +132,7 @@ class Project_controller extends CI_Controller {
 						"ot_rate"		=> $this->input->post('ot_rate'),
 						"dt_hour"		=> $this->input->post('dt_hour'),
 						"dt_rate"		=> $this->input->post('dt_rate'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_LaborRate($data);
 					if($result == false) {
@@ -130,11 +146,15 @@ class Project_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "material") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('unit') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/materials","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "" && $this->input->post('unit') <> "") {
 					$data = array(
 						"description"	=> $this->input->post('description'),
 						"unit"		=> $this->input->post('unit'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_Material($data);
 					if($result == false) {
@@ -148,7 +168,11 @@ class Project_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "bidding") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('bid_date') <> "" && $this->input->post('bid_agent') && $this->input->post('job_name') && $this->input->post('project_type') && $this->input->post('bid_completed') && $this->input->post('rebid') && $this->input->post('old_bid_date') && $this->input->post('prebid_meeting_date') && $this->input->post('job_location') && $this->input->post('start_date') && $this->input->post('project_valuation') && $this->input->post('sc_method') && $this->input->post('delivery_system') && $this->input->post('owner_type') && $this->input->post('address')) {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/bidding","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('bid_date') <> "" && $this->input->post('bid_agent') && $this->input->post('job_name') && $this->input->post('project_type') && $this->input->post('bid_completed') && $this->input->post('rebid') && $this->input->post('old_bid_date') && $this->input->post('prebid_meeting_date') && $this->input->post('job_location') && $this->input->post('start_date') && $this->input->post('project_valuation') && $this->input->post('sc_method') && $this->input->post('delivery_system') && $this->input->post('owner_type') && $this->input->post('address')) {
 					$data = array(
 						"bid_date"				=> $this->input->post('bid_date'),
 						"bid_agent"				=> $this->input->post('bid_agent'),
@@ -165,7 +189,7 @@ class Project_controller extends CI_Controller {
 						"delivery_system"		=> $this->input->post('delivery_system'),
 						"owner_type"			=> $this->input->post('owner_type'),
 						"address"				=> $this->input->post('address'),
-						"user"					=> $this->input->post('admin_id')
+						"user"					=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_BiddingData($data);
 					if($result == false) {
@@ -182,15 +206,19 @@ class Project_controller extends CI_Controller {
 				show_404();
 			}
 		} 
-		elseif($action == "update" && $this->input->post('admin_id') <> "") {
+		elseif($action == "update" && $this->session->userdata('adminid') <> "") {
 			if($module == "projlist") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('project_name') <> "" && $this->input->post('client_name') <> "" && $this->input->post('proj_location') <> "" && $this->input->post('project_type') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/projlist","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('project_name') <> "" && $this->input->post('client_name') <> "" && $this->input->post('proj_location') <> "" && $this->input->post('project_type') <> "") {
 					$data = array(
 						"project_name" 	=> $this->input->post('project_name'),
 						"client_name" 	=> $this->input->post('client_name'),
 						"location" 		=> $this->input->post('proj_location'),
 						"project_type" 	=> $this->input->post('project_type'),
-						"user" 			=> $this->input->post('admin_id'),
+						"user" 			=> $this->session->userdata('adminid'),
 					);
 					$result = $this->Edit_Projlist($data,$this->input->post('rowid'));
 					if($result == false) {
@@ -204,10 +232,14 @@ class Project_controller extends CI_Controller {
 				}
 			} 
 			elseif($module == "types") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('row_id') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/types","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('description') <> "" && $this->input->post('row_id') <> "") {
 					$data = array(
 						"description" => $this->input->post('description'),
-						"user"		  => $this->input->post('admin_id')
+						"user"		  => $this->session->userdata('adminid')
 					);
 					$result = $this->Edit_ProjType($data,$this->input->post('row_id'));
 					if($result == false) {
@@ -221,7 +253,11 @@ class Project_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "equiprate") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('rowid') <> "" && $this->input->post('code') <> "" && $this->input->post('description') <> "" && $this->input->post('equip_no') <> "" && $this->input->post('class') <> "" && $this->input->post('fa_rate') <> "" && $this->input->post('geo_rate') <> "" && $this->input->post('make') <> "" && $this->input->post('model') <> "" && $this->input->post('ot_factor') <> "" && $this->input->post('row_delay') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/equipment","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('rowid') <> "" && $this->input->post('code') <> "" && $this->input->post('description') <> "" && $this->input->post('equip_no') <> "" && $this->input->post('class') <> "" && $this->input->post('fa_rate') <> "" && $this->input->post('geo_rate') <> "" && $this->input->post('make') <> "" && $this->input->post('model') <> "" && $this->input->post('ot_factor') <> "" && $this->input->post('row_delay') <> "") {
 					$data = array(
 						"code"			=> $this->input->post('code'),
 						"description"	=> $this->input->post('description'),
@@ -233,7 +269,7 @@ class Project_controller extends CI_Controller {
 						"model"			=> $this->input->post('model'),
 						"ot_factor"		=> $this->input->post('ot_factor'),
 						"row_delay"		=> $this->input->post('row_delay'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Edit_EquipRate($data,$this->input->post('rowid'));
 					if($result == false) {
@@ -247,7 +283,11 @@ class Project_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "laborrate") {
-				if($this->input->post('rowid') <> "" && $this->input->post('admin_id') <> "" && $this->input->post('description') <> "" && $this->input->post('class') <> "" && $this->input->post('st_hour') <> "" && $this->input->post('st_rate') <> "" && $this->input->post('ot_hour') <> "" && $this->input->post('ot_rate') <> "" && $this->input->post('dt_hour') <> "" && $this->input->post('dt_rate') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/labor","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->input->post('rowid') <> "" && $this->session->userdata('adminid') <> "" && $this->input->post('description') <> "" && $this->input->post('class') <> "" && $this->input->post('st_hour') <> "" && $this->input->post('st_rate') <> "" && $this->input->post('ot_hour') <> "" && $this->input->post('ot_rate') <> "" && $this->input->post('dt_hour') <> "" && $this->input->post('dt_rate') <> "") {
 					$data = array(
 						"class"			=> $this->input->post('class'),
 						"description"	=> $this->input->post('description'),
@@ -257,7 +297,7 @@ class Project_controller extends CI_Controller {
 						"ot_rate"		=> $this->input->post('ot_rate'),
 						"dt_hour"		=> $this->input->post('dt_hour'),
 						"dt_rate"		=> $this->input->post('dt_rate'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Edit_LaborRate($data,$this->input->post('rowid'));
 					if($result == false) {
@@ -271,11 +311,15 @@ class Project_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "material") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('rowid') <> "" && $this->input->post('description') <> "" && $this->input->post('unit') <> "") {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/materials","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('rowid') <> "" && $this->input->post('description') <> "" && $this->input->post('unit') <> "") {
 					$data = array(
 						"description"	=> $this->input->post('description'),
 						"unit"		=> $this->input->post('unit'),
-						"user"			=> $this->input->post('admin_id')
+						"user"			=> $this->session->userdata('adminid')
 					);
 					$result = $this->Edit_Material($data,$this->input->post('rowid'));
 					if($result == false) {
@@ -289,7 +333,11 @@ class Project_controller extends CI_Controller {
 				}
 			}
 			elseif($module == "bidding") {
-				if($this->input->post('admin_id') <> "" && $this->input->post('rowid') && $this->input->post('bid_date') <> "" && $this->input->post('bid_agent') && $this->input->post('job_name') && $this->input->post('project_type') && $this->input->post('bid_completed') && $this->input->post('rebid') && $this->input->post('old_bid_date') && $this->input->post('prebid_meeting_date') && $this->input->post('job_location') && $this->input->post('start_date') && $this->input->post('project_valuation') && $this->input->post('sc_method') && $this->input->post('delivery_system') && $this->input->post('owner_type') && $this->input->post('address')) {
+				if($this->session->userdata('userlevel') == "VIEWER") {
+					$this->redirector("projects/bidding","Unable to proceed insufficient account level!","error");
+					exit;
+				}
+				if($this->session->userdata('adminid') <> "" && $this->input->post('rowid') && $this->input->post('bid_date') <> "" && $this->input->post('bid_agent') && $this->input->post('job_name') && $this->input->post('project_type') && $this->input->post('bid_completed') && $this->input->post('rebid') && $this->input->post('old_bid_date') && $this->input->post('prebid_meeting_date') && $this->input->post('job_location') && $this->input->post('start_date') && $this->input->post('project_valuation') && $this->input->post('sc_method') && $this->input->post('delivery_system') && $this->input->post('owner_type') && $this->input->post('address')) {
 					$data = array(
 						"bid_date"				=> $this->input->post('bid_date'),
 						"bid_agent"				=> $this->input->post('bid_agent'),
@@ -323,7 +371,7 @@ class Project_controller extends CI_Controller {
 				show_404();
 			}
 		}
-		elseif($action == "retrieve" && $this->input->post('admin_id') <> "") {
+		elseif($action == "retrieve" && $this->session->userdata('adminid') <> "") {
 				if($module == "projlist") {
 					echo $this->List_ProjList();
 				}
@@ -349,10 +397,14 @@ class Project_controller extends CI_Controller {
 					show_404();
 				}
 			}
-		elseif($action == "delete" && $this->input->post('admin_id') <> "") {
+		elseif($action == "delete" && $this->session->userdata('adminid') <> "") {
 				if($module == "projlist") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-						$result = $this->Delete_ProjList($this->input->post('admin_id'),$this->input->post('id'));
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("projects/list","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_ProjList($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
 							$this->redirector("projects/list","An error occurred when deleting record!","error");
 						} 
@@ -365,8 +417,12 @@ class Project_controller extends CI_Controller {
 					}
 				} 
 				elseif($module == "types") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-						$result = $this->Delete_ProjTypes($this->input->post('admin_id'),$this->input->post('id'));
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("projects/types","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_ProjTypes($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
 							$this->redirector("projects/types","An error occurred when deleting record!","error");
 						} 
@@ -376,8 +432,12 @@ class Project_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "equiprate") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-						$result = $this->Delete_EquipRate($this->input->post('admin_id'),$this->input->post('id'));
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("projects/equipment","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_EquipRate($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
 							$this->redirector("projects/equipment","An error occurred when deleting record!","error");
 						} 
@@ -390,8 +450,12 @@ class Project_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "laborrate") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-						$result = $this->Delete_LaborRate($this->input->post('admin_id'),$this->input->post('id'));
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("projects/labor","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_LaborRate($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
 							$this->redirector("projects/labor","An error occurred when deleting record!","error");
 						} 
@@ -404,10 +468,14 @@ class Project_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "material") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-						$result = $this->Delete_Material($this->input->post('admin_id'),$this->input->post('id'));
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("projects/materials","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_Material($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
-							$this->redirector("projects/material","An error occurred when deleting record!","error");
+							$this->redirector("projects/materials","An error occurred when deleting record!","error");
 						} 
 						else {
 							echo true;
@@ -418,8 +486,12 @@ class Project_controller extends CI_Controller {
 					}
 				}
 				elseif($module == "bidding") {
-					if($this->input->post('admin_id') <> "" && $this->input->post('id') <> "") {
-						$result = $this->Delete_BiddingData($this->input->post('admin_id'),$this->input->post('id'));
+					if($this->session->userdata('userlevel') == "VIEWER") {
+						$this->redirector("projects/bidding","Unable to proceed insufficient account level!","error");
+						exit;
+					}
+					if($this->session->userdata('adminid') <> "" && $this->input->post('id') <> "") {
+						$result = $this->Delete_BiddingData($this->session->userdata('adminid'),$this->input->post('id'));
 						if($result == false) {
 							$this->redirector("projects/bidding","An error occurred when deleting record!","error");
 						} 
@@ -441,28 +513,32 @@ class Project_controller extends CI_Controller {
 	}
 	
 	public function prep_update($type) {
-		if($this->input->post('id') <> "" && $this->input->post('admin_id') <> "") {
+		if($this->input->post('id') <> "" && $this->session->userdata('adminid') <> "") {
 			$this->load->model('Project','proj');
-			if($type == "projlist") {
-				$data = $this->proj->getWhere_ProjList($this->input->post('id'));
-			}
-			elseif($type == "types") {
-				$data = $this->proj->getWhere_ProjTypes($this->input->post('id'));
-			}
-			elseif($type == "equiprate") {
-				$data = $this->proj->getWhere_EquipRate($this->input->post('id'));
-			}
-			elseif($type == "laborrate") {
-				$data = $this->proj->getWhere_LaborRate($this->input->post('id'));
-			}
-			elseif($type == "material") {
-				$data = $this->proj->getWhere_Materials($this->input->post('id'));
-			}
-			elseif($type == "bidding") {
-				$data = $this->proj->getWhere_BiddingData($this->input->post('id'));
-			}
-			else {
-				show_404();
+			if($this->session->userdata('userlevel') == "VIEWER") {
+				$data = "Unable to proceed insufficient account level!";
+			} else {
+				if($type == "projlist") {
+					$data = $this->proj->getWhere_ProjList($this->input->post('id'));
+				}
+				elseif($type == "types") {
+					$data = $this->proj->getWhere_ProjTypes($this->input->post('id'));
+				}
+				elseif($type == "equiprate") {
+					$data = $this->proj->getWhere_EquipRate($this->input->post('id'));
+				}
+				elseif($type == "laborrate") {
+					$data = $this->proj->getWhere_LaborRate($this->input->post('id'));
+				}
+				elseif($type == "material") {
+					$data = $this->proj->getWhere_Materials($this->input->post('id'));
+				}
+				elseif($type == "bidding") {
+					$data = $this->proj->getWhere_BiddingData($this->input->post('id'));
+				}
+				else {
+					show_404();
+				}
 			}
 			echo json_encode($data);
 		}
