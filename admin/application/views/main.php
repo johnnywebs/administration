@@ -191,7 +191,10 @@
 						<?php endif; ?>
 						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">Estimation</span></a>
 							<ul aria-expanded="false" class="collapse">
-								<li><a href="<?php echo base_url("estimation/build"); ?>">Create Project</a></li>
+								<li><a href="<?php echo base_url("estimation/build"); ?>">Create Estimation</a></li>
+							</ul>
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="<?php echo base_url("estimation/preview"); ?>">Preview Estimation</a></li>
 							</ul>
 						</li>
 					</ul>
