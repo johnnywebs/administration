@@ -61,7 +61,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
-					<form autocomplete="off" method="post" action="<?php echo base_url("admin/crud/create/list"); ?>" class="form-horizontal p-t-20">
+					<form autocomplete="off" method="post" action="<?php echo base_url("user/crud/create/list"); ?>" class="form-horizontal p-t-20">
 						<div class="form-group row">
 							<label for="username" class="col-sm-12 control-label">Username*</label>
 							<div class="col-sm-12">
@@ -131,7 +131,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
-					<form autocomplete="off" id="updateAdminList" method="post" action="<?php echo base_url("admin/crud/update/list"); ?>" class="form-horizontal p-t-20">
+					<form autocomplete="off" id="updateAdminList" method="post" action="<?php echo base_url("user/crud/update/list"); ?>" class="form-horizontal p-t-20">
 						<div class="form-group row">
 							<label for="xusername" class="col-sm-12 control-label">Username*</label>
 							<div class="col-sm-12">
@@ -204,7 +204,7 @@
 	});
 	
 	function getAdminList() {
-		$.post("<?php echo base_url("admin/crud/retrieve/list"); ?>",{ admin_id : "1" })
+		$.post("<?php echo base_url("user/crud/retrieve/list"); ?>",{ admin_id : "1" })
 		.done(function(data) {
 			$("#AdminListData").html(data);
 			$('#tblAdminList').DataTable({
@@ -218,7 +218,7 @@
 	}
 	
 	function fneditAdminList(id) {
-		$.post("<?php echo base_url("admin/prepupdate/list"); ?>",{ admin_id : "1", id: id })
+		$.post("<?php echo base_url("user/prepupdate/list"); ?>",{ admin_id : "1", id: id })
 		.done(function(json) {
 			if(json == "Unable to proceed insufficient account level!") {
 				swal("Error!", json, "error"); 
@@ -248,7 +248,7 @@
 			showLoaderOnConfirm: true 
         }, function(isConfirm){   
             if (isConfirm) {     
-				$.post("<?php echo base_url("admin/crud/delete/list"); ?>",{ admin_id : "1", id: id })
+				$.post("<?php echo base_url("user/crud/delete/list"); ?>",{ admin_id : "1", id: id })
 				.done(function(data) {
 					if(data == 1) { // or true
 						$('#tblAdminList').DataTable().destroy();
