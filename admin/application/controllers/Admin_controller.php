@@ -44,7 +44,7 @@ class Admin_controller extends CI_Controller {
 		if($this->session->userdata('userid') == "") { 
 			$this->load->view('login');
 		} else {
-			$this->redirector("employees/types","Welcome back ".$this->session->userdata('fullname')."!","success");
+			$this->redirector("employees/dashboard","Welcome back ".$this->session->userdata('fullname')."!","success");
 		}
 	}
 	
