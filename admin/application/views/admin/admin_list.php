@@ -1,14 +1,17 @@
 <div class="row page-titles">
 	<div class="col-md-5 align-self-center">
-		<h3 class="text-themecolor">Payroll Records</h3>
+		<h3 class="text-themecolor">Administration</h3>
 	</div>
 	<div class="col-md-7 align-self-center">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-			<li class="breadcrumb-item">Payroll Transactions</li>
-			<li class="breadcrumb-item active">Payroll Period</li>
+			<li class="breadcrumb-item">Administration</li>
+			<li class="breadcrumb-item active">Admin Accounts</li>
 		</ol>
 	</div>
+	<!--<div class="">
+		<button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+	</div>-->
 </div>
 <div class="container-fluid">
 	<div class="row">
@@ -17,28 +20,27 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col-12 col-sm-10">
-							<h4 class="card-title">Payroll Period</h4>
-							<h6 class="card-subtitle">List of Payroll Period</h6>
+							<h4 class="card-title">Admin Accounts</h4>
+							<h6 class="card-subtitle">List of Accounts</h6>
 						</div>
 						<div class="col-12 col-sm-2">
-							<?php if($this->session->userdata('userlevel') != "VIEWER"): ?>
-							<button type='button' data-toggle="modal" data-target="#createPayperiod" class='btn btn-info'><i class='fa fa-edit'></i> Create New</button>
+							<?php if($this->session->userdata('userlevel') == "ADMIN"): ?>
+							<button type='button' data-toggle="modal" data-target="#createAdminList" class='btn btn-info'><i class='fa fa-edit'></i> Create New</button>
 							<?php endif; ?>
 						</div>
 					</div>
 					<div class="table-responsive m-t-10">
-						<table id="tblPayperiod" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+						<table id="tblAdminList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th>Description</th>
-									<th>Date From</th>
-									<th>Date To</th>
-									<th>Status</th>
-									<th>Date Inserted</th>
+									<th>Fullname</th>
+									<th>Username</th>
+									<th>User Level</th>
+									<th>Date Created</th>
 									<th>Options</th>
 								</tr>
 							</thead>
-							<tbody id="payperiodData">
+							<tbody id="AdminListData">
 										
 							</tbody>
 						</table>
@@ -51,21 +53,21 @@
 		</footer>
 	</div>
 	<!-- start create modal -->
-	<div id="createPayperiod" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div id="createAdminList" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Create New Pay Period</h4>
+					<h4 class="modal-title">Create New Admin Data</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
-					<form method="post" action="<?php echo base_url("payroll/crud/create/payperiod"); ?>" class="form-horizontal p-t-20">
+					<form autocomplete="off" method="post" action="<?php echo base_url("admin/crud/create/list"); ?>" class="form-horizontal p-t-20">
 						<div class="form-group row">
-							<label for="description" class="col-sm-12 control-label">Description</label>
+							<label for="username" class="col-sm-12 control-label">Username*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
 									<input type="hidden" class="form-control" name="admin_id" value="1">
-									<input type="text" class="form-control" name="description" id="description">
+									<input type="text" class="form-control" name="username" id="username">
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 									</div>
@@ -73,10 +75,10 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="date_from" class="col-sm-12 control-label">Date From*</label>
+							<label for="password" class="col-sm-12 control-label">Password*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
-									<input type="text" class="form-control" name="date_from" id="date_from">
+									<input type="text" class="form-control" name="password" id="password">
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 									</div>
@@ -84,10 +86,10 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="date_to" class="col-sm-12 control-label">Date To*</label>
+							<label for="fullname" class="col-sm-12 control-label">Full Name*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
-									<input type="text" class="form-control" name="date_to" id="date_to">
+									<input type="text" class="form-control" name="fullname" id="fullname">
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 									</div>
@@ -95,12 +97,13 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="status" class="col-sm-12 control-label">Status</label>
+							<label for="level" class="col-sm-12 control-label">Level*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
-									<select class="form-control" name="status" id="status">
-										<option value="Y">Yes</option>
-										<option value="N">No</option>
+									<select class="form-control" id="level" name="level">
+										<option value="ADMIN">ADMIN</option>
+										<option value="EDITOR">EDITOR</option>
+										<option value="VIEWER">VIEWER</option>
 									</select>
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
@@ -120,22 +123,21 @@
 	<!-- end create modal -->
 	
 	<!-- start create modal -->
-	<div id="editPayperiod" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div id="editAdminList" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Update Payroll Period</h4>
+					<h4 class="modal-title">Update Admin Data</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
-					<form id="updatePayperiod" method="post" action="<?php echo base_url("payroll/crud/update/payperiod"); ?>" class="form-horizontal p-t-20">
+					<form autocomplete="off" id="updateAdminList" method="post" action="<?php echo base_url("admin/crud/update/list"); ?>" class="form-horizontal p-t-20">
 						<div class="form-group row">
-							<label for="description" class="col-sm-12 control-label">Description*</label>
+							<label for="xusername" class="col-sm-12 control-label">Username*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
-									<input type="hidden" class="form-control" name="rowid" id="rowid">
-									<input type="hidden" class="form-control" name="admin_id" value="1">
-									<input type="text" class="form-control" name="description" id="description">
+									<input type="hidden" class="form-control" name="row_id" id="row_id" value="">
+									<input type="text" class="form-control" name="username" id="username">
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 									</div>
@@ -143,10 +145,10 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="date_from" class="col-sm-12 control-label">Date From*</label>
+							<label for="xpassword" class="col-sm-12 control-label">Password*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
-									<input type="text" class="form-control" name="date_from" id="date_from">
+									<input type="text" class="form-control" name="password" id="password">
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 									</div>
@@ -154,10 +156,10 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="date_to" class="col-sm-12 control-label">Date To*</label>
+							<label for="xfullname" class="col-sm-12 control-label">Full Name*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
-									<input type="text" class="form-control" name="date_to" id="date_to">
+									<input type="text" class="form-control" name="fullname" id="fullname">
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 									</div>
@@ -165,12 +167,13 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="status" class="col-sm-12 control-label">Status*</label>
+							<label for="level" class="col-sm-12 control-label">Level*</label>
 							<div class="col-sm-12">
 								<div class="input-group">
-									<select class="form-control" name="status" id="status">
-										<option value="Y">Yes</option>
-										<option value="N">No</option>
+									<select class="form-control" id="level" name="level">
+										<option value="ADMIN">ADMIN</option>
+										<option value="EDITOR">EDITOR</option>
+										<option value="VIEWER">VIEWER</option>
 									</select>
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
@@ -192,11 +195,7 @@
 
 <script>
 	$(document).ready(function() {
-		$('#createPayperiod #date_from').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
-		$('#createPayperiod #date_to').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
-		$('#editPayperiod #date_from').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
-		$('#editPayperiod #date_to').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
-		getPayperiodList();
+		getAdminList();
 		<?php 
 			if($this->session->flashdata('global_message') != "") {
 				echo $this->session->flashdata('global_message');
@@ -204,39 +203,38 @@
 		?>
 	});
 	
-	function getPayperiodList() {
-		$.post("<?php echo base_url("payroll/crud/retrieve/payperiod"); ?>",{ admin_id : "1" })
+	function getAdminList() {
+		$.post("<?php echo base_url("admin/crud/retrieve/list"); ?>",{ admin_id : "1" })
 		.done(function(data) {
-			$("#payperiodData").html(data);
-			$('#tblPayperiod').DataTable({
+			$("#AdminListData").html(data);
+			$('#tblAdminList').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					'copy', 'csv', 'excel', 'pdf', 'print'
 				]
 			});
+			$(".preloader").fadeOut();
 		});
-		
-		$(".preloader").fadeOut();
 	}
 	
-	function fneditPayperiod(id) {
-		$.post("<?php echo base_url("payroll/prepupdate/payperiod"); ?>",{ admin_id : "1", id: id })
+	function fneditAdminList(id) {
+		$.post("<?php echo base_url("admin/prepupdate/list"); ?>",{ admin_id : "1", id: id })
 		.done(function(json) {
 			if(json == "Unable to proceed insufficient account level!") {
 				swal("Error!", json, "error"); 
 				return false;
 			}
 			var obj = JSON.parse(json);
-			$('#editPayperiod input#rowid').val(obj[0].id);
-			$('#editPayperiod input#description').val(obj[0].description);
-			$('#editPayperiod input#date_from').val(obj[0].date_from);
-			$('#editPayperiod input#date_to').val(obj[0].date_to);
-			$('#editPayperiod select#status').val(obj[0].status);
-			$("#editPayperiod").modal('show');
+			$('#updateAdminList input#row_id').val(obj[0].id);
+			$('#updateAdminList input#username').val(obj[0].username);
+			$('#updateAdminList input#fullname').val(obj[0].fullname);
+			$('#updateAdminList select#level').val(obj[0].level);
+			$("#editAdminList").modal('show');
 		});
+		
 	}
 	
-	function fndeletePayperiod(id) {
+	function fndeleteAdminList(id) {
 		swal({   
             title: "Are you sure you want to delete this record?",   
             text: "You will not be able to recover this record!",   
@@ -250,11 +248,11 @@
 			showLoaderOnConfirm: true 
         }, function(isConfirm){   
             if (isConfirm) {     
-				$.post("<?php echo base_url("payroll/crud/delete/payperiod"); ?>",{ admin_id : "1", id: id })
+				$.post("<?php echo base_url("admin/crud/delete/list"); ?>",{ admin_id : "1", id: id })
 				.done(function(data) {
 					if(data == 1) { // or true
-						$('#tblPayperiod').DataTable().destroy();
-						getPayperiodList();
+						$('#tblAdminList').DataTable().destroy();
+						getAdminList();
 						swal("Deleted!", "Record was successfully deleted!", "success"); 
 					} else {
 						swal("Error!", data, "error"); 

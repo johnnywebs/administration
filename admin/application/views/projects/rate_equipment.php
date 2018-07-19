@@ -24,7 +24,9 @@
 							<h6 class="card-subtitle">List of Rates</h6>
 						</div>
 						<div class="col-12 col-sm-2">
+							<?php if($this->session->userdata('userlevel') != "VIEWER"): ?>
 							<button type='button' data-toggle="modal" data-target="#createEquipList" class='btn btn-info'><i class='fa fa-edit'></i> Create New</button>
+							<?php endif; ?>
 						</div>
 					</div>
 					<div class="table-responsive m-t-10">
@@ -371,7 +373,7 @@
 						getEquipRate();
 						swal("Deleted!", "Record was successfully deleted!", "success"); 
 					} else {
-						swal("Error!", "Unable to delete record.", "error"); 
+						swal("Error!", data, "error"); 
 					}
 				});  
             } else {     
@@ -383,6 +385,10 @@
 	function fneditEquipRate(id) {
 		$.post("<?php echo base_url("projects/prepupdate/material"); ?>",{ admin_id : "1", id: id })
 		.done(function(json) {
+			if(json == "Unable to proceed insufficient account level!") {
+				swal("Error!", json, "error"); 
+				return false;
+			}
 			var obj = JSON.parse(json);
 			$('#editEquipList input#rowid').val(obj[0].id);
 			$('#editEquipList input#code').val(obj[0].code);

@@ -45,7 +45,7 @@ class Crm_controller extends CI_Controller {
 			if($action == "create" && $this->input->post('admin_id') <> "") {
 				
 			} 
-			elseif($action == "retrieve" && $this->input->post('admin_id') <> "") {
+			elseif($action == "retrieve" && $this->session->userdata('adminid') <> "") {
 				if($module == "countrycbo") {
 					echo $this->CBO_countries($this->input->post('def_ctr'));
 				}
@@ -53,10 +53,10 @@ class Crm_controller extends CI_Controller {
 					echo $this->CBO_states($this->input->post('country'));
 				}
 			}
-			elseif($action == "update" && $this->input->post('admin_id') <> "") {
+			elseif($action == "update" && $this->session->userdata('adminid') <> "") {
 				
 			}
-			elseif($action == "delete" && $this->input->post('admin_id') <> "") {
+			elseif($action == "delete" && $this->session->userdata('adminid') <> "") {
 				
 			}
 			else {

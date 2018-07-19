@@ -21,7 +21,9 @@
 							<h6 class="card-subtitle">List of Leave Request</h6>
 						</div>
 						<div class="col-12 col-sm-2">
+							<?php if($this->session->userdata('userlevel') != "VIEWER"): ?>
 							<button type='button' data-toggle="modal" data-target="#createLeaveReq" class='btn btn-info'><i class='fa fa-edit'></i> Create New</button>
+							<?php endif; ?>
 						</div>
 					</div>
 					<div class="table-responsive m-t-10">
@@ -306,6 +308,10 @@
 	function fneditLeaveReq(id) {
 		$.post("<?php echo base_url("payroll/prepupdate/leaverequest"); ?>",{ admin_id : "1", id: id })
 		.done(function(json) {
+			if(json == "Unable to proceed insufficient account level!") {
+				swal("Error!", json, "error"); 
+				return false;
+			}
 			var obj = JSON.parse(json);
 			$('#editLeaveReq input#rowid').val(obj[0].id);
 			$(".preloader").show();
@@ -340,7 +346,7 @@
 						getLeaveRequestList();
 						swal("Deleted!", "Record was successfully deleted!", "success"); 
 					} else {
-						swal("Error!", "Unable to delete record.", "error"); 
+						swal("Error!", data, "error"); 
 					}
 				});  
             } else {     
