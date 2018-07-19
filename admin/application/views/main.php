@@ -187,7 +187,7 @@
 							</ul>
 						</li>
 						<?php if($this->session->userdata('userlevel') != "VIEWER"): ?>
-						<li> <a class="has-arrow waves-effect waves-dark" href="<?php echo base_url("admin/list"); ?>" aria-expanded="false"><i class="mdi mdi-account-star-variant"></i><span class="hide-menu">USER ACCOUNTS</span></a></li>
+						<li> <a class="has-arrow waves-effect waves-dark" href="<?php echo base_url("user/list"); ?>" aria-expanded="false"><i class="mdi mdi-account-star-variant"></i><span class="hide-menu">USER ACCOUNTS</span></a></li>
 						<?php endif; ?>
 						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">Estimation</span></a>
 							<ul aria-expanded="false" class="collapse">
