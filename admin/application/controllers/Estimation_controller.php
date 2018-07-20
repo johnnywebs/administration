@@ -52,6 +52,8 @@ class Estimation_controller extends CI_Controller {
 					$data = array('code' => $code,
 						'estimatedby' =>  addslashes($params['etimatedby']),
 						'estimateddate' =>  addslashes($params['etimateddate']),
+						'project_name' =>  addslashes($params['projectname']),
+						'project_type' =>  addslashes($params['projecttype']),
 						'client' =>  addslashes($params['client']),
 						'filename' =>  addslashes($params['filename']),
 						'location' =>  addslashes($params['location']),
@@ -285,6 +287,7 @@ class Estimation_controller extends CI_Controller {
 			if($module == "typeofwork") {		
 				$work = $this->showworktypes();
 				$htm = "";
+				$htm = "<option selected='true' disabled='disabled'>Select from the Options Below</option>";
 				foreach($work as $key=>$val){
 					$htm .= '<option value="'.$val->id.'">'.$val->description.'</option>';
 				}
@@ -388,9 +391,10 @@ class Estimation_controller extends CI_Controller {
 					foreach($data as $row) {
 						$html .= "<tr>";
 						$html .= "<td>$row->code</td>";
+						$html .= "<td width='20px'>$row->project_name</td>";
+						$html .= "<td width='20px'>$row->project_type</td>";
 						$html .= "<td>$row->client</td>";
 						$html .= "<td>$row->typeofwork</td>";
-						$html .= "<td>$row->location</td>";
 						$html .= "<td>$row->estimatedby</td>";
 						$html .= "<td>$row->estimateddate</td>";
 						$html .= "<td>
@@ -400,6 +404,27 @@ class Estimation_controller extends CI_Controller {
 					}
 				}
 				echo $html;
+			}
+			
+			elseif($module == "showProjName"){
+				$html = "";
+				$data = $this->showProjectDetail();
+				$html = "<option selected='true' disabled='disabled'>Select from the Options Below</option>";
+				if($data != false){
+					foreach($data as $key=>$val){
+						$html .= '<option value="'.$val->id.'">'.$val->project_name.'</option>';
+					}
+				}
+				echo $html;
+			}
+			
+			elseif($module == "showProjData"){
+				$data = array();
+				if($search <> ""){
+					$details = $this->showProjectDetail(trim($search));
+					$data['data'] = $details;
+				}
+				echo json_encode($data);
 			}
 			
 		}
@@ -483,9 +508,20 @@ class Estimation_controller extends CI_Controller {
 		}
 	}
 	
+	public function showProjectDetail($searchval = ""){
+		$this->load->model('Estimation', 'projlist');
+		if($searchval <> ""){
+			return $this->projlist->getProjectList($searchval);
+		}else{
+			return $this->projlist->getProjectList("");
+		}
+	}
+	
 	public function numericOnly($str){
 		return preg_replace("/[^0-9.]/", "", $str);
 	}
+	
+	
 	
 	
 	
