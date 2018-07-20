@@ -111,9 +111,18 @@ class Estimation extends CI_Model {
 		}
 	}
 	
+	function getProjectList($id){
+		if($id <> ""){
+			$query = $this->db->get_where('projects', array('id' => $id));
+		}else{
+			$query = $this->db->get('projects');
+		}
+		return $query->result();
+	}
+	
 	function getProject(){
-		$query = $this->db->query('SELECT a.id, a.code,  a.client, b.description AS typeofwork, a.location, a.estimatedby, a.estimateddate FROM `estimate_master` AS a, 
-				`estimate_worktype` AS b WHERE a.typeofwork = b.id order by a.id desc');
+		$query = $this->db->query('SELECT a.id, c.project_name, a.project_type, a.code,  a.client, b.description AS typeofwork, a.location, a.estimatedby, a.estimateddate FROM `estimate_master` AS a, 
+				`estimate_worktype` AS b, projects as c WHERE (a.typeofwork = b.id) and (a.project_name = c.id) order by a.id desc');
 		if($query->num_rows() > 0) {
 			return $query->result();
 		} else {
