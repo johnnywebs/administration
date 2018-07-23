@@ -19,6 +19,7 @@
     <link href="<?php echo base_url("public/css/style.css"); ?>" rel="stylesheet">
 	<link href="<?php echo base_url("public/css/estimate.css"); ?>" rel="stylesheet">
     <link href="<?php echo base_url("public/css/colors/blue.css"); ?>" id="theme" rel="stylesheet">
+    <link href="<?php echo base_url("public/assets/plugins/summernote/dist/summernote.css"); ?>" id="theme" rel="stylesheet">
 	
     <script src="<?php echo base_url("public/assets/plugins/jquery/jquery.min.js");?>"></script>
     <!--[if lt IE 9]>
@@ -186,15 +187,12 @@
 								<li><a href="javascript:void(0);" onclick="processPayroll();"><b style='color:#ff0000'>Process Payroll</b></a></li>
 							</ul>
 						</li>
-						<?php if($this->session->userdata('userlevel') == "ADMIN"): ?>
+						<?php if($this->session->userdata('userlevel') != "VIEWER"): ?>
 						<li> <a class="has-arrow waves-effect waves-dark" href="<?php echo base_url("user/list"); ?>" aria-expanded="false"><i class="mdi mdi-account-star-variant"></i><span class="hide-menu">USER ACCOUNTS</span></a></li>
 						<?php endif; ?>
 						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">Estimation</span></a>
 							<ul aria-expanded="false" class="collapse">
-								<li><a href="<?php echo base_url("estimation/build"); ?>">Create Estimation</a></li>
-							</ul>
-							<ul aria-expanded="false" class="collapse">
-								<li><a href="<?php echo base_url("estimation/preview"); ?>">Preview Estimation</a></li>
+								<li><a href="<?php echo base_url("estimation/build"); ?>">Create Project</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -223,6 +221,7 @@
 	<script src="<?php echo base_url("public/assets/plugins/moment/moment.js"); ?>"></script>
 	<script src="<?php echo base_url("public/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"); ?>"></script>
 	<script src="<?php echo base_url("public/assets/plugins/select2/dist/js/select2.full.js"); ?>"></script>
+	<script src="<?php echo base_url("public/assets/plugins/summernote/dist/summernote.min.js"); ?>"></script>
     <!--Custom JavaScript -->
     <script src="<?php echo base_url("public/js/custom.js");?>"></script>
 	<script src="<?php echo base_url("public/js/toastr.js");?>"></script>

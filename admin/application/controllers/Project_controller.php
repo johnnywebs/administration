@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+use Google\Cloud\Storage\StorageClient;
 class Project_controller extends CI_Controller {
 	
 	public function redirector($path,$flashmsg,$flashmsgtype) {
@@ -38,6 +38,17 @@ class Project_controller extends CI_Controller {
 			$this->session->set_flashdata('global_message', $toast);
 		}
 		redirect(base_url($path));
+	}
+	
+	public function uniqidReal($lenght = 13) {
+		if (function_exists("random_bytes")) {
+			$bytes = random_bytes(ceil($lenght / 2));
+		} elseif (function_exists("openssl_random_pseudo_bytes")) {
+			$bytes = openssl_random_pseudo_bytes(ceil($lenght / 2));
+		} else {
+			throw new Exception("no cryptographically secure random function available");
+		}
+		return substr(bin2hex($bytes), 0, $lenght);
 	}
 	
 	public function crud($action = '',$module = '',$search = '') {
@@ -173,6 +184,45 @@ class Project_controller extends CI_Controller {
 					exit;
 				}
 				if($this->session->userdata('adminid') <> "" && $this->input->post('bid_date') <> "" && $this->input->post('bid_agent') && $this->input->post('job_name') && $this->input->post('project_type') && $this->input->post('bid_completed') && $this->input->post('rebid') && $this->input->post('old_bid_date') && $this->input->post('prebid_meeting_date') && $this->input->post('job_location') && $this->input->post('start_date') && $this->input->post('project_valuation') && $this->input->post('sc_method') && $this->input->post('delivery_system') && $this->input->post('owner_type') && $this->input->post('address')) {
+					$attachment_filename = "";
+					if(isset($_FILES['attachment'])) {
+						if($_FILES['attachment']['size'] > 10000000) {
+							$this->redirector("projects/bidding","Uploaded file exceeds 10MB limit","error");
+						}
+						
+						 $acceptable = array(
+							'application/pdf',
+							'application/msword',
+							'image/jpeg',
+							'image/jpg',
+							'image/gif',
+							'image/png'
+						);
+						
+						if(!in_array($_FILES['attachment']['type'], $acceptable) && !empty($_FILES["attachment"]["type"])) {
+							$this->redirector("projects/bidding","Uploaded file has an invalid file type. Only PDF, DOC, JPG, GIF and PNG types are accepted.","error");
+						}
+						$uniq = $this->uniqidReal();
+						$name = $_FILES['attachment']['name'];  
+						$file_tmp =$_FILES['attachment']['tmp_name'];  
+						
+						/*if(!move_uploaded_file($file_tmp, $original)) {
+							die();
+						}*/
+						$storage = new StorageClient(['projectId' => 'steve-unified','keyFilePath' => './key.json']);
+						$file = fopen($file_tmp, 'r');
+						$bucket = $storage->bucket("steve-unified");
+						$oldobject = $bucket->object($uniq.$name);
+						if($oldobject->exists()) {
+							$this->redirector("projects/bidding","Uploaded file is already uploaded in the database.","error");
+						}
+						$object = $bucket->upload($file, [
+							'name' => $uniq.$name
+						]);
+						
+						$attachment_filename = $uniq.$name;
+					}
+					
 					$data = array(
 						"bid_date"				=> $this->input->post('bid_date'),
 						"bid_agent"				=> $this->input->post('bid_agent'),
@@ -189,13 +239,15 @@ class Project_controller extends CI_Controller {
 						"delivery_system"		=> $this->input->post('delivery_system'),
 						"owner_type"			=> $this->input->post('owner_type'),
 						"address"				=> $this->input->post('address'),
+						"web_info"				=> $this->input->post('web_info'),
+						"attachment"			=> $attachment_filename,
 						"user"					=> $this->session->userdata('adminid')
 					);
 					$result = $this->Create_BiddingData($data);
 					if($result == false) {
 						$this->redirector("projects/bidding","An error occurrred when creating record!","error");
 					} else {
-						$this->redirector("projects/bidding","Successfully created a Material!","success");
+						$this->redirector("projects/bidding","Successfully created a bidding info!","success");
 					}
 				}
 				else {
@@ -338,29 +390,92 @@ class Project_controller extends CI_Controller {
 					exit;
 				}
 				if($this->session->userdata('adminid') <> "" && $this->input->post('rowid') && $this->input->post('bid_date') <> "" && $this->input->post('bid_agent') && $this->input->post('job_name') && $this->input->post('project_type') && $this->input->post('bid_completed') && $this->input->post('rebid') && $this->input->post('old_bid_date') && $this->input->post('prebid_meeting_date') && $this->input->post('job_location') && $this->input->post('start_date') && $this->input->post('project_valuation') && $this->input->post('sc_method') && $this->input->post('delivery_system') && $this->input->post('owner_type') && $this->input->post('address')) {
-					$data = array(
-						"bid_date"				=> $this->input->post('bid_date'),
-						"bid_agent"				=> $this->input->post('bid_agent'),
-						"job_name"				=> $this->input->post('job_name'),
-						"project_type"			=> $this->input->post('project_type'),
-						"bid_completed"			=> $this->input->post('bid_completed'),
-						"rebid"					=> $this->input->post('rebid'),
-						"old_bid_date"			=> $this->input->post('old_bid_date'),
-						"prebid_meeting_date"	=> $this->input->post('prebid_meeting_date'),
-						"job_location"			=> $this->input->post('job_location'),
-						"start_date"			=> $this->input->post('start_date'),
-						"project_valuation"		=> $this->input->post('project_valuation'),
-						"sc_method"				=> $this->input->post('sc_method'),
-						"delivery_system"		=> $this->input->post('delivery_system'),
-						"owner_type"			=> $this->input->post('owner_type'),
-						"address"				=> $this->input->post('address'),
-						"user"					=> $this->input->post('user')
-					);
+					$attachment_filename = "";
+					if(isset($_FILES['attachment'])) {
+						if($_FILES['attachment']['size'] > 10000000) {
+							$this->redirector("projects/bidding","Uploaded file exceeds 10MB limit","error");
+						}
+						
+						 $acceptable = array(
+							'application/pdf',
+							'application/msword',
+							'image/jpeg',
+							'image/jpg',
+							'image/gif',
+							'image/png'
+						);
+						
+						if(!in_array($_FILES['attachment']['type'], $acceptable) && !empty($_FILES["attachment"]["type"])) {
+							$this->redirector("projects/bidding","Uploaded file has an invalid file type. Only PDF, DOC, JPG, GIF and PNG types are accepted.","error");
+						}
+						
+						$uniq = $this->uniqidReal();
+						$name = $_FILES['attachment']['name'];  
+						$file_tmp =$_FILES['attachment']['tmp_name'];  
+						
+						$storage = new StorageClient(['projectId' => 'steve-unified','keyFilePath' => './key.json']);
+						$file = fopen($file_tmp, 'r');
+						$bucket = $storage->bucket("steve-unified");
+						if($this->input->post('old_attachment') != "") {
+						$oldobject = $bucket->object($this->input->post('old_attachment'));
+							if($oldobject->exists()) {
+								$oldobject->delete();
+							}
+						}
+						$object = $bucket->upload($file, [
+							'name' => $uniq.$name
+						]);
+						
+						$attachment_filename = $uniq.$name;
+					}
+					
+					if($attachment_filename != "") {
+						$data = array(
+							"bid_date"				=> $this->input->post('bid_date'),
+							"bid_agent"				=> $this->input->post('bid_agent'),
+							"job_name"				=> $this->input->post('job_name'),
+							"project_type"			=> $this->input->post('project_type'),
+							"bid_completed"			=> $this->input->post('bid_completed'),
+							"rebid"					=> $this->input->post('rebid'),
+							"old_bid_date"			=> $this->input->post('old_bid_date'),
+							"prebid_meeting_date"	=> $this->input->post('prebid_meeting_date'),
+							"job_location"			=> $this->input->post('job_location'),
+							"start_date"			=> $this->input->post('start_date'),
+							"project_valuation"		=> $this->input->post('project_valuation'),
+							"sc_method"				=> $this->input->post('sc_method'),
+							"delivery_system"		=> $this->input->post('delivery_system'),
+							"owner_type"			=> $this->input->post('owner_type'),
+							"address"				=> $this->input->post('address'),
+							"web_info"				=> $this->input->post('web_info'),
+							"attachment"			=> $attachment_filename,
+							"user"					=> $this->input->post('user')
+						);
+					} else {
+						$data = array(
+							"bid_date"				=> $this->input->post('bid_date'),
+							"bid_agent"				=> $this->input->post('bid_agent'),
+							"job_name"				=> $this->input->post('job_name'),
+							"project_type"			=> $this->input->post('project_type'),
+							"bid_completed"			=> $this->input->post('bid_completed'),
+							"rebid"					=> $this->input->post('rebid'),
+							"old_bid_date"			=> $this->input->post('old_bid_date'),
+							"prebid_meeting_date"	=> $this->input->post('prebid_meeting_date'),
+							"job_location"			=> $this->input->post('job_location'),
+							"start_date"			=> $this->input->post('start_date'),
+							"project_valuation"		=> $this->input->post('project_valuation'),
+							"sc_method"				=> $this->input->post('sc_method'),
+							"delivery_system"		=> $this->input->post('delivery_system'),
+							"owner_type"			=> $this->input->post('owner_type'),
+							"address"				=> $this->input->post('address'),
+							"web_info"				=> $this->input->post('web_info'),
+							"user"					=> $this->input->post('user')
+						);
+					}
 					$result = $this->Edit_BiddingData($data,$this->input->post('rowid'));
 					if($result == false) {
 						$this->redirector("projects/bidding","An error occurrred when creating record!","error");
 					} else {
-						$this->redirector("projects/bidding","Successfully created a Material!","success");
+						$this->redirector("projects/bidding","Successfully updated bidding info!","success");
 					}
 				}
 				else {
@@ -847,6 +962,7 @@ class Project_controller extends CI_Controller {
 				$html .= "<td>$row->delivery_system</td>";
 				$html .= "<td>$row->owner_type</td>";
 				$html .= "<td>$row->address</td>";
+				$html .= "<td><a href='https://storage.googleapis.com/steve-unified/$row->attachment' target='_blank'>DOWNLOAD</a></td>";
 				$html .= "<td>$row->date_inserted</td>";
 				$html .= "<td>
 							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditBiddingData('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
