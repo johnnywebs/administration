@@ -26,10 +26,9 @@
 								<thead>
 									<tr>
 										<th>Project Code</th>
-										<th width='20px'>Project Name</th>
-										<th width='20px'>Project Type</th>
-										<th width='20px'>Client</th>
-										<th width='20px'>Type of Work</th>
+										<th>Client</th>
+										<th>Type of Work</th>
+										<th>Location</th>
 										<th>Estimated By</th>
 										<th>Estimated Date</th>
 										<th>Options</th>
@@ -62,21 +61,6 @@
 								  <div class="col-md-3">
 									<input class="form-control" type="date" value="2011-08-19" id="etimateddate" name="etimateddate" required>
 								   </div>
-							</div>
-							<div class="form-group row">
-								  <label for="projectname" class="col-md-2 col-form-label">Project Name</label>
-								  <div class="col-md-10">
-									<!--<input class="form-control" type="text" id="typeofwork" name="typeofwork" required>-->
-									<select class="form-control" id="projectname" name="projectname" onchange="getprjdata();" required>
-									  
-									</select>
-								  </div>
-							</div>
-							<div class="form-group row">
-								  <label for="projecttype" class="col-md-2 col-form-label">Project Type</label>
-								  <div class="col-md-10">
-									<input class="form-control" type="text" id="projecttype" name="projecttype" required>
-								  </div>
 							</div>
 							<div class="form-group row">
 								  <label for="filename" class="col-md-2 col-form-label">File Name</label>
@@ -939,8 +923,7 @@
 						<div class="col-3">
 								<div class="row">
 									<?php if($showitem == "build"):?>
-										<button id="btnBuild" type="submit" class="btn btn-primary" style="width:98%;">Create Project</button>
-										<a id="btnewestimate" href="<?php echo base_url('estimation/build'); ?>" class="btn btn-primary" style="width:98%" >Create New Estimation</a>
+										<button id="btnBuild" type="submit" class="btn btn-primary" width="100%">Create Project</button>
 									<?php else:?>
 										<a href="<?php echo base_url('estimation/preview'); ?>" class="btn btn-primary" style="width:98%" >Back To List</a>
 									<?php endif;?>
@@ -1065,13 +1048,12 @@
 		var act = $('#action').text();
 		getEstimateList();
 		getworktype();
-		getprojectname();
-		$("#btnewestimate").hide();
 		if(act == "Build"){
 			$('#estimatetable').hide();
 			$('#estimateinfo').show();
 			$('#estimatebreakdown').hide();
 		}else{
+			
 			$('#estimatetable').show();
 			$('#estimateinfo').hide();
 			$('#estimatebreakdown').hide();
@@ -1094,26 +1076,6 @@
 		});
 	}
 	
-	function getprojectname(){
-		$.get('<?php echo base_url('estimation/crud/retrieve/showProjName'); ?>')
-		.done(function(data) {
-			$('#projectname').html(data);
-		});
-	}
-	
-	function getprjdata(){
-		var id = $('#projectname').val();
-		$.get('<?php echo base_url(); ?>' + 'estimation/crud/retrieve/showProjData/' + id)
-		.done(function(response) {
-			var js = JSON.parse(response);
-			$.each(js['data'], function(key, value){
-				$('#projecttype').val(value.project_type);
-				$('#client').val(value.client_name);
-				$('#location').val(value.location);
-			});
-		});
-	}
-	
 	function itemremove(me){
 		me.closest('tr').remove();
 		$('#estimationmaster').calx();
@@ -1132,15 +1094,6 @@
 	
 	$('#workingdays').submit(function(e){
 		e.preventDefault();
-		if($('#projectname').val() == null ||$('#typeofwork').val() == null){
-			swal(
-					'Oopps!',
-					'Please Specify Proect Name and Work Type',
-					'error'
-				);
-			return false;
-		}
-		
 		swal({   
             title: "Are you sure you want to Create this record?",   
             text: "You will be creating a new instance set of Data!",   
@@ -1200,8 +1153,6 @@
 						  'You Created Project Code :' + data,
 						  'success'
 					);
-					$("#btnewestimate").show();
-					$('.add_item').hide();
 					$('#btnBuild').hide();
 				});
 				
@@ -1476,7 +1427,6 @@
 	
 	function renderestimation(param){
 		
-		$('#projectcode').text(param);
 		$('#estimatetable').hide();
 		$('#estimateinfo').show();
 		$('#estimatebreakdown').show();
@@ -1546,8 +1496,6 @@
 						$('#workingdays').calx('destroy');
 						$('#etimatedby').val(itm[0].estimatedby);
 						$('#etimateddate').val(itm[0].estimateddate);
-						$('#projectname').val(itm[0].project_name);
-						$('#projecttype').val(itm[0].project_type);
 						$('#filename').val(itm[0].filename);
 						$('#client').val(itm[0].client);
 						$('#location').val(itm[0].location);
@@ -1764,7 +1712,5 @@
             } 
         });
 	}
-	
-	
 	
 </script>
