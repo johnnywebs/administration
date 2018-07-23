@@ -54,6 +54,7 @@
 									<th>Delivery System</th>
 									<th>Owner Type</th>
 									<th>Address</th>
+									<th>Attachment</th>
 									<th>Date Inserted</th>
 									<th>Options</th>
 								</tr>
@@ -79,7 +80,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
-					<form method="post" action="<?php echo base_url("projects/crud/create/bidding"); ?>" class="form-horizontal p-t-20">
+					<form method="post" enctype="multipart/form-data" action="<?php echo base_url("projects/crud/create/bidding"); ?>" class="form-horizontal p-t-20">
 						<div class="row holderx">
 							<div class="col-4">
 								<div class="form-group row">
@@ -258,6 +259,27 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-8">
+								<div class="form-group row">
+									<label for="web_info" class="col-sm-12 control-label">Web Info*</label>
+									<div class="col-sm-12">
+										<textarea name="web_info" id="web_info"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group row">
+									<label for="attachment" class="col-sm-12 control-label">Attachment*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="file" class="form-control" name="attachment" id="attachment">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 				</div>
 					<div class="modal-footer">
@@ -279,7 +301,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
-					<form method="post" action="<?php echo base_url("projects/crud/update/bidding"); ?>" class="form-horizontal p-t-20">
+					<form method="post" enctype="multipart/form-data" action="<?php echo base_url("projects/crud/update/bidding"); ?>" class="form-horizontal p-t-20">
 						<div class="row holderx">
 							<div class="col-4">	
 								<div class="form-group row">
@@ -437,21 +459,43 @@
 									</div>
 								</div>
 								<div class="form-group row">
-								<label for="owner_type" class="col-sm-12 control-label">Owner Type*</label>
-								<div class="col-sm-12">
-									<div class="input-group">
-										<input type="text" class="form-control" name="owner_type" id="owner_type">
-										<div class="input-group-append">
-											<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+									<label for="owner_type" class="col-sm-12 control-label">Owner Type*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="owner_type" id="owner_type">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 								<div class="form-group row">
 									<label for="address" class="col-sm-12 control-label">Address*</label>
 									<div class="col-sm-12">
 										<div class="input-group">
 											<input type="text" class="form-control" name="address" id="address">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-8">
+								<div class="form-group row">
+									<label for="web_info" class="col-sm-12 control-label">Web Info*</label>
+									<div class="col-sm-12">
+										<textarea name="web_info" id="web_info"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group row">
+									<label for="attachment" class="col-sm-12 control-label">Attachment*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="hidden" class="form-control" name="old_attachment" id="old_attachment">
+											<input type="file" class="form-control" name="attachment" id="attachment">
 											<div class="input-group-append">
 												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 											</div>
@@ -483,6 +527,13 @@
 		$('#editBiddingList #prebid_meeting_date').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
 		$('#editBiddingList #start_date').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD HH:mm:00' });
 		getBiddingData();
+		$('#createBiddingList #web_info').summernote({
+            height: 70,
+            minHeight: null,
+            maxHeight: null,
+            focus: false
+        });
+		
 		<?php 
 			if($this->session->flashdata('global_message') != "") {
 				echo $this->session->flashdata('global_message');
@@ -531,7 +582,7 @@
 				.done(function(data) {
 					if(data == 1) { // or true
 						$('#tblBiddingList').DataTable().destroy();
-						getMtrl();
+						getBiddingData();
 						swal("Deleted!", "Record was successfully deleted!", "success"); 
 					} else {
 						swal("Error!", data, "error"); 
@@ -567,7 +618,16 @@
 			$('#editBiddingList input#delivery_system').val(obj[0].delivery_system);
 			$('#editBiddingList input#owner_type').val(obj[0].owner_type);
 			$('#editBiddingList input#address').val(obj[0].address);
+			$('#editBiddingList input#old_attachment').val(obj[0].attachment);
+			$('#editBiddingList textarea#web_info').val(obj[0].web_info);
+			$('#editBiddingList #web_info').summernote({
+				height: 70,
+				minHeight: null,
+				maxHeight: null,
+				focus: false
+			});
 			$("#editBiddingList").modal('show');
+			
 		});
 	}
 </script>
