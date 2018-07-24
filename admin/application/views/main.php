@@ -104,7 +104,7 @@
                             <div class="dropdown-menu dropdown-menu-right scale-up"> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-cn"></i> China</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a> </div>
                         </li>-->
 						<li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="https://via.placeholder.com/50x50?text=LOGO" alt="user" class="profile-pic" /></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-settings"></i></a>
                             <div class="dropdown-menu dropdown-menu-right scale-up">
                                 <ul class="dropdown-user">
                                     <!--<li>
@@ -121,7 +121,7 @@
                                     <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
                                     <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
                                     <li role="separator" class="divider"></li>-->
-                                    <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+                                    <li><a href="<?php echo base_url("user/manage"); ?>"><i class="ti-settings"></i> Account Setting</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="<?php echo base_url("user/logout"); ?>"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
@@ -134,11 +134,12 @@
 		<aside class="left-sidebar">
             <div class="scroll-sidebar">
                 <div class="user-profile">
-                    <div class="profile-img"> <img src="https://via.placeholder.com/50x50?text=LOGO" alt="user" />
+                    <!--<div class="profile-img"> <img src="https://via.placeholder.com/50x50?text=LOGO" alt="user" />
                         <div class="notify setpos"> <span class="heartbit"></span> <span class="point"></span> </div>
-                    </div>
+                    </div>-->
+					<br/>
                     <div class="profile-text">
-                        <h5>John Salvador</h5>
+                        <h5><?php echo $this->session->userdata('fullname'); ?></h5>
                         <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
                         <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
                         <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
@@ -187,12 +188,12 @@
 								<li><a href="javascript:void(0);" onclick="processPayroll();"><b style='color:#ff0000'>Process Payroll</b></a></li>
 							</ul>
 						</li>
-						<?php if($this->session->userdata('userlevel') != "VIEWER"): ?>
+						<?php if($this->session->userdata('userlevel') == "ADMIN"): ?>
 						<li> <a class="has-arrow waves-effect waves-dark" href="<?php echo base_url("user/list"); ?>" aria-expanded="false"><i class="mdi mdi-account-star-variant"></i><span class="hide-menu">USER ACCOUNTS</span></a></li>
 						<?php endif; ?>
-						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">Estimation</span></a>
+						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">ESTIMATION</span></a>
 							<ul aria-expanded="false" class="collapse">
-								<li><a href="<?php echo base_url("estimation/build"); ?>">Create Project</a></li>
+								<li><a href="<?php echo base_url("estimation/build"); ?>">Create Estimation</a></li>
 							</ul>
 						</li>
 					</ul>
