@@ -159,6 +159,27 @@ class Admin_controller extends CI_Controller {
 						$this->redirector("user/list","Invalid parameters passed!","error");
 					}
 				}
+				elseif($module == "account") {
+					if($this->session->userdata('adminid') <> "") {
+						if($this->input->post('password') <> "") {
+							$data = array(
+								"fullname" 	=> $this->input->post('fullname'),
+								"password" 	=> md5($this->input->post('password'))
+							);
+						} else {
+							$data = array(
+								"fullname" 	=> $this->input->post('fullname')
+							);
+
+						}
+						$result = $this->Update_AdminData($data,$this->session->userdata('adminid'));
+						if($result == false) {
+							$this->redirector("user/manage","An error occurred when updating record!","error");
+						} else {
+							$this->redirector("user/logout","Successfully update account data!","success");
+						}
+					}
+				}
 				else {
 					show_404();
 				}

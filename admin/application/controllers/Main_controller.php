@@ -138,6 +138,9 @@ class Main_controller extends CI_Controller {
 	}
 	
 	public function estimation($module = '',$id = ''){
+		if($this->session->userdata('adminid') == "") {
+			redirect(base_url("user/login"));
+		}
 		if($module == "build"){
 			$data['module'] = "estimation/estimation_build";
 			$data['showitem'] = "build";
@@ -158,7 +161,12 @@ class Main_controller extends CI_Controller {
 			if($module == "list") {
 				$data['module'] = "admin/admin_list";
 				$this->load->view('main',$data);
-			} else {
+			} 
+			elseif($module == "manage") {
+				$data['module'] = "admin/account_manager";
+				$this->load->view('main',$data);
+			} 
+			else {
 				show_404();
 			}
 		} else {
