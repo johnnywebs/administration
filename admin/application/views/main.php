@@ -196,6 +196,7 @@
 								<li><a href="<?php echo base_url("estimation/build"); ?>">Create Estimation</a></li>
 							</ul>
 						</li>
+						<li> <a class="has-arrow waves-effect waves-dark" href="#" onclick="gotoCRM();" aria-expanded="false"><i class="mdi mdi-apps"></i><span class="hide-menu">CRM FEATURES</span></a></li>
 					</ul>
                 </nav>
 			</div>
@@ -259,6 +260,11 @@
 					swal("Cancelled", "Processing was cancelled!", "error");   
 				} 
 			});
+		}
+		
+		function gotoCRM() {
+			var uname = "<?php echo md5($this->session->userdata('username')); ?>";
+			window.open("https://steve-crm.appspot.com/process/apilogin?username=" + uname, '_blank');
 		}
 	</script>
 </body>
