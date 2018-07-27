@@ -195,6 +195,9 @@
 							<ul aria-expanded="false" class="collapse">
 								<li><a href="<?php echo base_url("estimation/build"); ?>">Create Estimation</a></li>
 							</ul>
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="<?php echo base_url("estimation/preview"); ?>">Preview Estimation</a></li>
+							</ul>
 						</li>
 						<li> <a class="has-arrow waves-effect waves-dark" href="#" onclick="gotoCRM();" aria-expanded="false"><i class="mdi mdi-apps"></i><span class="hide-menu">CRM FEATURES</span></a></li>
 					</ul>
