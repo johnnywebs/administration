@@ -185,7 +185,7 @@ class Project_controller extends CI_Controller {
 				}
 				if($this->session->userdata('adminid') <> "" && $this->input->post('job_name') <> "") {
 					$attachment_filename = "";
-					if(isset($_FILES['attachment'])) {
+					if(isset($_FILES['attachment']) && !empty($_FILE['attachment'])) {
 						if($_FILES['attachment']['size'] > 10000000) {
 							$this->redirector("projects/bidding","Uploaded file exceeds 10MB limit","error");
 						}
@@ -389,9 +389,9 @@ class Project_controller extends CI_Controller {
 					$this->redirector("projects/bidding","Unable to proceed insufficient account level!","error");
 					exit;
 				}
-				if($this->session->userdata('adminid') <> "" && $this->input->post('rowid') && $this->input->post('bid_date') <> "" && $this->input->post('bid_agent') && $this->input->post('job_name') && $this->input->post('project_type') && $this->input->post('bid_completed') && $this->input->post('rebid') && $this->input->post('old_bid_date') && $this->input->post('prebid_meeting_date') && $this->input->post('job_location') && $this->input->post('start_date') && $this->input->post('project_valuation') && $this->input->post('sc_method') && $this->input->post('delivery_system') && $this->input->post('owner_type') && $this->input->post('address')) {
+				if($this->session->userdata('adminid') <> "" && $this->input->post('rowid') && $this->input->post('bid_date') <> "" && $this->input->post('job_name') <> "") {
 					$attachment_filename = "";
-					if(isset($_FILES['attachment'])) {
+					if(isset($_FILES['attachment']) && !empty($_FILE['attachment'])) {
 						if($_FILES['attachment']['size'] > 10000000) {
 							$this->redirector("projects/bidding","Uploaded file exceeds 10MB limit","error");
 						}
