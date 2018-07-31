@@ -183,7 +183,7 @@ class Project_controller extends CI_Controller {
 					$this->redirector("projects/bidding","Unable to proceed insufficient account level!","error");
 					exit;
 				}
-				if($this->session->userdata('adminid') <> "" && $this->input->post('bid_date') <> "" && $this->input->post('bid_agent') && $this->input->post('job_name') && $this->input->post('project_type') && $this->input->post('bid_completed') && $this->input->post('rebid') && $this->input->post('old_bid_date') && $this->input->post('prebid_meeting_date') && $this->input->post('job_location') && $this->input->post('start_date') && $this->input->post('project_valuation') && $this->input->post('sc_method') && $this->input->post('delivery_system') && $this->input->post('owner_type') && $this->input->post('address')) {
+				if($this->session->userdata('adminid') <> "" && $this->input->post('job_name') <> "") {
 					$attachment_filename = "";
 					if(isset($_FILES['attachment'])) {
 						if($_FILES['attachment']['size'] > 10000000) {
@@ -946,7 +946,21 @@ class Project_controller extends CI_Controller {
 		if($data !== false) {
 			$html = "";
 			foreach($data as $row) {
-				$html .= "<tr>";
+				if($row->bid_agent == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->project_type == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->bid_completed == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->rebid == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->old_bid_date == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->prebid_meeting_date == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->job_location == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->start_date == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->project_valuation == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->sc_method == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->delivery_system == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->owner_type == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				if($row->address == "") { $red = "style='color:#fff;background-color:#EF4836;'"; } else { $red = ""; }
+				
+				$html .= "<tr ".$red.">";
 				$html .= "<td>$row->bid_date</td>";
 				$html .= "<td>$row->bid_agent</td>";
 				$html .= "<td>$row->job_name</td>";
@@ -970,6 +984,7 @@ class Project_controller extends CI_Controller {
 						  </td>";
 			}
 			return $html;
+			
 		}
 		return false;
 	}
