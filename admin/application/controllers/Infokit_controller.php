@@ -137,7 +137,7 @@ class Infokit_controller extends CI_Controller {
 					'topic_sequence'=> $this->input->post('topic_sequence')
 				);
 				$this->session->set_userdata($newdata);
-				redirect("infokit/lesson");
+				redirect(base_url("infokit/lesson"));
 			}
 			elseif($module == "lessonlist") {
 				echo $this->List_Lessons($this->input->post('topic_id'));
