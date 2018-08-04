@@ -200,6 +200,11 @@
 							</ul>
 						</li>
 						<li> <a class="has-arrow waves-effect waves-dark" href="#" onclick="gotoCRM();" aria-expanded="false"><i class="mdi mdi-apps"></i><span class="hide-menu">CRM FEATURES</span></a></li>
+						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-apps"></i><span class="hide-menu">INFOKIT</span></a>
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="<?php echo base_url("infokit/topic"); ?>">Topics</a></li>
+							</ul>
+						</li>
 					</ul>
                 </nav>
 			</div>
@@ -227,6 +232,7 @@
 	<script src="<?php echo base_url("public/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"); ?>"></script>
 	<script src="<?php echo base_url("public/assets/plugins/select2/dist/js/select2.full.js"); ?>"></script>
 	<script src="<?php echo base_url("public/assets/plugins/summernote/dist/summernote.min.js"); ?>"></script>
+	<script src="<?php echo base_url("public/assets/plugins/sortable-master/Sortable.min.js"); ?>"></script>
     <!--Custom JavaScript -->
     <script src="<?php echo base_url("public/js/custom.js");?>"></script>
 	<script src="<?php echo base_url("public/js/toastr.js");?>"></script>

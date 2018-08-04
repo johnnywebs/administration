@@ -976,7 +976,11 @@ class Project_controller extends CI_Controller {
 				$html .= "<td>$row->delivery_system</td>";
 				$html .= "<td>$row->owner_type</td>";
 				$html .= "<td>$row->address</td>";
-				$html .= "<td><a href='https://storage.googleapis.com/steve-unified/$row->attachment' target='_blank'>DOWNLOAD</a></td>";
+				if($row->attachment != "") {
+					$html .= "<td><a href='https://storage.googleapis.com/steve-unified/$row->attachment' target='_blank'>DOWNLOAD</a></td>";
+				} else {
+					$html .= "<td></td>";
+				}
 				$html .= "<td>$row->date_inserted</td>";
 				$html .= "<td>
 							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditBiddingData('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>

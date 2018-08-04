@@ -31,6 +31,11 @@ $route['payroll/(:any)/(:num)']			= "main_controller/payroll/$1/$2";
 $route['payroll/(:any)']				= "main_controller/payroll/$1";
 $route['payroll/crud/(:any)/(:any)']	= "payroll_controller/crud/$1/$2";
 $route['payroll/prepupdate/(:any)']		= "payroll_controller/prep_update/$1";
+//Infokit Router
+$route['infokit/(:any)/(:num)']			= "main_controller/infokit/$1/$2";
+$route['infokit/(:any)']				= "main_controller/infokit/$1";
+$route['infokit/crud/(:any)/(:any)']	= "infokit_controller/crud/$1/$2";
+$route['infokit/prepupdate/(:any)']		= "infokit_controller/prep_update/$1";
 
 //Estimation Router
 $route['estimation/(:any)']					= "main_controller/estimation/$1";
