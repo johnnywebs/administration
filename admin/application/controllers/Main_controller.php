@@ -174,6 +174,21 @@ class Main_controller extends CI_Controller {
 		}
 	}
 	
+	public function infokit($module = '',$id = '') {
+		if($this->session->userdata('adminid') == "") {
+			redirect(base_url("user/login"));
+		}
+		
+		if($module == "topic") {
+			$data['module'] = "infokit/infokit_topic";
+			$this->load->view('main',$data);
+		} 
+		elseif($module == "lesson") {
+			$data['module'] = "infokit/infokit_lesson";
+			$this->load->view('main',$data);
+		}
+	}
+	
 	public function redirector($path,$flashmsg,$flashmsgtype) {
 		if($flashmsgtype == "error") {
 			$toast = "$.toast({
