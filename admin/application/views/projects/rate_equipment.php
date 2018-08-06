@@ -180,6 +180,79 @@
 		</div>
 	</div>
 	<!-- end create modal -->
+	<style>
+		#previewEquipList label { font-size:14px; }
+		#previewEquipList .values { border-bottom:#6BB9F0 solid 2px;padding:5px }
+	</style>
+	<!-- start create modal -->
+	<div id="previewEquipList" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Equipment Rate</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="code" class="p-0 ol-sm-12 control-label">Code</label>
+								<div class="values" id="code"></div>
+							</div>
+							<div class="col-sm-6">
+								<label for="description" class="p-0 col-sm-12 control-label">Description</label>
+								<div class="values" id="description"></div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="equip_no" class="p-0 col-sm-12 control-label">Equipment Number</label>
+								<div class="values" id="equip_no"></div>
+							</div>
+							<div class="col-sm-6">
+								<label for="class" class="p-0 col-sm-12 control-label">Location</label>
+								<div class="values" id="class"></div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="fa_rate" class="p-0 col-sm-12 control-label">FA Rate</label>
+								<div class="values" id="fa_rate"></div>
+							</div>
+							<div class="col-sm-6">
+								<label for="geo_rate" class="p-0 col-sm-12 control-label">Geo Rate</label>
+								<div class="values" id="geo_rate"></div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="make" class="p-0 col-sm-12 control-label">Make</label>	
+								<div class="values" id="make"></div>
+							</div>
+							<div class="col-sm-6">
+								<label for="model" class="p-0 col-sm-12 control-label">Model</label>
+								<div class="values" id="model"></div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="ot_factor" class="p-0 col-sm-12 control-label">OT Factor</label>
+								<div class="values" id="ot_factor"></div>
+							</div>
+							<div class="col-sm-6">
+								<label for="row_delay" class="p-0 col-sm-12 control-label">Row Delay</label>
+								<div class="values" id="row_delay"></div>
+							</div>
+						</div>
+				</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+						<button onclick="$('#editEquipList').modal('show');$('#previewEquipList').modal('hide');" class="btn btn-danger waves-effect waves-light">Update</button>
+					</div>
+					</form>
+			</div>
+		</div>
+	</div>
+	<!-- end create modal -->
 	
 	<!-- start create modal -->
 	<div id="editEquipList" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -383,7 +456,7 @@
 	}
 	
 	function fneditEquipRate(id) {
-		$.post("<?php echo base_url("projects/prepupdate/material"); ?>",{ admin_id : "1", id: id })
+		$.post("<?php echo base_url("projects/prepupdate/equiprate"); ?>",{ admin_id : "1", id: id })
 		.done(function(json) {
 			if(json == "Unable to proceed insufficient account level!") {
 				swal("Error!", json, "error"); 
@@ -401,7 +474,17 @@
 			$('#editEquipList input#model').val(obj[0].model);
 			$('#editEquipList input#ot_factor').val(obj[0].ot_factor);
 			$('#editEquipList input#row_delay').val(obj[0].row_delay);
-			$("#editEquipList").modal('show');
+			$('#previewEquipList div#code').text(obj[0].code);
+			$('#previewEquipList div#description').text(obj[0].description);
+			$('#previewEquipList div#equip_no').text(obj[0].equip_no);
+			$('#previewEquipList div#class').text(obj[0].class);
+			$('#previewEquipList div#fa_rate').text(obj[0].fa_rate);
+			$('#previewEquipList div#geo_rate').text(obj[0].geo_rate);
+			$('#previewEquipList div#make').text(obj[0].make);
+			$('#previewEquipList div#model').text(obj[0].model);
+			$('#previewEquipList div#ot_factor').text(obj[0].ot_factor);
+			$('#previewEquipList div#row_delay').text(obj[0].row_delay);
+			$("#previewEquipList").modal('show');
 		});
 	}
 </script>

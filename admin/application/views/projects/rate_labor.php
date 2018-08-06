@@ -158,6 +158,68 @@
 		</div>
 	</div>
 	<!-- end create modal -->
+	<style>
+		#previewLaborRate .values { border-bottom:#6BB9F0 solid 2px;padding:5px }
+	</style>
+	<!-- start create modal -->
+	<div id="previewLaborRate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Labor Rate</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="class" class="p-0 col-sm-12 control-label">Class</label>
+								<div class="values" id="class"></div>
+							</div>
+							<div class="col-sm-6">
+								<label for="description" class="p-0 col-sm-12 control-label">Description</label>
+								<div class="values" id="description"></div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="st_hour" class="p-0 col-sm-12 control-label">Straight Hour</label>
+								<div class="values" id="st_hour"></div>
+							</div>
+							<div class="col-sm-6">
+								<label for="st_rate" class="p-0 col-sm-12 control-label">Straight Rate</label>
+								<div class="values" id="st_rate"></div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="ot_hour" class="p-0 col-sm-12 control-label">Overtime Hour</label>
+								<div class="values" id="ot_hour"></div>
+							</div>
+							<div class="col-sm-6">
+								<label for="ot_rate" class="p-0 col-sm-12 control-label">Overtime Rate</label>
+								<div class="values" id="ot_rate"></div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="dt_hour" class="p-0 col-sm-12 control-label">Doubletime Hour</label>
+								<div class="values" id="dt_hour"></div>
+							</div>
+							<div class="col-sm-6">
+								<label for="dt_rate" class="p-0 col-sm-12 control-label">Doubletime Rate</label>
+								<div class="values" id="dt_rate"></div>
+							</div>
+						</div>
+				</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+						<button onclick="$('#editLaborRate').modal('show');$('#previewLaborRate').modal('hide');" class="btn btn-danger waves-effect waves-light">Edit</button>
+					</div>
+					</form>
+			</div>
+		</div>
+	</div>
+	<!-- end create modal -->
 	
 	<!-- start create modal -->
 	<div id="editLaborRate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -254,7 +316,7 @@
 				</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-danger waves-effect waves-light">Create</button>
+						<button type="submit" class="btn btn-danger waves-effect waves-light">Update</button>
 					</div>
 					</form>
 			</div>
@@ -336,7 +398,15 @@
 			$('#editLaborRate input#ot_rate').val(obj[0].ot_rate);
 			$('#editLaborRate input#dt_hour').val(obj[0].dt_hour);
 			$('#editLaborRate input#dt_rate').val(obj[0].dt_rate);
-			$("#editLaborRate").modal('show');
+			$('#previewLaborRate div#class').text(obj[0].class);
+			$('#previewLaborRate div#description').text(obj[0].description);
+			$('#previewLaborRate div#st_hour').text(obj[0].st_hour);
+			$('#previewLaborRate div#st_rate').text(obj[0].st_rate);
+			$('#previewLaborRate div#ot_hour').text(obj[0].ot_hour);
+			$('#previewLaborRate div#ot_rate').text(obj[0].ot_rate);
+			$('#previewLaborRate div#dt_hour').text(obj[0].dt_hour);
+			$('#previewLaborRate div#dt_rate').text(obj[0].dt_rate);
+			$("#previewLaborRate").modal('show');
 		});
 		
 	}

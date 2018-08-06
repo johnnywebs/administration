@@ -14,11 +14,170 @@
 		<button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
 	</div>-->
 </div>
+<style>
+		#previewView .values { border-bottom:#6BB9F0 solid 2px;padding:5px }
+	</style>
 <div class="container-fluid">
 	<div class="row" id="validation">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-body">
+				<div class="card-body" id="previewView">
+					<h4 class="card-title">Employee Record</h4>
+					<h6 class="card-subtitle"></h6>
+						<div class="row">
+							<div class="col-md-5">
+								<div class="form-group">
+									<label for="wfirstName"> First Name : </label>
+									<div class="controls">
+										<div class='values' id="wfirstName"><?php echo $emp_first; ?></div> 
+									</div>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<div class="form-group">
+									<label for="wlastName"> Last Name : </label>
+									<div class="controls">
+										<div class="values"><?php echo $emp_last; ?></div> 
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="wMiddleIni"> Middle Initial : </label>
+									<div class="controls">
+										<div class="values"><?php echo $emp_mi; ?></div> 
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="bdate"> Birthdate :  </label>
+									<div class="controls">
+										<div class="values"><?php echo $birthdate; ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="email"> Email :  </label>
+									<div class="controls">
+										<div class="values"><?php echo $email; ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="mobtel"> Mobile # :  </label>
+									<div class="controls">
+										<div class="values"><?php echo $mobile_no; ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="marital"> Civil Status : </label>
+									<div class="controls">
+										<div class="values"><?php echo $marital_status;?></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="addUnit"> Unit : </label>
+									<div class="controls">
+										<div class="values"><?php echo $add_unit; ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<div class="form-group">
+									<label for="addStreet"> Street : </label>
+									<div class="controls">
+										<div class="values"><?php echo $add_street; ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="addCity"> City : </label>
+									<div class="controls">
+										<div class="values"><?php echo $add_city; ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-8" id="divctr">
+								<div class="form-group">
+									<label for="addCountry"> Country : </label>
+									<div class="controls">
+										<div class="values"><?php echo $add_country; ?></div>
+									</div>
+								</div>
+							</div>
+							<div style="display:none" id="statebox" class="col-md-4">
+								<div class="form-group">
+									<label for="addState"> State : </label>
+									<div class="controls">
+										<div class="values"><?php echo $add_state; ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="addZip"> Zip Code : </label>
+									<div class="controls">
+										<div class="values"><?php echo $add_zipcode; ?></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="empStat"> Employment Status : </label>
+									<div class="controls">
+										<div class="values"><?php echo $emp_status; ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="desig"> Designation : </label>
+									<div class="controls">
+										<div class="values"><?php echo $designation; ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="hourlyrate">Hourly Rate: </label>
+									<div class="controls">
+										<div class="values"><?php echo $hourly_rate; ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="hourlyrate">Monthly Rate: </label>
+									<div class="controls">
+										<div class="values"><?php echo $monthly_rate; ?></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<button class="btn btn-info col-3" onclick="$('#editView').show();$('#previewView').hide();">EDIT</button>
+								</div>
+							</div>
+						</div>
+				</div>
+			
+				<div class="card-body" id='editView' style='display:none;'>
 					<h4 class="card-title">Update Employee Record</h4>
 					<h6 class="card-subtitle"></h6>
 					<form action="<?php echo base_url("employees/crud/update/emplist"); ?>" method="post" novalidate>

@@ -120,6 +120,51 @@
 		</div>
 	</div>
 	<!-- end create modal -->
+	<style>
+		#previewProjectType .values { border-bottom:#6BB9F0 solid 2px;padding:5px }
+	</style>
+	<!-- start create modal -->
+	<div id="previewProjectType" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Project</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label for="project_name" class="col-sm-12 control-label">Project Name</label>
+						<div class="col-sm-12">
+							<div  class="values" id="project_name"></div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="client_name" class="col-sm-12 control-label">Client Name</label>
+						<div class="col-sm-12">
+							<div class="values" id="client_name"></div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="proj_location" class="col-sm-12 control-label">Location</label>
+						<div class="col-sm-12">
+							<div  class="values" id="proj_location"></div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="project_type" class="col-sm-12 control-label">Project Type</label>
+						<div class="col-sm-12">
+							<div  class="values" id="project_type"></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+					<button onclick="$('#previewProjectType').modal('hide');$('#editProjectType').modal('show');" class="btn btn-danger waves-effect waves-light">Edit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end create modal -->
 	
 	<!-- start create modal -->
 	<div id="editProjectType" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -280,7 +325,11 @@
 			$('#editProjectType input#client_name').val(obj[0].client_name);
 			$('#editProjectType input#proj_location').val(obj[0].location);
 			$('#editProjectType input#project_type').val(obj[0].project_type);
-			$("#editProjectType").modal('show');
+			$('#previewProjectType div#project_name').text(obj[0].project_name);
+			$('#previewProjectType div#client_name').text(obj[0].client_name);
+			$('#previewProjectType div#proj_location').text(obj[0].location);
+			$('#previewProjectType div#project_type').text(obj[0].project_type);
+			$("#previewProjectType").modal('show');
 		});
 	}
 </script>

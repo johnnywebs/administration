@@ -94,6 +94,39 @@
 		</div>
 	</div>
 	<!-- end create modal -->
+	<style>
+		#previewMtrlList .values { border-bottom:#6BB9F0 solid 2px;padding:5px }
+	</style>
+	<!-- start create modal -->
+	<div id="previewMtrlList" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Materials</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+						<div class="form-group row">
+							<label for="description" class="col-sm-12 control-label">Description</label>
+							<div class="col-sm-12">
+								<div class='values' id="description"></div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="unit" class="col-sm-12 control-label">Unit</label>
+							<div class="col-sm-12">
+								<div class='values' id="unit"></div>
+							</div>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+					<button onclick="$('#editMtrlList').modal('show');$('#previewMtrlList').modal('hide');" class="btn btn-danger waves-effect waves-light">Edit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end create modal -->
 	
 	<!-- start create modal -->
 	<div id="editMtrlList" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -206,7 +239,9 @@
 			$('#editMtrlList input#rowid').val(obj[0].id);
 			$('#editMtrlList input#description').val(obj[0].description);
 			$('#editMtrlList input#unit').val(obj[0].unit);
-			$("#editMtrlList").modal('show');
+			$('#previewMtrlList div#description').text(obj[0].description);
+			$('#previewMtrlList div#unit').text(obj[0].unit);
+			$("#previewMtrlList").modal('show');
 			
 		});
 	}
