@@ -83,6 +83,33 @@
 		</div>
 	</div>
 	<!-- end create modal -->
+	<style>
+		#previewEmpDesig .values { border-bottom:#6BB9F0 solid 2px;padding:5px }
+	</style>
+	<!-- start create modal -->
+	<div id="previewEmpDesig" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Employee Designations</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label for="emp_desig" class="col-sm-12 control-label">Employee Designations</label>
+						<div class="col-sm-12">
+							<div class="values" id="emp_desig"></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+					<button onclick="$('#previewEmpDesig').modal('hide');$('#editEmpDesig').modal('show');" class="btn btn-danger waves-effect waves-light">Edit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end create modal -->
 	
 	<!-- start create modal -->
 	<div id="editEmpDesig" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -153,7 +180,8 @@
 			var obj = JSON.parse(json);
 			$('#updateEmpDesig input#row_id').val(obj[0].id);
 			$('#updateEmpDesig input#emp_desig').val(obj[0].description);
-			$("#editEmpDesig").modal('show');
+			$('#previewEmpDesig div#emp_desig').text(obj[0].description);
+			$("#previewEmpDesig").modal('show');
 		});
 	}
 	

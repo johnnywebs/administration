@@ -185,7 +185,7 @@ class Project_controller extends CI_Controller {
 				}
 				if($this->session->userdata('adminid') <> "" && $this->input->post('job_name') <> "") {
 					$attachment_filename = "";
-					if(isset($_FILES['attachment']) && !empty($_FILE['attachment'])) {
+					if(isset($_FILES['attachment']) && !empty($_FILES['attachment'])) {
 						if($_FILES['attachment']['size'] > 10000000) {
 							$this->redirector("projects/bidding","Uploaded file exceeds 10MB limit","error");
 						}
@@ -675,7 +675,7 @@ class Project_controller extends CI_Controller {
 				$html .= "<td>$row->project_type</td>";
 				$html .= "<td>$row->date_inserted</td>";
 				$html .= "<td>
-							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditProjList('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='View Record' type='button' onclick=\"fneditProjList('".$row->id."');\" class='btn btn-info'><i class='fa fa-desktop'></i></button>
 							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteProjList('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
 						  </td>";
 			}
@@ -736,7 +736,7 @@ class Project_controller extends CI_Controller {
 				$html .= "<td>$row->date_inserted</td>";
 				$html .= "<td>$row->user</td>";
 				$html .= "<td>
-							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditTypes('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='View Record' type='button' onclick=\"fneditTypes('".$row->id."');\" class='btn btn-info'><i class='fa fa-desktop'></i></button>
 							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteTypes('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
 						  </td>";
 			}
@@ -792,7 +792,7 @@ class Project_controller extends CI_Controller {
 				$html .= "<td>$row->row_delay</td>";
 				$html .= "<td>$row->date_inserted</td>";
 				$html .= "<td>
-							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditEquipRate('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='View Record' type='button' onclick=\"fneditEquipRate('".$row->id."');\" class='btn btn-info'><i class='fa fa-desktop'></i></button>
 							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteEquipRate('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
 						  </td>";
 			}
@@ -846,7 +846,7 @@ class Project_controller extends CI_Controller {
 				$html .= "<td>$row->dt_rate</td>";
 				$html .= "<td>$row->date_inserted</td>";
 				$html .= "<td>
-							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditLaborRate('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='View Record' type='button' onclick=\"fneditLaborRate('".$row->id."');\" class='btn btn-info'><i class='fa fa-desktop'></i></button>
 							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteLaborRate('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
 						  </td>";
 			}
@@ -894,7 +894,7 @@ class Project_controller extends CI_Controller {
 				$html .= "<td>$row->unit</td>";
 				$html .= "<td>$row->date_inserted</td>";
 				$html .= "<td>
-							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditMtrl('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='View Record' type='button' onclick=\"fneditMtrl('".$row->id."');\" class='btn btn-info'><i class='fa fa-desktop'></i></button>
 							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteMtrl('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
 						  </td>";
 			}
@@ -983,7 +983,7 @@ class Project_controller extends CI_Controller {
 				}
 				$html .= "<td>$row->date_inserted</td>";
 				$html .= "<td>
-							<button data-toggle='tooltip' title='Edit Record' type='button' onclick=\"fneditBiddingData('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='View Record' type='button' onclick=\"fneditBiddingData('".$row->id."');\" class='btn btn-info'><i class='fa fa-desktop'></i></button>
 							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteBiddingData('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
 						  </td>";
 			}

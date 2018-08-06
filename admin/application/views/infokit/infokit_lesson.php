@@ -6,7 +6,7 @@
 
 <div class="row page-titles">
 	<div class="col-md-5 align-self-center">
-		<h3 class="text-themecolor">Infokit - Topic : <?php echo $this->session->userdata('topic_name'); ?></h3>
+		<h3 class="text-themecolor">Infokit - Topic : <?php echo $this->session->userdata('topic_name'); ?> </h3>
 	</div>
 	<div class="col-md-7 align-self-center">
 		<ol class="breadcrumb">
@@ -178,8 +178,7 @@
 			var obj = JSON.parse(json);
 			$('#previewLesson span#lesson_name').text(obj[0].name);
 			$('#previewLesson div#description').text(obj[0].description);
-			//if(obj[0].attachment_type == ")
-			var att_link = "<a href='#' onclick=\"$('#redir').submit();\">"+obj[0].attachment+"</a>";
+			var att_link = "<a target='_blank' href='https://storage.googleapis.com/steve-unified/"+obj[0].attachment+"'>"+obj[0].attachment+"</a>";
 			var dl_link = obj[0].attachment;
 			$('#previewLesson div#attachment').html(att_link);
 			$('#redir input#file').val(dl_link);
