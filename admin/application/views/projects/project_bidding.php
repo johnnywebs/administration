@@ -292,6 +292,143 @@
 	</div>
 	<!-- end create modal -->
 	
+	<style>
+		#previewBiddingList .values { border-bottom:#6BB9F0 solid 2px;padding:5px }
+	</style>
+	
+	<!-- start create modal -->
+	<div id="previewBiddingList" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Bidding List</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+						<div class="row holderx">
+							<div class="col-4">	
+								<div class="form-group row">
+									<label for="bid_date" class="col-sm-12 control-label">Bid Date</label>
+									<div class="col-sm-12">
+										<div class='values' id="bid_date"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="bid_agent" class="col-sm-12 control-label">Bid Agent</label>
+									<div class="col-sm-12">
+										<div class='values' id="bid_agent"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="job_name" class="col-sm-12 control-label">Job Name</label>
+									<div class="col-sm-12">
+										<div class='values' id="job_name"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="project_type" class="col-sm-12 control-label">Project Type</label>
+									<div class="col-sm-12">
+										<div class='values' id="project_type"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="bid_completed" class="col-sm-12 control-label">Bid Completed</label>
+									<div class="col-sm-12">
+										<div class='values' id="bid_completed"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group row">
+									<label for="rebid" class="col-sm-12 control-label">Rebid</label>
+									<div class="col-sm-12">
+										<div class='values' id="rebid"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+								<label for="old_bid_date" class="col-sm-12 control-label">Old Bid Date</label>
+								<div class="col-sm-12">
+									<div class='values' id="old_bid_date"></div>
+								</div>
+							</div>
+								<div class="form-group row">
+									<label for="prebid_meeting_date" class="col-sm-12 control-label">Pre-Bid Meeting</label>
+									<div class="col-sm-12">
+										<div class='values' id="prebid_meeting_date"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="job_location" class="col-sm-12 control-label">Job Location</label>
+									<div class="col-sm-12">
+										<div class='values' id="job_location"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="start_date" class="col-sm-12 control-label">Start Date</label>
+									<div class="col-sm-12">
+										<div class='values' id="start_date"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group row">
+									<label for="project_valuation" class="col-sm-12 control-label">Project Valuation</label>
+									<div class="col-sm-12">
+										<div class='values' id="project_valuation"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="sc_method" class="col-sm-12 control-label">Subcontract Method</label>
+									<div class="col-sm-12">
+										<div class='values' id="sc_method"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="delivery_system" class="col-sm-12 control-label">Project Delivery System</label>
+									<div class="col-sm-12">
+										<div class='values' id="delivery_system"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="owner_type" class="col-sm-12 control-label">Owner Type</label>
+									<div class="col-sm-12">
+										<div class='values' id="owner_type"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="address" class="col-sm-12 control-label">Address</label>
+									<div class="col-sm-12">
+										<div class='values' id="address"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-8">
+								<div class="form-group row">
+									<label for="web_info" class="col-sm-12 control-label">Web Info</label>
+									<div class="col-sm-12">
+										<div class='values' id="web_info"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group row">
+									<label for="attachment" class="col-sm-12 control-label">Attachment</label>
+									<div class="col-sm-12">
+										<div class='values' id="old_attachment"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+						<button onclick="$('#editBiddingList').modal('show');$('#previewBiddingList').modal('hide');" class="btn btn-danger waves-effect waves-light">Update</button>
+					</div>
+			</div>
+		</div>
+	</div>
+	<!-- end create modal -->
+	
 	<!-- start create modal -->
 	<div id="editBiddingList" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog modal-lg">
@@ -626,7 +763,31 @@
 				maxHeight: null,
 				focus: false
 			});
-			$("#editBiddingList").modal('show');
+			$('#previewBiddingList div#bid_date').text(obj[0].bid_date);
+			$('#previewBiddingList div#bid_agent').text(obj[0].bid_agent);
+			$('#previewBiddingList div#job_name').text(obj[0].job_name);
+			$('#previewBiddingList div#project_type').text(obj[0].project_type);
+			$('#previewBiddingList div#bid_completed').text(obj[0].bid_completed);
+			$('#previewBiddingList div#rebid').text(obj[0].rebid);
+			$('#previewBiddingList div#old_bid_date').text(obj[0].old_bid_date);
+			$('#previewBiddingList div#prebid_meeting_date').text(obj[0].prebid_meeting_date);
+			$('#previewBiddingList div#job_location').text(obj[0].job_location);
+			$('#previewBiddingList div#start_date').text(obj[0].start_date);
+			$('#previewBiddingList div#project_valuation').text(obj[0].project_valuation);
+			$('#previewBiddingList div#sc_method').text(obj[0].sc_method);
+			$('#previewBiddingList div#delivery_system').text(obj[0].delivery_system);
+			$('#previewBiddingList div#owner_type').text(obj[0].owner_type);
+			$('#previewBiddingList div#address').text(obj[0].address);
+			$('#previewBiddingList div#old_attachment').text(obj[0].attachment);
+			$('#previewBiddingList div#web_info').html(obj[0].web_info);
+			$('#previewBiddingList #web_info').summernote({
+				height: 70,
+				minHeight: null,
+				maxHeight: null,
+				focus: false
+			});
+			$('#previewBiddingList #web_info').summernote('disable');
+			$("#previewBiddingList").modal('show');
 			
 		});
 	}

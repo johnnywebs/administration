@@ -491,7 +491,7 @@ class Employee_controller extends CI_Controller {
 				$html .= "<td>".$row->date_inserted."</td>";
 				$html .= "<td>".$row->user."</td>";
 				$html .= "<td>
-							<button data-toggle='tooltip' title='Edit Record'  type='button' onclick=\"fneditTypes('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='View Record'  type='button' onclick=\"fneditTypes('".$row->id."');\" class='btn btn-info'><i class='fa fa-desktop'></i></button>
 							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteTypes('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
 						  </td>";
 			}
@@ -538,7 +538,7 @@ class Employee_controller extends CI_Controller {
 				$html .= "<td>".$row->date_inserted."</td>";
 				$html .= "<td>".$row->user."</td>";
 				$html .= "<td>
-							<button data-toggle='tooltip' title='Edit Record'  type='button' onclick=\"fneditDepts('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='View Record'  type='button' onclick=\"fneditDepts('".$row->id."');\" class='btn btn-info'><i class='fa fa-desktop'></i></button>
 							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteDepts('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
 						  </td>";
 			}
@@ -585,7 +585,7 @@ class Employee_controller extends CI_Controller {
 				$html .= "<td>".$row->date_inserted."</td>";
 				$html .= "<td>".$row->user."</td>";
 				$html .= "<td>
-							<button data-toggle='tooltip' title='Edit Record'  type='button' onclick=\"fneditDesigs('".$row->id."');\" class='btn btn-info'><i class='fa fa-edit'></i></button>
+							<button data-toggle='tooltip' title='View Record'  type='button' onclick=\"fneditDesigs('".$row->id."');\" class='btn btn-info'><i class='fa fa-desktop'></i></button>
 							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteDesigs('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
 						  </td>";
 			}
@@ -641,7 +641,7 @@ class Employee_controller extends CI_Controller {
 				$html .= "<td>$row->emp_status</td>";
 				$html .= "<td>$row->date_inserted</td>";
 				$html .= "<td>
-							<a href='".base_url("employees/empupdate/".$row->id)."' data-toggle='tooltip' title='Edit Record'  type='button' class='btn btn-info'><i class='fa fa-edit'></i></a>
+							<a href='".base_url("employees/empupdate/".$row->id)."' data-toggle='tooltip' title='View Record'  type='button' class='btn btn-info'><i class='fa fa-desktop'></i></a>
 							<button data-toggle='tooltip' title='Delete Record' type='button' onclick=\"fndeleteEmpList('".$row->id."');\" class='btn btn-warning'><i class='fa fa-eraser'></i></button>
 						  </td>";
 			}

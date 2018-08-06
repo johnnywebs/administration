@@ -83,6 +83,33 @@
 		</div>
 	</div>
 	<!-- end create modal -->
+	<style>
+		#previewProjType .values { border-bottom:#6BB9F0 solid 2px;padding:5px }
+	</style>
+	<!-- start create modal -->
+	<div id="previewProjType" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Project Type</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label for="proj_type" class="col-sm-12 control-label">Project Type</label>
+						<div class="col-sm-12">
+							<div class="values" id="proj_type"></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+					<button onclick="$('#previewProjType').modal('hide');$('#editProjType').modal('show');" class="btn btn-danger waves-effect waves-light">Edit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end create modal -->
 	
 	<!-- start create modal -->
 	<div id="editProjType" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -153,7 +180,8 @@
 			var obj = JSON.parse(json);
 			$('#updateProjType input#row_id').val(obj[0].id);
 			$('#updateProjType input#proj_type').val(obj[0].description);
-			$("#editProjType").modal('show');
+			$('#previewProjType div#proj_type').text(obj[0].description);
+			$("#previewProjType").modal('show');
 		});
 		
 	}

@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+use Google\Cloud\Storage\StorageClient;
 class Infokit_controller extends CI_Controller {
 	
 	public function redirector($path,$flashmsg,$flashmsgtype) {
@@ -77,32 +77,30 @@ class Infokit_controller extends CI_Controller {
 			}
 			elseif($module == "lesson") {
 				if($this->session->userdata('adminid') <> "") {
-					if(isset($_FILES['attachment'])) {
+					if(isset($_FILES['attachment']) && !empty($_FILES['attachment'])) {
 						$uniq = $this->uniqidReal();
 						$name = $_FILES['attachment']['name'];  
-						$file = $_FILES['attachment']['tmp_name'];  
+						$file_tmp = $_FILES['attachment']['tmp_name'];  
 						$uniq = $this->uniqidReal();
-						$final_file_name = $uniq.$name;
-						$dest_file = '/elearning/'.$uniq.$name;
 						
-						$host = "ftp.accel-construction.com";
-						$port = "21";
-						$timeo= "5000000";
-						$user = "johnmaster@accel-construction.com";
-						$pass = "john@12345";
-						$error = "";
-						$ftp = ftp_connect($host);
-						ftp_login($ftp,$user,$pass);
-						ftp_pasv($ftp, true);
-						if(!ftp_put($ftp, $dest_file, $file, FTP_BINARY, FTP_AUTORESUME)) {
-							$this->redirector("infokit/lesson",error_get_last(),"error");
+						$storage = new StorageClient(['projectId' => 'steve-unified','keyFilePath' => './key.json']);
+						$file = fopen($file_tmp, 'r');
+						$bucket = $storage->bucket("steve-unified");
+						$oldobject = $bucket->object($uniq.$name);
+						if($oldobject->exists()) {
+							$this->redirector("projects/bidding","Uploaded file is already uploaded in the database.","error");
 						}
-						ftp_close($ftp);
+						$object = $bucket->upload($file, [
+							'name' => $uniq.$name
+						]);
+						
+						$attachment_filename = $uniq.$name;
+						
 						$data = array(
 							"topic_id" => $this->input->post('topic_id'),
 							"name" => $this->input->post('name'),
 							"description" => $this->input->post('description'),
-							"attachment" => $final_file_name,
+							"attachment" => $attachment_filename,
 							"attachment_type" => $_FILES['attachment']['type'],
 							"created_by"	=> $this->session->userdata('adminid')
 						);
@@ -146,10 +144,11 @@ class Infokit_controller extends CI_Controller {
 				if($this->input->post('file') != "") { 
 					$host = "ftp.accel-construction.com";
 					$port = "21";
-					$timeo= "5000000";
+					$timeo= 50000000;
 					$user = "johnmaster@accel-construction.com";
 					$pass = "john@12345";
 					$ftp = ftp_connect($host);
+					ftp_set_option($ftp, FTP_TIMEOUT_SEC, $timeo);
 					ftp_login($ftp,$user,$pass);
 					ftp_pasv($ftp, true);
 					$file_path = "/elearning/".$this->input->post('file');
