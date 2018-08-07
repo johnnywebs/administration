@@ -109,12 +109,9 @@
 								<div class="form-group row">
 									<label for="job_name" class="col-sm-12 control-label">Job Name*</label>
 									<div class="col-sm-12">
-										<div class="input-group">
-											<input type="text" class="form-control" name="job_name" id="job_name">
-											<div class="input-group-append">
-												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-											</div>
-										</div>
+										<select class="select2 form-control custom-select" name="job_name" id="job_name" style="width: 100%; height:36px;">
+											<option>-- SELECT --</option>
+										</select>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -469,10 +466,9 @@
 									<label for="job_name" class="col-sm-12 control-label">Job Name*</label>
 									<div class="col-sm-12">
 										<div class="input-group">
-											<input type="text" class="form-control" name="job_name" id="job_name">
-											<div class="input-group-append">
-												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
-											</div>
+											<select class="select2 form-control custom-select" name="job_name" id="job_name" style="width: 100%; height:36px;">
+												<option>-- SELECT --</option>
+											</select>
 										</div>
 									</div>
 								</div>
@@ -676,7 +672,49 @@
 				echo $this->session->flashdata('global_message');
 			}
 		?>
+		
+		$("#createBiddingList .select2").select2({
+			dropdownParent: $("#createBiddingList"),
+			ajax: {
+				url: "<?php echo base_url("projects/crud/retrieve/cbolistprojectnames"); ?>",
+				type: "POST",
+				dataType: 'json',
+				delay: 100,
+				data: function (params) {
+					var query = { admin_id: "1",searchTerm: params.term }
+					return query;
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+			}
+		});
+		
+		$("#editBiddingList .select2").select2({
+			dropdownParent: $("#editBiddingList"),
+			/*ajax: {
+				url: "<?php echo base_url("employees/crud/retrieve/cbolistempid"); ?>",
+				type: "POST",
+				dataType: 'json',
+				delay: 250,
+				data: function (params) {
+					var query = { admin_id: "1",searchTerm: params.term }
+					return query;
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+			}*/
+		});
 	});
+	
+	
 	
 	function getBiddingData() {
 		$.post("<?php echo base_url("projects/crud/retrieve/bidding"); ?>",{ admin_id : "1" })
@@ -697,6 +735,19 @@
 		.done(function(data) {
 			$("#createBiddingList #project_type").html(data);
 			$("#editBiddingList #project_type").html(data);
+			$(".preloader").fadeOut();
+		});
+	}
+	
+	function getProjectNames(param) {
+		$.post("<?php echo base_url("projects/crud/retrieve/cbolistprojectnames"); ?>",{ admin_id : "1",searchTerm:param })
+		.done(function(data) {
+			var hhh = "";
+			var magic = JSON.parse(data);
+			for(i=0;i<magic.length;i++) {
+				hhh += "<option value='"+magic[i].id+"'>"+magic[i].text+"</option>";
+			}
+			$("#editBiddingList #job_name").html(hhh);
 			$(".preloader").fadeOut();
 		});
 	}
@@ -739,10 +790,11 @@
 				return false;
 			}
 			var obj = JSON.parse(json);
+			getProjectNames(obj[0].job_name);
 			$('#editBiddingList input#rowid').val(obj[0].id);
 			$('#editBiddingList input#bid_date').val(obj[0].bid_date);
 			$('#editBiddingList input#bid_agent').val(obj[0].bid_agent);
-			$('#editBiddingList input#job_name').val(obj[0].job_name);
+			$('#editBiddingList select#job_name').val(obj[0].job_name);
 			$('#editBiddingList select#project_type').val(obj[0].project_type);
 			$('#editBiddingList input#bid_completed').val(obj[0].bid_completed);
 			$('#editBiddingList input#rebid').val(obj[0].rebid);
