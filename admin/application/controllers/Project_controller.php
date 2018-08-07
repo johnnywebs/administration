@@ -493,6 +493,10 @@ class Project_controller extends CI_Controller {
 				elseif($module == "cbotypes") {
 					echo $this->CBO_ProjTypes();
 				}
+				elseif($module == "cbolistprojectnames") {
+					$param = $this->input->post('searchTerm');
+					echo $this->CBO_ProjNames($param);
+				}
 				elseif($module == "types") {
 					echo $this->List_ProjTypes();
 				}
@@ -724,6 +728,8 @@ class Project_controller extends CI_Controller {
 			return false;
 		}
 	}
+	
+	
 	
 	public function List_ProjTypes() {
 		$this->load->model('Project','proj');
@@ -1010,6 +1016,19 @@ class Project_controller extends CI_Controller {
 		} else {
 			return false;
 		}	
+	}
+	
+	public function CBO_ProjNames($param) {
+		$this->load->model('Project','proj');
+		$data = $this->proj->search_ProjLeadNames($param);
+		if($data !== false) {
+			$html = array();
+			foreach($data as $row) {
+				$html[] = array("id"=>$row->id,"text"=>$row->project_name);
+			}
+			return json_encode($html);
+		}
+		return false;
 	}
 	
 }
