@@ -23,7 +23,7 @@
 					<h6 class="card-subtitle"></h6>
 					<form action="<?php echo base_url("employees/crud/create/emplist"); ?>" method="post" novalidate>
 						<div class="row">
-							<div class="col-md-5">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="wfirstName"> First Name : <span class="danger">*</span> </label>
 									<div class="controls">
@@ -32,7 +32,7 @@
 									<input type="hidden" name="admin_id" value="1"> 
 								</div>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="wlastName"> Last Name : <span class="danger">*</span> </label>
 									<div class="controls">
@@ -45,6 +45,14 @@
 									<label for="wMiddleIni"> Middle Initial : <span class="danger">*</span> </label>
 									<div class="controls">
 										<input type="text" class="form-control required" required data-validation-required-message="This field is required" id="wmiddleIni" name="emp_mi"> 
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="wNickname"> Nickname : <span class="danger">*</span> </label>
+									<div class="controls">
+										<input type="text" class="form-control required" required data-validation-required-message="This field is required" id="wNickname" name="emp_nick"> 
 									</div>
 								</div>
 							</div>

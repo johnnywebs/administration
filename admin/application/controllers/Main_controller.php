@@ -33,6 +33,7 @@ class Main_controller extends CI_Controller {
 				$data['emp_first']		= $row->emp_first;
 				$data['emp_last']		= $row->emp_last;
 				$data['emp_mi']			= $row->emp_mi;
+				$data['emp_nick']			= $row->emp_nick;
 				$data['birthdate']		= $row->birthdate;
 				$data['email']			= $row->email;
 				$data['mobile_no']		= $row->mobile_no;

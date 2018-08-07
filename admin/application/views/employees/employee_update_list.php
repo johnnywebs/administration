@@ -25,7 +25,7 @@
 					<h4 class="card-title">Employee Record</h4>
 					<h6 class="card-subtitle"></h6>
 						<div class="row">
-							<div class="col-md-5">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="wfirstName"> First Name : </label>
 									<div class="controls">
@@ -33,7 +33,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="wlastName"> Last Name : </label>
 									<div class="controls">
@@ -46,6 +46,14 @@
 									<label for="wMiddleIni"> Middle Initial : </label>
 									<div class="controls">
 										<div class="values"><?php echo $emp_mi; ?></div> 
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="wNickname"> Nickname : <span class="danger">*</span> </label>
+									<div class="controls">
+										<div class="values"><?php echo $emp_nick; ?></div> 
 									</div>
 								</div>
 							</div>
@@ -182,7 +190,7 @@
 					<h6 class="card-subtitle"></h6>
 					<form action="<?php echo base_url("employees/crud/update/emplist"); ?>" method="post" novalidate>
 						<div class="row">
-							<div class="col-md-5">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="wfirstName"> First Name : <span class="danger">*</span> </label>
 									<div class="controls">
@@ -192,7 +200,7 @@
 									<input type="hidden" name="rowid" value="<?php echo $rowid; ?>"> 
 								</div>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="wlastName"> Last Name : <span class="danger">*</span> </label>
 									<div class="controls">
@@ -205,6 +213,14 @@
 									<label for="wMiddleIni"> Middle Initial : <span class="danger">*</span> </label>
 									<div class="controls">
 										<input type="text" class="form-control required" id="wmiddleIni" required data-validation-required-message="This field is required"  name="emp_mi" value="<?php echo $emp_mi; ?>"> 
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="wNickname"> Nickname : <span class="danger">*</span> </label>
+									<div class="controls">
+										<input type="text" class="form-control required" required data-validation-required-message="This field is required" id="wNickname" name="emp_nick" value="<?php echo $emp_nick; ?>"> 
 									</div>
 								</div>
 							</div>

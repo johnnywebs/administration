@@ -278,6 +278,13 @@ class Project extends CI_Model {
 		}
 	}
 	
-
+	function search_ProjLeadNames($param) {
+		$query = $this->db->query('SELECT * FROM project_leads WHERE id = ? OR project_name LIKE ? ORDER by created_date',array($param,"%".$param."%"));
+		if($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
 	
 }

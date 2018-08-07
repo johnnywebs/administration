@@ -115,6 +115,7 @@ class Employee_controller extends CI_Controller {
 						if($this->input->post('add_country') != "United States" || $this->input->post('add_country') != "Canada") {
 							$data = array(
 							"emp_last"			=> $this->input->post('emp_last'),
+							"emp_nick"			=> $this->input->post('emp_nick'),
 							"emp_first"			=> $this->input->post('emp_first'),
 							"emp_mi"			=> $this->input->post('emp_mi'),
 							"birthdate"			=> $this->input->post('birthdate'),
@@ -135,6 +136,7 @@ class Employee_controller extends CI_Controller {
 						} else {
 							$data = array(
 							"emp_last"			=> $this->input->post('emp_last'),
+							"emp_nick"			=> $this->input->post('emp_nick'),
 							"emp_first"			=> $this->input->post('emp_first'),
 							"emp_mi"			=> $this->input->post('emp_mi'),
 							"birthdate"			=> $this->input->post('birthdate'),
@@ -241,6 +243,7 @@ class Employee_controller extends CI_Controller {
 					if($this->session->userdata('adminid') <> "") {
 						$data = array(
 							"emp_last"			=> $this->input->post('emp_last'),
+							"emp_nick"			=> $this->input->post('emp_nick'),
 							"emp_first"			=> $this->input->post('emp_first'),
 							"emp_mi"			=> $this->input->post('emp_mi'),
 							"birthdate"			=> $this->input->post('birthdate'),
