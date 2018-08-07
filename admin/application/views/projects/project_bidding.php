@@ -76,11 +76,11 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Create New Bidding</h4>
+					<h6 class="modal-title">Create New Bidding</h6>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
-				<div class="modal-body">
-					<form method="post" enctype="multipart/form-data" action="<?php echo base_url("projects/crud/create/bidding"); ?>" class="form-horizontal p-t-20">
+				<div class="modal-body" style='padding-top:5px;padding-bottom:5px'>
+					<form method="post" enctype="multipart/form-data" action="<?php echo base_url("projects/crud/create/bidding"); ?>" class="form-horizontal p-t-10">
 						<div class="row holderx">
 							<div class="col-4">
 								<div class="form-group row">
@@ -112,6 +112,17 @@
 										<select class="select2 form-control custom-select" name="job_name" id="job_name" style="width: 100%; height:36px;">
 											<option>-- SELECT --</option>
 										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="sales_officer" class="col-sm-12 control-label">Sales Officer*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="sales_officer" id="sales_officer">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -198,6 +209,17 @@
 										</div>
 									</div>
 								</div>
+								<div class="form-group row">
+									<label for="lead_description" class="col-sm-12 control-label">Lead Status*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="lead_description" id="lead_description">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class="col-4">
 								<div class="form-group row">
@@ -255,6 +277,17 @@
 										</div>
 									</div>
 								</div>
+								<div class="form-group row">
+									<label for="website" class="col-sm-12 control-label">Website*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="website" id="website">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class="col-8">
 								<div class="form-group row">
@@ -298,10 +331,10 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Bidding List</h4>
+					<h6 class="modal-title">Bidding List</h6>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" style='padding-top:5px;padding-bottom:5px'>
 						<div class="row holderx">
 							<div class="col-4">	
 								<div class="form-group row">
@@ -323,15 +356,21 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="project_type" class="col-sm-12 control-label">Project Type</label>
+									<label for="sales_officer" class="col-sm-12 control-label">Sales Officer*</label>
 									<div class="col-sm-12">
-										<div class='values' id="project_type"></div>
+										<div class='values' id="sales_officer"></div>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="bid_completed" class="col-sm-12 control-label">Bid Completed</label>
+									<label for="lead_description" class="col-sm-12 control-label">Lead Status*</label>
 									<div class="col-sm-12">
-										<div class='values' id="bid_completed"></div>
+										<div class='values' id="lead_description"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="website" class="col-sm-12 control-label">Website*</label>
+									<div class="col-sm-12">
+										<div class='values' id="website"></div>
 									</div>
 								</div>
 							</div>
@@ -366,6 +405,12 @@
 										<div class='values' id="start_date"></div>
 									</div>
 								</div>
+								<div class="form-group row">
+									<label for="project_type" class="col-sm-12 control-label">Project Type</label>
+									<div class="col-sm-12">
+										<div class='values' id="project_type"></div>
+									</div>
+								</div>
 							</div>
 							<div class="col-4">
 								<div class="form-group row">
@@ -396,6 +441,12 @@
 									<label for="address" class="col-sm-12 control-label">Address</label>
 									<div class="col-sm-12">
 										<div class='values' id="address"></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="bid_completed" class="col-sm-12 control-label">Bid Completed</label>
+									<div class="col-sm-12">
+										<div class='values' id="bid_completed"></div>
 									</div>
 								</div>
 							</div>
@@ -431,11 +482,11 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Update Bidding List</h4>
+					<h6 class="modal-title">Update Bidding List</h6>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
-				<div class="modal-body">
-					<form method="post" enctype="multipart/form-data" action="<?php echo base_url("projects/crud/update/bidding"); ?>" class="form-horizontal p-t-20">
+				<div class="modal-body" style='padding-top:5px;padding-bottom:5px'>
+					<form method="post" enctype="multipart/form-data" action="<?php echo base_url("projects/crud/update/bidding"); ?>" class="form-horizontal p-t-10">
 						<div class="row holderx">
 							<div class="col-4">	
 								<div class="form-group row">
@@ -473,12 +524,10 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="project_type" class="col-sm-12 control-label">Project Type*</label>
+									<label for="sales_officer" class="col-sm-12 control-label">Sales Officer*</label>
 									<div class="col-sm-12">
 										<div class="input-group">
-											<select class="form-control" name="project_type" id="project_type">
-											
-											</select>
+											<input type="text" class="form-control" name="sales_officer" id="sales_officer">
 											<div class="input-group-append">
 												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 											</div>
@@ -486,10 +535,21 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="bid_completed" class="col-sm-12 control-label">Bid Completed*</label>
+									<label for="lead_description" class="col-sm-12 control-label">Lead Status*</label>
 									<div class="col-sm-12">
 										<div class="input-group">
-											<input type="number" class="form-control" name="bid_completed" id="bid_completed">
+											<input type="text" class="form-control" name="lead_description" id="lead_description">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="website" class="col-sm-12 control-label">Website*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="text" class="form-control" name="website" id="website">
 											<div class="input-group-append">
 												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 											</div>
@@ -556,6 +616,19 @@
 										</div>
 									</div>
 								</div>
+								<div class="form-group row">
+									<label for="project_type" class="col-sm-12 control-label">Project Type*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<select class="form-control" name="project_type" id="project_type">
+											
+											</select>
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class="col-4">
 								<div class="form-group row">
@@ -607,6 +680,17 @@
 									<div class="col-sm-12">
 										<div class="input-group">
 											<input type="text" class="form-control" name="address" id="address">
+											<div class="input-group-append">
+												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="bid_completed" class="col-sm-12 control-label">Bid Completed*</label>
+									<div class="col-sm-12">
+										<div class="input-group">
+											<input type="number" class="form-control" name="bid_completed" id="bid_completed">
 											<div class="input-group-append">
 												<span class="input-group-text" id="basic-addon2"><i class="ti-user"></i></span>
 											</div>
@@ -695,8 +779,8 @@
 		
 		$("#editBiddingList .select2").select2({
 			dropdownParent: $("#editBiddingList"),
-			/*ajax: {
-				url: "<?php echo base_url("employees/crud/retrieve/cbolistempid"); ?>",
+			ajax: {
+				url: "<?php echo base_url("projects/crud/retrieve/cbolistprojectnames"); ?>",
 				type: "POST",
 				dataType: 'json',
 				delay: 250,
@@ -710,7 +794,7 @@
 					};
 				},
 				cache: true
-			}*/
+			}
 		});
 	});
 	
@@ -738,6 +822,31 @@
 			$(".preloader").fadeOut();
 		});
 	}
+	
+	function getProjectLeadsData(id) {
+		$.post("<?php echo base_url("projects/crud/retrieve/projectleadsdata"); ?>",{ admin_id : "1",searchTerm:id })
+		.done(function(data) {
+			var obj = JSON.parse(data);
+			$('#editBiddingList input#website').val(obj[0].website);
+			$('#editBiddingList input#sales_officer').val(obj[0].sales_officer);
+			$('#editBiddingList input#lead_description').val(obj[0].lead_description);
+			
+			$('#createBiddingList input#website').val(obj[0].website);
+			$('#createBiddingList input#sales_officer').val(obj[0].sales_officer);
+			$('#createBiddingList input#lead_description').val(obj[0].lead_description);
+			$(".preloader").fadeOut();
+		});
+	}
+	
+	$("#createBiddingList #job_name").change(function() {
+		$(".preloader").show();
+		getProjectLeadsData($(this).val());
+	});
+	
+	$("#editBiddingList #job_name").change(function() {
+		$(".preloader").show();
+		getProjectLeadsData($(this).val());
+	});
 	
 	function getProjectNames(param) {
 		$.post("<?php echo base_url("projects/crud/retrieve/cbolistprojectnames"); ?>",{ admin_id : "1",searchTerm:param })
@@ -809,6 +918,9 @@
 			$('#editBiddingList input#address').val(obj[0].address);
 			$('#editBiddingList input#old_attachment').val(obj[0].attachment);
 			$('#editBiddingList textarea#web_info').val(obj[0].web_info);
+			$('#editBiddingList input#website').val(obj[0].website);
+			$('#editBiddingList input#sales_officer').val(obj[0].sales_officer);
+			$('#editBiddingList input#lead_description').val(obj[0].lead_description);
 			$('#editBiddingList #web_info').summernote({
 				height: 70,
 				minHeight: null,
@@ -832,6 +944,9 @@
 			$('#previewBiddingList div#address').text(obj[0].address);
 			$('#previewBiddingList div#old_attachment').text(obj[0].attachment);
 			$('#previewBiddingList div#web_info').html(obj[0].web_info);
+			$('#previewBiddingList div#website').text(obj[0].website);
+			$('#previewBiddingList div#sales_officer').text(obj[0].sales_officer);
+			$('#previewBiddingList div#lead_description').text(obj[0].lead_description);
 			$('#previewBiddingList #web_info').summernote({
 				height: 70,
 				minHeight: null,

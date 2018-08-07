@@ -240,6 +240,9 @@ class Project_controller extends CI_Controller {
 						"owner_type"			=> $this->input->post('owner_type'),
 						"address"				=> $this->input->post('address'),
 						"web_info"				=> $this->input->post('web_info'),
+						"website"				=> $this->input->post('website'),
+						"lead_description"		=> $this->input->post('lead_description'),
+						"sales_officer"			=> $this->input->post('sales_officer'),
 						"attachment"			=> $attachment_filename,
 						"user"					=> $this->session->userdata('adminid')
 					);
@@ -447,6 +450,9 @@ class Project_controller extends CI_Controller {
 							"owner_type"			=> $this->input->post('owner_type'),
 							"address"				=> $this->input->post('address'),
 							"web_info"				=> $this->input->post('web_info'),
+							"website"				=> $this->input->post('website'),
+							"lead_description"		=> $this->input->post('lead_description'),
+							"sales_officer"			=> $this->input->post('sales_officer'),
 							"attachment"			=> $attachment_filename,
 							"user"					=> $this->input->post('user')
 						);
@@ -468,6 +474,9 @@ class Project_controller extends CI_Controller {
 							"owner_type"			=> $this->input->post('owner_type'),
 							"address"				=> $this->input->post('address'),
 							"web_info"				=> $this->input->post('web_info'),
+							"website"				=> $this->input->post('website'),
+							"lead_description"		=> $this->input->post('lead_description'),
+							"sales_officer"			=> $this->input->post('sales_officer'),
 							"user"					=> $this->input->post('user')
 						);
 					}
@@ -496,6 +505,10 @@ class Project_controller extends CI_Controller {
 				elseif($module == "cbolistprojectnames") {
 					$param = $this->input->post('searchTerm');
 					echo $this->CBO_ProjNames($param);
+				}
+				elseif($module == "projectleadsdata") {
+					$param = $this->input->post('searchTerm');
+					echo $this->List_ProjLeadData($param);
 				}
 				elseif($module == "types") {
 					echo $this->List_ProjTypes();
@@ -1030,5 +1043,20 @@ class Project_controller extends CI_Controller {
 		}
 		return false;
 	}
+	
+	public function List_ProjLeadData($param) {
+		$this->load->model('Project','proj');
+		$data = $this->proj->search_ProjLeadNames($param);
+		if($data !== false) {
+			$html = array();
+			foreach($data as $row) {
+				$html[] = array("id"=>$row->id,"sales_officer"=>$row->sales_officer,"lead_description"=>$row->lead_description,"website"=>$row->website);
+			}
+			return json_encode($html);
+		}
+		return false;
+	}
+	
+	
 	
 }
