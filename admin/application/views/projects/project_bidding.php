@@ -109,13 +109,14 @@
 								<div class="form-group row">
 									<label for="job_name" class="col-sm-12 control-label">Job Name*</label>
 									<div class="col-sm-12">
-										<select class="select2 form-control custom-select" name="job_name" id="job_name" style="width: 100%; height:36px;">
+										<input type='hidden' name='job_name' id='real_job_name'>
+										<select class="select2 form-control custom-select" name="xjob_name" id="job_name" style="width: 100%; height:36px;">
 											<option>-- SELECT --</option>
 										</select>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="sales_officer" class="col-sm-12 control-label">Sales Officer*</label>
+									<label for="sales_officer" class="col-sm-12 control-label">Sales Representative*</label>
 									<div class="col-sm-12">
 										<div class="input-group">
 											<input type="text" class="form-control" name="sales_officer" id="sales_officer">
@@ -278,7 +279,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="website" class="col-sm-12 control-label">Website*</label>
+									<label for="website" class="col-sm-12 control-label">Link*</label>
 									<div class="col-sm-12">
 										<div class="input-group">
 											<input type="text" class="form-control" name="website" id="website">
@@ -356,7 +357,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="sales_officer" class="col-sm-12 control-label">Sales Officer*</label>
+									<label for="sales_officer" class="col-sm-12 control-label">Sales Representative*</label>
 									<div class="col-sm-12">
 										<div class='values' id="sales_officer"></div>
 									</div>
@@ -368,7 +369,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="website" class="col-sm-12 control-label">Website*</label>
+									<label for="website" class="col-sm-12 control-label">Link*</label>
 									<div class="col-sm-12">
 										<div class='values' id="website"></div>
 									</div>
@@ -470,7 +471,7 @@
 				</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-						<button onclick="$('#editBiddingList').modal('show');$('#previewBiddingList').modal('hide');" class="btn btn-danger waves-effect waves-light">Update</button>
+						<button onclick="$('#editBiddingList').modal('show');$('#previewBiddingList').modal('hide');" class="btn btn-danger waves-effect waves-light">Edit</button>
 					</div>
 			</div>
 		</div>
@@ -517,14 +518,15 @@
 									<label for="job_name" class="col-sm-12 control-label">Job Name*</label>
 									<div class="col-sm-12">
 										<div class="input-group">
-											<select class="select2 form-control custom-select" name="job_name" id="job_name" style="width: 100%; height:36px;">
+											<input type='hidden' name='job_name' id='real_job_name'>
+											<select class="select2 form-control custom-select" name="xjob_name" id="job_name" style="width: 100%; height:36px;">
 												<option>-- SELECT --</option>
 											</select>
 										</div>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="sales_officer" class="col-sm-12 control-label">Sales Officer*</label>
+									<label for="sales_officer" class="col-sm-12 control-label">Sales Representative*</label>
 									<div class="col-sm-12">
 										<div class="input-group">
 											<input type="text" class="form-control" name="sales_officer" id="sales_officer">
@@ -546,7 +548,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="website" class="col-sm-12 control-label">Website*</label>
+									<label for="website" class="col-sm-12 control-label">Link*</label>
 									<div class="col-sm-12">
 										<div class="input-group">
 											<input type="text" class="form-control" name="website" id="website">
@@ -827,24 +829,26 @@
 		$.post("<?php echo base_url("projects/crud/retrieve/projectleadsdata"); ?>",{ admin_id : "1",searchTerm:id })
 		.done(function(data) {
 			var obj = JSON.parse(data);
-			$('#editBiddingList input#website').val(obj[0].website);
-			$('#editBiddingList input#sales_officer').val(obj[0].sales_officer);
-			$('#editBiddingList input#lead_description').val(obj[0].lead_description);
+			$('#editBiddingList input#website').val(obj[0].link);
+			$('#editBiddingList input#sales_officer').val(obj[0].sales_representative);
+			$('#editBiddingList input#lead_description').val(obj[0].lead_status);
 			
-			$('#createBiddingList input#website').val(obj[0].website);
-			$('#createBiddingList input#sales_officer').val(obj[0].sales_officer);
-			$('#createBiddingList input#lead_description').val(obj[0].lead_description);
+			$('#createBiddingList input#website').val(obj[0].link);
+			$('#createBiddingList input#sales_officer').val(obj[0].sales_representative);
+			$('#createBiddingList input#lead_description').val(obj[0].lead_status);
 			$(".preloader").fadeOut();
 		});
 	}
 	
 	$("#createBiddingList #job_name").change(function() {
 		$(".preloader").show();
+		$("#createBiddingList #real_job_name").val($("#createBiddingList #job_name option:selected").text());
 		getProjectLeadsData($(this).val());
 	});
 	
 	$("#editBiddingList #job_name").change(function() {
 		$(".preloader").show();
+		$("#editBiddingList #real_job_name").val($("#editBiddingList #job_name option:selected").text());
 		getProjectLeadsData($(this).val());
 	});
 	
@@ -904,6 +908,7 @@
 			$('#editBiddingList input#bid_date').val(obj[0].bid_date);
 			$('#editBiddingList input#bid_agent').val(obj[0].bid_agent);
 			$('#editBiddingList select#job_name').val(obj[0].job_name);
+			$('#editBiddingList input#real_job_name').val(obj[0].job_name);
 			$('#editBiddingList select#project_type').val(obj[0].project_type);
 			$('#editBiddingList input#bid_completed').val(obj[0].bid_completed);
 			$('#editBiddingList input#rebid').val(obj[0].rebid);
@@ -945,7 +950,7 @@
 			$('#previewBiddingList div#old_attachment').text(obj[0].attachment);
 			$('#previewBiddingList div#web_info').html(obj[0].web_info);
 			$('#previewBiddingList div#website').text(obj[0].website);
-			$('#previewBiddingList div#sales_officer').text(obj[0].sales_officer);
+			$('#previewBiddingList div#sales_officer').text(obj[0].sales_representative);
 			$('#previewBiddingList div#lead_description').text(obj[0].lead_description);
 			$('#previewBiddingList #web_info').summernote({
 				height: 70,
